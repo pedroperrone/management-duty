@@ -1,3 +1,5 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/d21c02c221f6c0dd1796/maintainability)](https://codeclimate.com/github/pedroperrone/management-duty/maintainability)[![Test Coverage](https://api.codeclimate.com/v1/badges/d21c02c221f6c0dd1796/test_coverage)](https://codeclimate.com/github/pedroperrone/management-duty/test_coverage)
+
 ## Descrição
 
 Este repositório contém o trabalho final da disciplina de Engenharia de Software N da Universidade Federal do Rio Grande do Sul do grupo composto por [José Pedro Martinez](https://github.com/jotapem), [Lucas Flores](https://github.com/pacluke), [Mario Zemor](https://github.com/mgfzemor) e [Pedro Perrone](https://github.com/pedroperrone). Neste trabalho, cada grupo desenvolve um produto e atua como analista. Em seguida ocorre uma troca de especificações entre os grupos e um grupo atua como desenvolvedor para o outro.
