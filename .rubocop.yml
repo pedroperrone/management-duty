@@ -1,0 +1,27 @@
+Documentation:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+BlockLength:
+  Enabled: false
+AllCops:
+  TargetRubyVersion: 2.5.1
+  Exclude:
+    - 'db/**.*'
+    - 'db/**/*'
+    - 'bin/**/*'
+    - 'bin/**.*'
+    - 'config/**.*'
+    - 'config/**/*'
+    - 'lib/tasks/**.*'
+    - "Gemfile"
+    - "Rakefile"
+    - "**.md"
+    - "**.ico"
+    - "**.apib"
+    - "**.ru"
+    - "**.rake"
+    - "**.json"
+    - "**.png"
+Style/StringLiterals:
+  Enabled: false
