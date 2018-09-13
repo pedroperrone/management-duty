@@ -41,3 +41,5 @@ Para rodar os testes automatizados da aplicação pela primeira vez, rode os seg
 rake db:create RAILS_ENV=test
 rake db:migrate RAILS_ENV=test
 ```
+
+Depois, para cada execução da rotina de testes automatizados, basta rodar `bundle exec rspec`.
