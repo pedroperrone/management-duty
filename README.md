@@ -31,3 +31,11 @@ rake db:migrate
 ```
 
 Por fim, use o comando `rails s`. O projeto deve estar disponível em `http://localhost:3000`.
+
+## Testes automatizados
+
+Para rodar os testes automatizados da aplicação pela primeira vez, rode os seguintes comandos para initializar o banco de dados:
+```
+rake db:create RAILS_ENV=test
+rake db:migrate RAILS_ENV=test
+```
