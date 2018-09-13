@@ -1,24 +1,33 @@
-# README
+## Descrição
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Este repositório contém o trabalho final da disciplina de Engenharia de Software N da Universidade Federal do Rio Grande do Sul do grupo composto por [José Pedro Martinez](https://github.com/jotapem), [Lucas Flores](https://github.com/pacluke), [Mario Zemor](https://github.com/mgfzemor) e [Pedro Perrone](https://github.com/pedroperrone). Neste trabalho, cada grupo desenvolve um produto e atua como analista. Em seguida ocorre uma troca de especificações entre os grupos e um grupo atua como desenvolvedor para o outro.
 
-Things you may want to cover:
+## Dependências
+* Ruby 2.5.1
+* PostgreSQL 10.5
 
-* Ruby version
+Recomenda-se o uso de algum gerenciador de versão de Ruby, como `rbenv` ou `rvm`.
 
-* System dependencies
+## Configuração do ambiente
 
-* Configuration
+Comece clonando o repositório com o comando
+`git clone https://github.com/pedroperrone/management-duty.git`
 
-* Database creation
+Em seguida navegue para o diretório do projeto com
+`cd management-duty`.
 
-* Database initialization
+Para instalar as dependências use o comando
+`bundle install`.
 
-* How to run the test suite
+Em seguida, faça uma cópia do arquivo de variávies de ambiente com o comando
+`cp .env.sample .env`.
 
-* Services (job queues, cache servers, search engines, etc.)
+Se for desejado alterar aspectos como nome do banco de dados ou usuário do banco de dados, faça as devidas modificações no arquivo `.env`.
 
-* Deployment instructions
+Rode a seguinte sequência de comandos para inicializar o banco de dados:
+```
+rake db:create
+rake db:migrate
+```
 
-* ...
+Por fim, use o comando `rails s`. O projeto deve estar disponível em `http://localhost:3000`.
