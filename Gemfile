@@ -14,7 +14,7 @@ gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'mini_racer', platforms: :ruby
+gem 'mini_racer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -66,3 +66,14 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Bootstrap 4 ruby gem for Ruby on Rails (Sprockets) and Hanami (formerly Lotus).
+# See https://github.com/twbs/bootstrap-rubygem for more information
+gem 'bootstrap', '~> 4.1.3'
+# A gem to automate using jQuery with Rails
+# See https://github.com/rails/jquery-rails for more information
+gem 'jquery-rails'
+# This gem provides popper.js assets as a Ruby gem.
+# Bootstrap tooltips and popovers depend on popper.js for positioning.
+# See https://github.com/glebm/popper_js-rubygem for more information
+gem 'popper_js', '~> 1.14.3'
