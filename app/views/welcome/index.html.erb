@@ -8,16 +8,13 @@
 
 <body>
   <!-- Navigation -->
-
     <nav class="navbar navbar-default navbar-expand-lg navbar-dark bg-dark fixed-to-top" role="navigation">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-
-
       <div class="collapse navbar-collapse" id="navbarSupportedContent" class="pl-3">
-        <a class="navbar-brand" href="index.html">&ensp;Alstar</a>
-        <ul class="nav navbar-nav">
+        <a class="navbar-brand" href="#intro"> <%= image_tag("welcome/logo2.png", alt: "", height: 35, width: 35, style: "display: inline-block")-%> &ensp;Management Duty</a>
+        <ul class="nav navbar-nav mr-4">
           <li >
             <a href="#intro">Home</a>
           </li>
@@ -27,19 +24,17 @@
           <li >
             <a href="#services">Services</a>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+          <li>
+            <a href="#contact">Contact</a>
           </li>
-
         </ul>
+        <div class="ml-4">
+        <form class="form-inline my-2 my-lg-0" class="ml-3">
+          <input class="form-control mr-sm-2 ml-3" type="search" placeholder="Email" aria-label="Search">
+          <input class="form-control mr-sm-2" type="search" placeholder="Password" aria-label="Search">
+          <button class="btn btn-theme my-2 my-sm-0" type="submit">Login</button>
+        </form>
+      </div>
       </div>
     </nav>
 
@@ -243,7 +238,6 @@
 
         </div>
       </div>
-
     </div>
   </section>
 
@@ -280,37 +274,6 @@
           </div>
         </div>
       </div>
-      <div class="row mar-top30">
-        <div class="col-md-12">
-          <h5>We're on social networks</h5>
-          <ul class="social-network">
-            <li><a href="#">
-						<span class="fa-stack fa-2x">
-							<i class="fa fa-circle fa-stack-2x"></i>
-							<i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
-						</span></a>
-            </li>
-            <li><a href="#">
-						<span class="fa-stack fa-2x">
-							<i class="fa fa-circle fa-stack-2x"></i>
-							<i class="fa fa-dribbble fa-stack-1x fa-inverse"></i>
-						</span></a>
-            </li>
-            <li><a href="#">
-						<span class="fa-stack fa-2x">
-							<i class="fa fa-circle fa-stack-2x"></i>
-							<i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
-						</span></a>
-            </li>
-            <li><a href="#">
-						<span class="fa-stack fa-2x">
-							<i class="fa fa-circle fa-stack-2x"></i>
-							<i class="fa fa-pinterest fa-stack-1x fa-inverse"></i>
-						</span></a>
-            </li>
-          </ul>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -319,21 +282,15 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <p>Copyright &copy; Alstar. All rights reserved.</p>
-          <div class="credits">
-            <!--
-              All the links in the footer should remain intact.
-              You can delete the links only if you purchased the pro version.
-              Licensing information: https://bootstrapmade.com/license/
-              Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Alstar
-            -->
-            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-          </div>
+          <p>Copyright &copy; Management Duty. All rights reserved.</p>
         </div>
       </div>
     </div>
   </footer>
+
+  <!-- Back to top button -->
   <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
   <!-- js -->
   <%= javascript_include_tag "welcome" %>
 </body>
