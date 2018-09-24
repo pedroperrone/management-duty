@@ -4,7 +4,6 @@
 //= require welcome/wow-min
 //= require welcome/mb-bgndGallery
 //= require welcome/jquery-simple-text-rotator-min
-//= require welcome/jquery-scrollTo-min
 //= require welcome/jquery-nav
 //= require welcome/modernizr-custom
 //= require welcome/grid
