@@ -77,3 +77,5 @@ gem 'jquery-rails'
 # Bootstrap tooltips and popovers depend on popper.js for positioning.
 # See https://github.com/glebm/popper_js-rubygem for more information
 gem 'popper_js', '~> 1.14.3'
+# font-awesome-rails provides the Font-Awesome web fonts and stylesheets as a Rails engine for use with the asset pipeline.
+gem "font-awesome-rails"
