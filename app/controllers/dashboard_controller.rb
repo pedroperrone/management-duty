@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
   def show
-    render params[:page]
+    render params[:page], :layout=> 'dashboard'
   end
 end
