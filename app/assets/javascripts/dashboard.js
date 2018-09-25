@@ -52,21 +52,22 @@ $(document).ready(function(){
 
    if($('body').hasClass('collapsed-menu') && $('#btnLeftMenu').is(':visible')) {
      var targ = $(e.target).closest('.br-sideleft').length;
+     let subMenu = $('.show-sub + .br-menu-sub');
+     let body = $('body');
+     let subClass = 'expand-menu';
      if(targ) {
-       $('body').addClass('expand-menu');
-
+       body.addClass(subClass);
        // show current shown sub menu that was hidden from collapsed
-       $('.show-sub + .br-menu-sub').slideDown();
+       subMenu.slideDown();
 
        var menuText = $('.menu-item-label');
        menuText.removeClass('d-lg-none');
        menuText.removeClass('op-lg-0-force');
 
      } else {
-       $('body').removeClass('expand-menu');
-
+       body.removeClass(subClass);
        // hide current shown menu
-       $('.show-sub + .br-menu-sub').slideUp();
+       subMenu.slideUp();
 
        var menuText = $('.menu-item-label');
        menuText.addClass('op-lg-0-force');
