@@ -103,28 +103,7 @@ $(document).ready(function(){
    $('body').addClass('show-left');
    return false;
  });
-
- // This will hide sidebar when it's clicked outside of it
- $(document).on('click touchstart', function(e){
-   e.stopPropagation();
-
-   // closing left sidebar
-   if($('body').hasClass('show-left')) {
-     var targ = $(e.target).closest('.br-sideleft').length;
-     if(!targ) {
-       $('body').removeClass('show-left');
-     }
-   }
-
-   // closing right sidebar
-   if($('body').hasClass('show-right')) {
-     var targ = $(e.target).closest('.br-sideright').length;
-     if(!targ) {
-       $('body').removeClass('show-right');
-     }
-   }
- });
-
+ 
  // displaying time and date in right sidebar
  var interval = setInterval(function() {
    var momentNow = moment();
