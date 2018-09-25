@@ -1,0 +1,47 @@
+<div class="br-header">
+  <div class="br-header-left">
+    <div class="navicon-left hidden-md-down"><a id="btnLeftMenu" href="blank.html"><i class="icon ion-navicon-round"></i></a></div>
+    <div class="navicon-left hidden-lg-up"><a id="btnLeftMenuMobile" href="blank.html"><i class="icon ion-navicon-round"></i></a></div>
+    <div class="input-group hidden-xs-down wd-250 transition">
+      <input id="searchbox" type="text" class="form-control" placeholder="Perquisar usuário">
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button"><i class="fa fa-search"></i></button>
+      </span>
+    </div><!-- input-group -->
+  </div><!-- br-header-left -->
+  <div class="br-header-right">
+    <nav class="nav">
+      <div class="dropdown">
+        <a href="blank.html" class="nav-link nav-link-profile" data-toggle="dropdown">
+          <span class="logged-name hidden-md-down">Usuário da UFRGS</span>
+          <%= image_tag('user.png', :class => 'wd-32 rounded-circle', :all => '') %>
+          <span class="square-10 bg-success"></span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-header wd-250">
+          <div class="tx-center">
+            <a href="blank.html">
+              <%= image_tag('user.png', :class => 'wd-80 rounded-circle', :all => '') %>
+            </a>
+            <h6 class="logged-fullname">Usuário da UFRGS</h6>
+            <p>user@ufrgs.com</p>
+          </div>
+          <hr>
+          <div class="tx-center">
+            <span class="profile-earning-label">GANHOS COM HORAS EXTRAS</span>
+            <h3 class="profile-earning-amount">R$ 525,00 <i class="icon ion-ios-arrow-thin-up tx-success"></i></h3>
+            <span class="profile-earning-text">Baseado na de preços da empresa</span>
+          </div>
+          <hr>
+          <ul class="list-unstyled user-profile-nav">
+            <li><a href="#"><i class="icon ion-ios-person"></i> Editar Perfil</a></li>
+            <li><a href="#"><i class="icon ion-ios-gear"></i> Configurações</a></li>
+            <li><a href="/"><i class="icon ion-power"></i> Logout</a></li>
+          </ul>
+        </div><!-- dropdown-menu -->
+      </div><!-- dropdown -->
+    </nav>
+    <div class="navicon-right">
+      <!-- give a space to show user menu correctly-->
+    </div><!-- navicon-right -->
+  </div><!-- br-header-right -->
+</div><!-- br-header -->

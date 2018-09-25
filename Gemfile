@@ -79,3 +79,5 @@ gem 'jquery-rails'
 gem 'popper_js', '~> 1.14.3'
 # font-awesome-rails provides the Font-Awesome web fonts and stylesheets as a Rails engine for use with the asset pipeline.
 gem "font-awesome-rails"
+# ionicons-rails provides icons
+gem 'ionicons-rails'
