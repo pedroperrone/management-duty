@@ -11,6 +11,43 @@
     <%= javascript_include_tag 'dashboard', 'data-turbolinks-track': 'reload' %>
   </head>
   <body>
-      <%= yield %>
+    <!-- ########## START: LEFT PANEL ########## -->
+    <div class="br-logo"><a href="#">
+      <span>[</span> <%= image_tag('welcome/logo.png', :width => 30, :height => 30) %> MANAGEMENT <i>DUTY </i><span> ]</span></a>
+    </div>
+    <div class="br-sideleft overflow-y-auto">
+        <%= render 'layouts/dashboard/navigation' %>
+        <%= render 'layouts/dashboard/info_list' %>
+    </div><!-- br-sideleft -->
+    <!-- ########## END: LEFT PANEL ########## -->
+
+    <!-- ########## START: HEAD PANEL ########## -->
+      <%= render 'layouts/dashboard/head_panel' %>
+    <!-- ########## END: HEAD PANEL ########## -->
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pageheader">
+        <nav class="breadcrumb pd-0 mg-0 tx-12">
+          <%= yield :breadcrumb %>
+        </nav>
+      </div><!-- br-pageheader -->
+      <div class="br-pagetitle">
+        <i class="icon icon ion-ios-home-outline"></i>
+        <div>
+          <h4> <%= yield :body_title %> </h4>
+          <p class="mg-b-0"> <%= yield :body_description %> </p>
+        </div>
+      </div><!-- d-flex -->
+      <div class="br-pagebody">
+        <div class="br-section-wrapper" style="height: 500px">
+          <h6 class="br-section-label"><%= yield :section_title %></h6>
+          <p class="br-section-text"><%= yield :section_description %></p>
+        </div>
+        <!-- start you own content here -->
+        <%= yield %>
+      </div><!-- br-pagebody -->
+    </div><!-- br-mainpanel -->
+    <!-- ########## END: MAIN PANEL ########## -->
   </body>
 </html>
