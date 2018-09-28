@@ -42,7 +42,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    binding.pry
     devise_parameter_sanitizer.permit(:sign_up, keys: extra_attributes)
   end
 
@@ -52,7 +51,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def extra_attributes
-    [:role, :specialty, :name]
+    %i[role specialty name]
   end
 
   # The path used after sign up.
