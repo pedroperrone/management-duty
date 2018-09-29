@@ -1,3 +1,5 @@
+//= require rails-ujs
+//= require activestorage
 //= require jquery3
 //= require popper
 //= require bootstrap-sprockets
@@ -103,7 +105,7 @@ $(document).ready(function(){
    $('body').addClass('show-left');
    return false;
  });
- 
+
  // displaying time and date in right sidebar
  var interval = setInterval(function() {
    var momentNow = moment();

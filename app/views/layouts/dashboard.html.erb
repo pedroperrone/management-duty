@@ -8,7 +8,7 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag    'dashboard', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'dashboard', 'data-turbolinks-track': 'reload' %>
+
   </head>
   <body>
     <!-- ########## START: LEFT PANEL ########## -->
@@ -49,5 +49,6 @@
       </div><!-- br-pagebody -->
     </div><!-- br-mainpanel -->
     <!-- ########## END: MAIN PANEL ########## -->
+      <%= javascript_include_tag 'dashboard', 'data-turbolinks-track': 'reload' %>
   </body>
 </html>

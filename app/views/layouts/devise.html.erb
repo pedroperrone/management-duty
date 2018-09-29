@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <title><%= yield :page_title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'dashboard', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'dashboard', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body>
+    <div class="row no-gutters flex-row-reverse ht-100v">
+      <div class="col-md-6 bg-gray-200 d-flex align-items-center justify-content-center">
+        <div class="login-wrapper wd-250 wd-xl-350 mg-y-30">
+          <h4 class="tx-inverse tx-center"><%= yield :form_title %></h4>
+          <p class="tx-center mg-b-60"><%= yield :form_description %></p>
+          <%= yield %>
+          <div class="form-group tx-12 mt-2"><%= yield :form_footer %></div>
+        </div><!-- login-wrapper -->
+      </div><!-- col -->
+      <div class="col-md-6 bg-br-primary d-flex align-items-center justify-content-center">
+        <div class="wd-350 wd-xl-450 mg-y-30">
+          <div class="signin-logo tx-28 tx-bold tx-white"><span class="tx-normal">[</span> Management <span class="tx-info">duty</span> <span class="tx-normal">]</span></div>
+          <div class="tx-white-7 mg-b-60">Agility in the management and control of work shifts</div>
+
+          <h5 class="tx-white"><%= yield :content_title %></h5>
+          <p class="tx-white-6"><%= yield :content_description %></p>
+          <a href="/" class="btn btn-outline-light bd bd-white bd-2 tx-white pd-x-25 tx-uppercase tx-12 tx-spacing-2 tx-medium">HOME PAGE</a>
+          <%= yield :content_links %>
+        </div><!-- wd-500 -->
+      </div>
+    </div><!-- row -->
+  </body>
+</html>
