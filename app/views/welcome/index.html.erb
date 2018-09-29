@@ -20,11 +20,11 @@
           </li>
         </ul>
         <div class="ml-4">
-        <form class="form-inline my-2 my-lg-0" class="ml-3" action="/dashboard/index">
-          <input class="form-control mr-sm-2 ml-3" type="search" placeholder="Email" aria-label="Search">
-          <input class="form-control mr-sm-2" type="search" placeholder="Password" aria-label="Search">
-          <button class="btn btn-theme my-2 my-sm-0" type="submit">Login</button>
-        </form>
+          <%= form_for(:user, :url => session_path(:user), :html => {:class => 'form-inline my-2 my-lg-0 ml-3'}) do |f| %>
+            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control mr-sm-2 ml-3', placeholder: :email %>
+            <%= f.password_field :password, autocomplete: "off", class: 'form-control mr-sm-2', placeholder: :password%>
+            <%= f.submit "Log in", class: 'btn btn-theme my-2 my-sm-0' %>
+          <% end %>
       </div>
       </div>
     </nav>
