@@ -1,44 +1,56 @@
-<h2>Create account</h2>
+<%= content_for :form_title do %>
+  Sign Up
+<% end %>
+
+<%= content_for :form_description do %>
+  Create your own account.
+<% end %>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div class='field  mt-2'>
+    <%= f.text_field :name, autocomplete: "off", class: 'form-control', placeholder: :name %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
+  <div class="field  mt-2">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: :email %>
+  </div>
+
+  <div class="field  mt-2">
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
     <% end %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: :password %>
   </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+  <div class="field  mt-2">
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: :password_confirmation %>
   </div>
 
-  <div class='field'>
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autocomplete: "off" %>
-  </div>
-
-  <div class='field'>
-    <%= f.label :role %><br />
-    <%= f.text_field :role, autocomplete: "off" %>
-  </div>
-
-  <div class='field'>
-    <%= f.label :specialty %><br />
-    <%= f.text_field :specialty, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
+  <div class="actions mt-2">
+    <%= f.submit "Sign up", class: 'btn btn-info btn-block' %>
   </div>
 <% end %>
 
-<%= render "users/shared/links" %>
+<%= content_for :form_footer do %>
+  By clicking the Sign Up button above you agreed to our privacy policy and terms of use of our website.
+<% end %>
+
+<%= content_for :content_title do %>
+  Create an account for your company.
+<% end %>
+
+<%= content_for :content_description do %>
+  Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+  deserunt mollit anim id est laborum Libero justo laoreet sit amet cursus sit
+  amet dictum sit. Commodo sed egestas egestas fringilla phasellus faucibus
+  scelerisque eleifend donec Excepteur sint occaecat cupidatat non proident,
+  sunt in culpa qui officia deserunt mollit anim id est laborum.
+<% end %>
+
+<%= content_for :content_links do %>
+  <a href="/users/sign_in" class="btn btn-outline-light bd bd-white bd-2 tx-white pd-x-25 tx-uppercase tx-12 tx-spacing-2 tx-medium">LOG IN</a>
+<% end %>
