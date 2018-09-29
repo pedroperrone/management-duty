@@ -35,7 +35,12 @@
           <ul class="list-unstyled user-profile-nav">
             <li><a href="#"><i class="icon ion-ios-person"></i> Editar Perfil</a></li>
             <li><a href="#"><i class="icon ion-ios-gear"></i> Configurações</a></li>
-            <li><a href="/"><i class="icon ion-power"></i> Logout</a></li>
+            <li>
+              <%= link_to destroy_user_session_path, :method=>'delete' do %>
+                <i class="icon ion-power"></i>
+                Logout
+              <% end %>
+            </li>
           </ul>
         </div><!-- dropdown-menu -->
       </div><!-- dropdown -->
