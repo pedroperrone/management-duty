@@ -2,6 +2,10 @@
 
 class DashboardController < ApplicationController
   def show
-    render params[:page], layout: 'dashboard'
+    if user_signed_in?
+      render params[:page], layout: 'dashboard'
+    else
+      redirect_to root_path
+    end
   end
 end
