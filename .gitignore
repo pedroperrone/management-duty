@@ -28,3 +28,4 @@
 
 .DS_store
 .env
+yarn.lock

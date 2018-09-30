@@ -38,6 +38,8 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
   gem 'shoulda'
   gem 'shoulda-matchers', '~> 3.1'
+  gem "factory_bot_rails"
+  gem 'rails-controller-testing'
 end
 
 group :development do
