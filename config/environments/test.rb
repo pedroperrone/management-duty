@@ -36,7 +36,7 @@ Rails.application.configure do
   # Tell Action Mailer not to deliver emails to the real world.
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
-  
+
   # Don't care if the mailer can't send.
 
   config.action_mailer.smtp_settings = {
@@ -53,8 +53,8 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV['MAILER_HOST'] }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
-  # Send email in development mode?
-  config.action_mailer.perform_deliveries = true
+  # Send email in test mode?
+  config.action_mailer.perform_deliveries = false
   config.action_mailer.logger = nil
 
   # Print deprecation notices to the stderr.
