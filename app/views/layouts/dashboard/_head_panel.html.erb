@@ -13,7 +13,7 @@
     <nav class="nav">
       <div class="dropdown">
         <a href="blank.html" class="nav-link nav-link-profile" data-toggle="dropdown">
-          <span class="logged-name hidden-md-down"> <%= current_user.name %> </span>
+          <span class="logged-name hidden-md-down"> <%= current_user.try(:name)  || current_admin.name %> </span>
           <%= image_tag('user.png', :class => 'wd-32 rounded-circle', :all => '') %>
           <span class="square-10 bg-success"></span>
         </a>
@@ -22,8 +22,8 @@
             <a href="blank.html">
               <%= image_tag('user.png', :class => 'wd-80 rounded-circle', :all => '') %>
             </a>
-            <h6 class="logged-fullname"><%= current_user.name %></h6>
-            <p><%= current_user.email%></p>
+            <h6 class="logged-fullname"><%= current_user.try(:name) || current_admin.name %></h6>
+            <p><%= current_user.try(:name) || current_admin.name %></p>
           </div>
           <hr>
           <div class="tx-center">
@@ -36,9 +36,16 @@
             <li><a href="#"><i class="icon ion-ios-person"></i> Editar Perfil</a></li>
             <li><a href="#"><i class="icon ion-ios-gear"></i> Configurações</a></li>
             <li>
-              <%= link_to destroy_user_session_path, :method=>'delete' do %>
-                <i class="icon ion-power"></i>
-                Logout
+              <% if user_signed_in? %>
+                <%= link_to destroy_user_session_path, method: :delete do %>
+                  <i class="icon ion-power"></i>
+                  Logout
+                <% end %>
+              <% else %>
+                <li><%= link_to destroy_admin_session_path, method: :delete do %>
+                  <i class="icon ion-power"></i>
+                  Logout
+                <% end %>
               <% end %>
             </li>
           </ul>

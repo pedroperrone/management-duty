@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  devise_for :admins, controllers: {
+    sessions: 'admins/sessions',
+    registrations: 'admins/registrations'
+  }
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',
@@ -8,5 +12,5 @@ Rails.application.routes.draw do
   root 'welcome#index'
   # Dashboard Controller
   get "/dashboard/:page" => 'dashboard#show'
-  get "dashboard/index" => 'dashboard#show'
+  get "/dashboard" => 'dashboard#show'
 end
