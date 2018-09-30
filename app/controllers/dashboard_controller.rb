@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
     if user_signed_in?
       render params[:page], layout: 'dashboard'
     else
-      redirect_to root_path
+      redirect_to user_session_path
     end
   end
 end
