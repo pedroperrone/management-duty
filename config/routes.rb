@@ -12,5 +12,5 @@ Rails.application.routes.draw do
   root 'welcome#index'
   # Dashboard Controller
   get "/dashboard/:page" => 'dashboard#show'
-  get "dashboard" => 'dashboard#show'
+  get "/dashboard" => 'dashboard#show'
 end
