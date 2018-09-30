@@ -28,6 +28,11 @@
     <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: :password_confirmation %>
   </div>
 
+  <div class="field  mt-2">
+  <%= f.select(:role, User.roles.keys , {}, { :class => 'form-control' }) %>
+  </div>
+
+
   <div class="actions mt-2">
     <%= f.submit "Sign up", class: 'btn btn-info btn-block' %>
   </div>
