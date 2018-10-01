@@ -9,11 +9,11 @@
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
   <%= devise_error_messages! %>
 
-<% resource.class.invite_key_fields.each do |field| -%>
-  <div class="field mt-2">
-    <%= f.text_field field, class: 'form-control', placeholder: field %></p>
-  </div>
-<% end -%>
+  <% resource.class.invite_key_fields.each do |field| -%>
+    <div class="field mt-2">
+      <%= f.text_field field, class: 'form-control', placeholder: field %></p>
+    </div>
+  <% end -%>
   <p><%= f.submit t("devise.invitations.new.submit_button"), class: 'btn btn-info btn-block' %></p>
 <% end %>
 
