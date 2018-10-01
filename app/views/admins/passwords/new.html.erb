@@ -1,16 +1,38 @@
-<h2>Forgot your password?</h2>
+<%= content_for :form_title do %>
+  Forgot your password?
+<% end %>
+
+<%= content_for :form_description do %>
+  Enter your Email below
+<% end %>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control', placeholder: :email  %>
   </div>
 
-  <div class="actions">
-    <%= f.submit "Send me reset password instructions" %>
+  <div class="actions mt-2">
+    <%= f.submit "Send me reset password instructions", class: 'btn btn-info btn-block' %>
   </div>
 <% end %>
 
-<%= render "admins/shared/links" %>
+<%= content_for :content_title do %>
+  Don't worry...
+<% end %>
+
+<%= content_for :content_description do %>
+  Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+  deserunt mollit anim id est laborum Libero justo laoreet sit amet cursus sit
+  amet dictum sit. Commodo sed egestas egestas fringilla phasellus faucibus
+  scelerisque eleifend donec Excepteur sint occaecat cupidatat non proident,
+  sunt in culpa qui officia deserunt mollit anim id est laborum.
+<% end %>
+
+<%= content_for :content_links do %>
+  <%= link_to('SING UP', new_admin_registration_path, class: 'btn btn-outline-light bd bd-white bd-2 tx-white pd-x-25 tx-uppercase tx-12 tx-spacing-2 tx-medium' )%>
+  <%= link_to('LOG IN', new_admin_session_path, class: 'btn btn-outline-light bd bd-white bd-2 tx-white pd-x-25 tx-uppercase tx-12 tx-spacing-2 tx-medium')%>
+<% end %>
