@@ -8,6 +8,7 @@ gem 'rails', '~> 5.2.1'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 3.11'
 gem 'devise'
+gem 'devise_invitable', '~> 1.7.0'
 gem 'timecop'
 
 gem 'mini_racer', platforms: :ruby
