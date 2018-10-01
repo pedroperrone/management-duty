@@ -21,9 +21,8 @@
         </ul>
         <div class="ml-4">
           <%= form_for(:user, :url => session_path(:user), :html => {:class => 'form-inline my-2 my-lg-0 ml-3'}) do |f| %>
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-control mr-sm-2 ml-3', placeholder: :email %>
-            <%= f.password_field :password, autocomplete: "off", class: 'form-control mr-sm-2', placeholder: :password%>
-            <%= f.submit "Log in", class: 'btn btn-theme my-2 my-sm-0' %>
+            <%= link_to("Sou Administrador", new_admin_session_path, class: 'btn btn-theme my-2 my-sm-0')%>
+            <%= link_to("Sou Colaborador", new_user_session_path, class: 'btn btn-theme my-2 my-sm-0 ml-4')%>
           <% end %>
       </div>
       </div>
@@ -38,7 +37,7 @@
             <h1><span class="1strotate">Management Duty, Design for life, Creativity and technology</span></h1>
             <div class="line-spacer"></div>
             <p><span class="2ndrotate">Agilidade no gerenciamento e controle de turnos de trabalho, Melhore a qualidade de vida de seus colaboradores, Todas as funcionalidades a um clique de distância</span></p>
-            <a href="/users/sign_up"><input  name="commit" value="Create Account" class="btn btn-theme my-2" ></a>
+            <%= link_to('Create Account for your company', new_admin_registration_path, class: 'btn btn-theme my-2')%>
           </div>
         </div>
       </div>
@@ -54,7 +53,7 @@
             <h2>About us</h2>
             <div class="heading-line"></div>
             <p>We’ve been building unique digital products, platforms, and experiences for the past 6 years.</p>
-            <a href="/users/sign_up"><input  name="commit" value="Create Account" class="btn btn-theme my-2" ></a>
+            <%= link_to('Create Account for your company', new_admin_registration_path, class: 'btn btn-theme my-2')%>
           </div>
         </div>
       </div>
@@ -68,7 +67,7 @@
           <h3>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>
           <p>
             Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Libero justo laoreet sit amet cursus sit amet dictum sit. Commodo sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-            <a href="/users/sign_up"><input  name="commit" value="Create Account" class="btn btn-theme my-2" ></a>
+            <%= link_to('Create Account for your company', new_admin_registration_path, class: 'btn btn-theme my-2')%>
           </p>
         </div>
       </div>

@@ -23,7 +23,7 @@
               <%= image_tag('user.png', :class => 'wd-80 rounded-circle', :all => '') %>
             </a>
             <h6 class="logged-fullname"><%= current_user.try(:name) || current_admin.name %></h6>
-            <p><%= current_user.try(:name) || current_admin.name %></p>
+            <p><%= current_user.try(:email) || current_admin.email %></p>
           </div>
           <hr>
           <div class="tx-center">

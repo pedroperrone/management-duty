@@ -1,5 +1,11 @@
-<h2><%= t 'devise.invitations.edit.header' %></h2>
+<%= content_for :form_title do %>
+  Activate your account
+<% end %>
 
+<%= content_for :form_description do %>
+  Just one more step...
+<% end %>
+                           
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => { :method => :put } do |f| %>
   <%= devise_error_messages! %>
   <%= f.hidden_field :invitation_token, readonly: true %>
@@ -7,19 +13,42 @@
   <% if f.object.class.require_password_on_accepting %>
 
   <div class='field  mt-2'>
-    <%= f.text_field :name, autocomplete: "off", class: 'form-control', placeholder: :name %>
+    <%= f.text_field :name, autofocus: true, autocomplete: "off", class: 'form-control', placeholder: :name %>
   </div>
 
   <div class="field  mt-2">
     <%= f.text_field :role, autocomplete: "off", class: 'form-control', placeholder: :role %>
   </div>
 
-  <p><%= f.label :password %><br />
-  <%= f.password_field :password %></p>
+  <div class='field  mt-2'>
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: :password  %>
+  </div>
 
-  <p><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></p>
+  <div class="field  mt-2">
+    <%= f.password_field :password_confirmation, class: 'form-control', placeholder: :password_confirmation %></p>
+  </div>
   <% end %>
+    <%= f.submit "Create account", class: 'btn btn-info btn-block' %>
+<% end %>
 
-  <p><%= f.submit t("devise.invitations.edit.submit_button") %></p>
+<%= content_for :form_footer do %>
+  By clicking the Sign Up button above you agreed to our privacy policy and terms of use of our website.
+<% end %>
+
+<%= content_for :content_title do %>
+  Welcome Collaborator!
+<% end %>
+
+<%= content_for :content_description do %>
+  Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+  deserunt mollit anim id est laborum Libero justo laoreet sit amet cursus sit
+  amet dictum sit. Commodo sed egestas egestas fringilla phasellus faucibus
+  scelerisque eleifend donec Excepteur sint occaecat cupidatat non proident,
+  sunt in culpa qui officia deserunt mollit anim id est laborum.
 <% end %>

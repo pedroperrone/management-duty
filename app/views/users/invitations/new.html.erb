@@ -1,12 +1,36 @@
-<h2><%= t "devise.invitations.new.header" %></h2>
+<%= content_for :form_title do %>
+  <%= t "devise.invitations.new.header" %>
+<% end %>
+
+<%= content_for :form_description do %>
+  Enter Collaborator Email below
+<% end %>
 
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
   <%= devise_error_messages! %>
 
-<% resource.class.invite_key_fields.each do |field| -%>
-  <p><%= f.label field %><br />
-  <%= f.text_field field %></p>
-<% end -%>
+  <% resource.class.invite_key_fields.each do |field| -%>
+    <div class="field mt-2">
+      <%= f.text_field field, class: 'form-control', placeholder: field %></p>
+    </div>
+  <% end -%>
+  <p><%= f.submit t("devise.invitations.new.submit_button"), class: 'btn btn-info btn-block' %></p>
+<% end %>
 
-  <p><%= f.submit t("devise.invitations.new.submit_button") %></p>
+<%= content_for :form_footer do %>
+  By clicking the Sign Up button above you agreed to our privacy policy and terms of use of our website.
+<% end %>
+
+<%= content_for :content_title do %>
+  Invite your Collaborator...
+<% end %>
+
+<%= content_for :content_description do %>
+  Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+  in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+  Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+  deserunt mollit anim id est laborum Libero justo laoreet sit amet cursus sit
+  amet dictum sit. Commodo sed egestas egestas fringilla phasellus faucibus
+  scelerisque eleifend donec Excepteur sint occaecat cupidatat non proident,
+  sunt in culpa qui officia deserunt mollit anim id est laborum.
 <% end %>
