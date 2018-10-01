@@ -13,4 +13,7 @@ Rails.application.routes.draw do
   # Dashboard Controller
   get "/dashboard/:page" => 'dashboard#show'
   get "/dashboard" => 'dashboard#show'
+
+  # Admin controller
+  get "/company/collaborators" => 'admins/invitations#index'
 end
