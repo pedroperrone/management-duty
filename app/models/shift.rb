@@ -15,36 +15,22 @@ class Shift < ApplicationRecord
     TimeDifference.between(starts_at, ends_at).in_hours
   end
 
+  def prepended_length
+    return 0 if prepended_shift.nil?
+    prepended_shift.length + prepended_shift.prepended_length
+  end
+
+  def appended_length
+    return 0 if appended_shift.nil?
+    appended_shift.length + appended_shift.appended_length
+  end
+
   private
 
   def summed_length_limit
     return if valid_summed_time?
 
     errors.add(:limit_time, I18n.t('validations.shift.total_length'))
-  end
-
-  def valid_summed_time?
-    time_right_before + length + time_right_after <= ININTERRUPTED_TIME_LIMIT
-  end
-
-  def time_right_before
-    return 0 if following_shift.nil?
-
-    following_shift.length
-  end
-
-  def preceding_shift
-    @preceding_shift ||= user.shifts.find_by_ends_at(starts_at)
-  end
-
-  def time_right_after
-    return 0 if preceding_shift.nil?
-
-    preceding_shift.length
-  end
-
-  def following_shift
-    @following_shift ||= user.shifts.find_by_starts_at(ends_at)
   end
 
   def minimum_length
@@ -57,6 +43,10 @@ class Shift < ApplicationRecord
     return unless overlaps_another_shift?
 
     errors.add(:minimum_length, I18n.t('validations.shift.overlap'))
+  end
+
+  def valid_summed_time?
+    prepended_length + length + appended_length <= ININTERRUPTED_TIME_LIMIT
   end
 
   def overlaps_another_shift?
@@ -78,5 +68,13 @@ class Shift < ApplicationRecord
 
   def nil_attributes?
     user.nil? || starts_at.nil? || ends_at.nil?
+  end
+
+  def prepended_shift
+    @prepended_shift ||= user.shifts.find_by_ends_at(starts_at)
+  end
+
+  def appended_shift
+    @appended_shift ||= user.shifts.find_by_starts_at(ends_at)
   end
 end
