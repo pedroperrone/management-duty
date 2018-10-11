@@ -2,6 +2,18 @@
 
 require 'rails_helper'
 
+RSpec.shared_examples 'a valid shift' do
+  it 'saves the shift correctly' do
+    expect(new_shift.save).to be_truthy
+  end
+end
+
+RSpec.shared_examples 'an invalid shift' do
+  it 'should not save the shift' do
+    expect { new_shift.save! }.to raise_error(ActiveRecord::RecordInvalid)
+  end
+end
+
 RSpec.describe Shift, type: :model do
   describe 'validations' do
     it { should validate_presence_of(:starts_at) }
@@ -29,9 +41,7 @@ RSpec.describe Shift, type: :model do
             FactoryBot.create(:shift, user: user, starts_at: Time.now + 13.hour,
                                       ends_at: Time.now + 16.hour)
           end
-          it 'create a new shift correctly' do
-            expect(new_shift.save).to be_truthy
-          end
+          it_should_behave_like 'a valid shift'
         end
 
         context 'the ininterrupt time exceeds the limit time' do
@@ -39,22 +49,18 @@ RSpec.describe Shift, type: :model do
             FactoryBot.create(:shift, user: user, starts_at: Time.now + 14.hour,
                                       ends_at: Time.now + 19.hour)
           end
-          it 'should raise an error' do
-            expect { new_shift.save! }.to raise_error(
-              ActiveRecord::RecordInvalid
-            )
-          end
+          it_should_behave_like 'an invalid shift'
         end
       end
 
       context 'another user has shifts that end when the new starts or ends' do
-        it 'should not interfer' do
-          new_shift = FactoryBot.build(
+        let(:new_shift) do
+          FactoryBot.build(
             :shift, :with_user, starts_at: previous_shift.ends_at,
                                 ends_at: previous_shift.ends_at + 11.hour
           )
-          expect(new_shift.save).to be_truthy
         end
+        it_should_behave_like 'a valid shift'
       end
     end
 
@@ -66,25 +72,17 @@ RSpec.describe Shift, type: :model do
 
       context 'the shift has exactly one hour' do
         let(:end_time) { Time.now + 1.hour }
-        it 'should be valid' do
-          expect(new_shift.save).to be_truthy
-        end
+        it_should_behave_like 'a valid shift'
       end
 
       context 'the shift has more than one hour' do
         let(:end_time) { Time.now + 1.hour + 1.minute }
-        it 'should be valid' do
-          expect(new_shift.save).to be_truthy
-        end
+        it_should_behave_like 'a valid shift'
       end
 
       context 'the shift has less than one hour' do
         let(:end_time) { Time.now + 59.minute }
-        it 'should not be valid' do
-          expect { new_shift.save! }.to raise_error(
-            ActiveRecord::RecordInvalid
-          )
-        end
+        it_should_behave_like 'an invalid shift'
       end
     end
 
@@ -101,11 +99,7 @@ RSpec.describe Shift, type: :model do
             FactoryBot.build(:shift, user: user, ends_at: Time.now + 30.minute,
                                      starts_at: Time.now - 30.minute)
           end
-          it 'should raise error' do
-            expect { new_shift.save! }.to raise_error(
-              ActiveRecord::RecordInvalid
-            )
-          end
+          it_should_behave_like 'an invalid shift'
         end
 
         context 'the new shift starts after the existing starts' do
@@ -113,11 +107,7 @@ RSpec.describe Shift, type: :model do
             FactoryBot.build(:shift, user: user, ends_at: Time.now + 2.hour,
                                      starts_at: Time.now + 30.minute)
           end
-          it 'should raise error' do
-            expect { new_shift.save! }.to raise_error(
-              ActiveRecord::RecordInvalid
-            )
-          end
+          it_should_behave_like 'an invalid shift'
         end
       end
     end
