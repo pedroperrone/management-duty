@@ -17,11 +17,13 @@ class Shift < ApplicationRecord
 
   def prepended_length
     return 0 if prepended_shift.nil?
+
     prepended_shift.length + prepended_shift.prepended_length
   end
 
   def appended_length
     return 0 if appended_shift.nil?
+
     appended_shift.length + appended_shift.appended_length
   end
 

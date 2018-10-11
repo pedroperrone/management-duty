@@ -143,11 +143,11 @@ RSpec.describe Shift, type: :model do
       context 'shift has prepended shifts' do
         let!(:second_shift) do
           FactoryBot.create(:shift, user: user, starts_at: first_shift.ends_at,
-            ends_at: first_shift.ends_at + 3.hour)
+                                    ends_at: first_shift.ends_at + 3.hour)
         end
         let!(:third_shift) do
           FactoryBot.create(:shift, user: user, starts_at: second_shift.ends_at,
-            ends_at: second_shift.ends_at + 8.hour)
+                                    ends_at: second_shift.ends_at + 8.hour)
         end
 
         it 'returns the summed length of the prepended shifts' do
@@ -167,11 +167,11 @@ RSpec.describe Shift, type: :model do
       context 'shift has appended shifts' do
         let!(:second_shift) do
           FactoryBot.create(:shift, user: user, ends_at: first_shift.starts_at,
-            starts_at: first_shift.starts_at - 3.hour)
+                                    starts_at: first_shift.starts_at - 3.hour)
         end
         let!(:third_shift) do
           FactoryBot.create(:shift, user: user, ends_at: second_shift.starts_at,
-            starts_at: second_shift.starts_at - 5.hour)
+                                    starts_at: second_shift.starts_at - 5.hour)
         end
 
         it 'returns the summed length of the appended shifts' do
