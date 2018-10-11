@@ -122,4 +122,91 @@ RSpec.describe Shift, type: :model do
       end
     end
   end
+
+  describe '.length' do
+    before { Timecop.freeze(Time.now) }
+
+    context 'shift exists' do
+      let!(:shift_one) do
+        FactoryBot.create(
+          :shift, :with_user, starts_at: Time.now, ends_at: Time.now + 5.hour
+        )
+      end
+      let!(:shift_two) do
+        FactoryBot.create(
+          :shift, :with_user, starts_at: Time.now,
+                              ends_at: Time.now + 2.hour + 30.minute
+        )
+      end
+
+      it 'should return the shift length' do
+        expect(shift_one.length).to equal(5.0)
+        expect(shift_two.length).to equal(2.5)
+      end
+    end
+  end
+
+  describe '.prepended_length' do
+    before { Timecop.freeze(Time.now) }
+
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:first_shift) do
+      FactoryBot.create(:shift, user: user, starts_at: Time.now,
+          ends_at: Time.now + 1.hour)
+    end
+
+    context 'shift has prepended shifts' do
+      let!(:second_shift) do
+        FactoryBot.create(:shift, user: user, starts_at: first_shift.ends_at,
+          ends_at: first_shift.ends_at + 3.hour)
+      end
+      let!(:third_shift) do
+        FactoryBot.create(:shift, user: user, starts_at: second_shift.ends_at,
+          ends_at: second_shift.ends_at + 8.hour)
+      end
+
+      it 'returns the summed length of the prepended shifts' do
+        expect(second_shift.prepended_length).to equal(1.0)
+        expect(third_shift.prepended_length).to equal(4.0)
+      end
+    end
+
+    context 'shift has no prepended shift' do
+      it 'return 0' do
+        expect(first_shift.prepended_length).to equal(0)
+      end
+    end
+  end
+
+  describe '.appended_length' do
+    before { Timecop.freeze(Time.now) }
+
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:first_shift) do
+      FactoryBot.create(:shift, user: user, starts_at: Time.now,
+          ends_at: Time.now + 1.hour)
+    end
+
+    context 'shift has appended shifts' do
+      let!(:second_shift) do
+        FactoryBot.create(:shift, user: user, ends_at: first_shift.starts_at,
+          starts_at: first_shift.starts_at - 3.hour)
+      end
+      let!(:third_shift) do
+        FactoryBot.create(:shift, user: user, ends_at: second_shift.starts_at,
+          starts_at: second_shift.starts_at - 5.hour)
+      end
+
+      it 'returns the summed length of the appended shifts' do
+        expect(second_shift.appended_length).to equal(1.0)
+        expect(third_shift.appended_length).to equal(4.0)
+      end
+    end
+
+    context 'shift has no appended shift' do
+      it 'return 0' do
+        expect(first_shift.appended_length).to equal(0)
+      end
+    end
+  end
 end
