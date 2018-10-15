@@ -27,6 +27,10 @@ class Shift < ApplicationRecord
     appended_shift.length + appended_shift.appended_length
   end
 
+  def contains?(time)
+    time >= starts_at && time < ends_at
+  end
+
   private
 
   def summed_length_limit

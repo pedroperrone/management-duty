@@ -187,4 +187,35 @@ RSpec.describe Shift, type: :model do
       end
     end
   end
+
+  describe '.contains?', :focus do
+    let!(:shift) { FactoryBot.create(:shift, :with_user) }
+
+    before { Timecop.freeze(Time.now) }
+
+    context 'is exactly the start time' do
+      it 'should be true' do
+        expect(shift.contains?(shift.starts_at)).to be_truthy
+      end
+    end
+
+    context 'is exactly the end time' do
+      it 'should be false' do
+        expect(shift.contains?(shift.ends_at)).to be_falsey
+      end
+    end
+
+    context 'is in the middle of the time' do
+      it 'should be true' do
+        expect(shift.contains?(shift.starts_at + 1.minute)).to be_truthy
+      end
+    end
+
+    context 'is not on the time' do
+      it 'should be false' do
+        expect(shift.contains?(shift.starts_at - 1.hour)).to be_falsey
+        expect(shift.contains?(shift.ends_at + 1.hour)).to be_falsey
+      end
+    end
+  end
 end
