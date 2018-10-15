@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ManagementDuty
   class Shift
     def initialize(shift)
@@ -8,6 +10,7 @@ module ManagementDuty
       unless @shift.contains?(partition_time)
         raise ManagementDuty::Errors::TimeOutOfShiftRangeError
       end
+
       first_new_shift = ::Shift.new(first_shift_params(partition_time))
       second_new_shift = ::Shift.new(second_shift_params(partition_time))
       ActiveRecord::Base.transaction do
@@ -25,7 +28,7 @@ module ManagementDuty
     end
 
     def second_shift_params(partition_time)
-      { starts_at: partition_time, ends_at: @shift.ends_at}
+      { starts_at: partition_time, ends_at: @shift.ends_at }
         .merge(default_params)
     end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ManagementDuty
   module Errors
     class TimeOutOfShiftRangeError < StandardError

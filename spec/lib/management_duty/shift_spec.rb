@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'management_duty/shift.rb'
 require 'management_duty/errors/time_out_of_shift_range_error.rb'
@@ -22,7 +24,7 @@ describe ManagementDuty::Shift do
           expect { subject.partitionate(shift.starts_at + 1.minute) }
             .to raise_error(ActiveRecord::RecordInvalid)
             .and change(::Shift, :count).by(0)
-            expect(shift.reload.active).to be_truthy
+          expect(shift.reload.active).to be_truthy
         end
       end
 
