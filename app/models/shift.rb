@@ -2,6 +2,7 @@
 
 class Shift < ApplicationRecord
   belongs_to :user
+  belongs_to :origin_shift, class_name: Shift.name, optional: true
 
   validates :ends_at, :starts_at, :user, presence: true
   with_options unless: :nil_attributes? do
@@ -48,7 +49,7 @@ class Shift < ApplicationRecord
   def overlap
     return unless overlaps_another_shift?
 
-    errors.add(:minimum_length, I18n.t('validations.shift.overlap'))
+    errors.add(:overlap, I18n.t('validations.shift.overlap'))
   end
 
   def valid_summed_time?

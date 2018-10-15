@@ -8,4 +8,7 @@ FactoryBot.define do
   trait :with_user do
     user { FactoryBot.create(:user) }
   end
+  trait :inactive do
+    active { false }
+  end
 end

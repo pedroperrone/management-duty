@@ -8,5 +8,5 @@ class User < ApplicationRecord
 
   validates :name, :role, presence: true
 
-  has_many :shifts
+  has_many :shifts, -> { where(active: true) }
 end

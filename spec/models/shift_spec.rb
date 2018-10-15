@@ -20,6 +20,7 @@ RSpec.describe Shift, type: :model do
     it { should validate_presence_of(:ends_at) }
     it { should validate_presence_of(:user) }
     it { should belong_to(:user) }
+    it { should belong_to(:origin_shift) }
     context 'ininterrupt_time' do
       let!(:user) { FactoryBot.create(:user) }
       let!(:previous_shift) do
@@ -188,7 +189,7 @@ RSpec.describe Shift, type: :model do
     end
   end
 
-  describe '.contains?', :focus do
+  describe '.contains?' do
     let!(:shift) { FactoryBot.create(:shift, :with_user) }
 
     before { Timecop.freeze(Time.now) }

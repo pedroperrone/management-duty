@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_142718) do
+ActiveRecord::Schema.define(version: 2018_10_15_153912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,9 @@ ActiveRecord::Schema.define(version: 2018_10_10_142718) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: true
+    t.bigint "origin_shift_id"
+    t.index ["origin_shift_id"], name: "index_shifts_on_origin_shift_id"
     t.index ["user_id"], name: "index_shifts_on_user_id"
   end
 
@@ -76,5 +79,6 @@ ActiveRecord::Schema.define(version: 2018_10_10_142718) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "shifts", "shifts", column: "origin_shift_id"
   add_foreign_key "shifts", "users"
 end

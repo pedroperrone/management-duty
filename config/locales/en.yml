@@ -35,3 +35,6 @@ en:
       total_length: With this shift the ininterupted time would exceed the permited
       minimum_length: The minimum length of a shift is 1 hour
       overlap: The shift overlaps another shift
+  lib:
+    shift:
+      partitionate: The partition time is not on the shift range
