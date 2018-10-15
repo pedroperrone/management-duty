@@ -46,10 +46,10 @@ describe ManagementDuty::Shift do
         expect(shift.active).to be_falsey
 
         shifts = ::Shift.where(origin_shift: shift).order(:id)
-        expect(shifts.first.starts_at).to eq(shift.starts_at)
-        expect(shifts.first.ends_at).to eq(shift.starts_at + 1.hour)
-        expect(shifts.second.starts_at).to eq(shift.starts_at + 1.hour)
-        expect(shifts.second.ends_at).to eq(shift.ends_at)
+        assert_time_equals(shifts.first.starts_at, shift.starts_at)
+        assert_time_equals(shifts.first.ends_at, shift.starts_at + 1.hour)
+        assert_time_equals(shifts.second.starts_at, shift.starts_at + 1.hour)
+        assert_time_equals(shifts.second.ends_at, shift.ends_at)
       end
     end
   end

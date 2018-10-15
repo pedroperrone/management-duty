@@ -10,6 +10,9 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'database_cleaner'
 
+Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each { |f| puts f; puts require(f) }
+include TimeAssertionHelper
+
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
@@ -47,10 +50,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
 
-  # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
-  # arbitrary gems may also be filtered via:
-  # config.filter_gems_from_backtrace("gem name")
 
   config.filter_run :focus
 
