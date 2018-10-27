@@ -1,4 +1,4 @@
-pt-br:
+pt:
   validations:
     shift:
       total_length: Esse turno excederia o número de horas seguidas de trabalho

@@ -1,4 +1,4 @@
-pt-br:
+pt:
   devise:
     confirmations:
       confirmed: "Seu endereço de e-mail foi corretamente registrado."
