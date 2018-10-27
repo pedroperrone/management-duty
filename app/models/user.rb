@@ -9,4 +9,18 @@ class User < ApplicationRecord
   validates :name, :role, presence: true
 
   has_many :shifts, -> { where(active: true) }
+
+  def same_expertise_level?(user)
+    same_role?(user) && same_specialty?(user)
+  end
+
+  private
+
+  def same_role?(user)
+    role == user.role
+  end
+
+  def same_specialty?(user)
+    specialty == user.specialty
+  end
 end
