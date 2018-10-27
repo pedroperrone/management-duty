@@ -1,0 +1,9 @@
+pt-br:
+  validations:
+    shift:
+      total_length: Esse turno excederia o número de horas seguidas de trabalho
+      minimum_length: O período mínimo de um turno é 1 hora
+      overlap: Esse turno se sobrepõe a outro turno
+  lib:
+    shift:
+      partitionate: O período especificado não pertence ao período do turno
