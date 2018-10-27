@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_15_153912) do
+ActiveRecord::Schema.define(version: 2018_10_16_172726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,19 @@ ActiveRecord::Schema.define(version: 2018_10_15_153912) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "shift_exchanges", force: :cascade do |t|
+    t.boolean "pending_admin_approval", default: true
+    t.boolean "pending_user_approval", default: true
+    t.boolean "approved_by_admin", default: false
+    t.boolean "approved_by_user", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "requested_shift_id"
+    t.bigint "given_up_shift_id"
+    t.index ["given_up_shift_id"], name: "index_shift_exchanges_on_given_up_shift_id"
+    t.index ["requested_shift_id"], name: "index_shift_exchanges_on_requested_shift_id"
   end
 
   create_table "shifts", force: :cascade do |t|
@@ -79,6 +92,8 @@ ActiveRecord::Schema.define(version: 2018_10_15_153912) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "shift_exchanges", "shifts", column: "given_up_shift_id"
+  add_foreign_key "shift_exchanges", "shifts", column: "requested_shift_id"
   add_foreign_key "shifts", "shifts", column: "origin_shift_id"
   add_foreign_key "shifts", "users"
 end
