@@ -33,7 +33,7 @@ RSpec.describe ShiftExchange, type: :model do
     end
   end
 
-  describe 'scopes', :focus do
+  describe 'scopes' do
     describe '.pending_for_user' do
       let!(:user) { FactoryBot.create(:user) }
       let!(:users_shift_one) { FactoryBot.create(:shift, user: user) }
@@ -84,6 +84,31 @@ RSpec.describe ShiftExchange, type: :model do
             .not_to include(refused_by_user, admin_approval_pending,
                             change_request_from_other_user)
         end
+      end
+    end
+  end
+
+  describe '.be_approved_by_user' do
+    let!(:exchange) { FactoryBot.create(:shift_exchange, :with_shifts) }
+
+    context 'when invoked' do
+      it 'should update pending_user_approval for false and approved_by_user ' \
+         'for true' do
+        exchange.be_approved_by_user
+        expect(exchange.pending_user_approval).to be_falsey
+        expect(exchange.approved_by_user).to be_truthy
+      end
+    end
+  end
+
+  describe '.be_refused_by_user' do
+    let!(:exchange) { FactoryBot.create(:shift_exchange, :with_shifts) }
+
+    context 'when invoked' do
+      it 'should update pending_user_approval and approved_by_user for false' do
+        exchange.be_refused_by_user
+        expect(exchange.pending_user_approval).to be_falsey
+        expect(exchange.approved_by_user).to be_falsey
       end
     end
   end

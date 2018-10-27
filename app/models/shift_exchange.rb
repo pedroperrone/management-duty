@@ -14,6 +14,14 @@ class ShiftExchange < ApplicationRecord
       .where('shifts.user_id = ?', user.id)
   }
 
+  def be_approved_by_user
+    be_judged_by_user(true)
+  end
+
+  def be_refused_by_user
+    be_judged_by_user(false)
+  end
+
   private
 
   def shifts_length
@@ -29,5 +37,9 @@ class ShiftExchange < ApplicationRecord
 
   def nil_attributes?
     requested_shift.nil? || given_up_shift.nil?
+  end
+
+  def be_judged_by_user(user_response)
+    update(pending_user_approval: false, approved_by_user: user_response)
   end
 end
