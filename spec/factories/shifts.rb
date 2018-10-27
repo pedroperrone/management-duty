@@ -11,4 +11,8 @@ FactoryBot.define do
   trait :inactive do
     active { false }
   end
+  trait :short do
+    starts_at { Time.now }
+    ends_at { Time.now + 1.hour }
+  end
 end
