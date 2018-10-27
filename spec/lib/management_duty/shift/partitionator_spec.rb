@@ -1,28 +1,28 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'management_duty/shift.rb'
+require 'management_duty/shift/partitionator.rb'
 require 'management_duty/errors/time_out_of_shift_range_error.rb'
 
 RSpec.shared_examples 'an invalid partitioning' do
   it 'should not make the partition' do
-    expect { subject.partitionate(partition_time) }
+    expect { subject.partitionate_at(partition_time) }
       .to raise_error(ActiveRecord::RecordInvalid)
       .and change(::Shift, :count).by(0)
     expect(shift.reload.active).to be_truthy
   end
 end
 
-describe ManagementDuty::Shift do
+describe ManagementDuty::Shift::Partitionator do
   subject { described_class.new(shift) }
   let!(:shift) { FactoryBot.create(:shift, :with_user) }
 
   before { Timecop.freeze(Time.now) }
 
-  describe '.partitionate' do
+  describe '.partitionate_at' do
     context 'the partition time is out of range' do
       it 'should raise error' do
-        expect { subject.partitionate(shift.starts_at - 1.hour) }
+        expect { subject.partitionate_at(shift.starts_at - 1.hour) }
           .to raise_error(ManagementDuty::Errors::TimeOutOfShiftRangeError)
       end
     end
@@ -41,7 +41,7 @@ describe ManagementDuty::Shift do
 
     context 'the new shifts are valid' do
       it 'should create two new shifts and inactivate the current one' do
-        expect { subject.partitionate(shift.starts_at + 1.hour) }
+        expect { subject.partitionate_at(shift.starts_at + 1.hour) }
           .to change(::Shift, :count).by(2)
         expect(shift.active).to be_falsey
 
