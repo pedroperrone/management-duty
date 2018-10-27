@@ -8,6 +8,12 @@ class ShiftExchange < ApplicationRecord
     validate :shifts_length
   end
 
+  scope :pending_for_user, lambda { |user|
+    where(pending_user_approval: true)
+      .joins('JOIN shifts ON shifts.id = shift_exchanges.requested_shift_id')
+      .where('shifts.user_id = ?', user.id)
+  }
+
   private
 
   def shifts_length

@@ -32,4 +32,59 @@ RSpec.describe ShiftExchange, type: :model do
       end
     end
   end
+
+  describe 'scopes', :focus do
+    describe '.pending_for_user' do
+      let!(:user) { FactoryBot.create(:user) }
+      let!(:users_shift_one) { FactoryBot.create(:shift, user: user) }
+      let!(:users_shift_two) do
+        FactoryBot.create(
+          :shift, user: user, starts_at: users_shift_one.ends_at + 1.minute,
+                  ends_at: users_shift_one.ends_at + 8.hour + 1.minute
+        )
+      end
+      let!(:users_shift_three) do
+        FactoryBot.create(
+          :shift, user: user, starts_at: users_shift_two.ends_at + 1.minute,
+                  ends_at: users_shift_two.ends_at + 8.hour + 1.minute
+        )
+      end
+
+      let!(:pending_approval) do
+        FactoryBot.create(
+          :shift_exchange, :with_shifts,
+          requested_shift: users_shift_one, pending_user_approval: true
+        )
+      end
+      let!(:refused_by_user) do
+        FactoryBot.create(
+          :shift_exchange, :with_shifts,
+          requested_shift: users_shift_two, pending_user_approval: false,
+          approved_by_user: false
+        )
+      end
+      let!(:admin_approval_pending) do
+        FactoryBot.create(
+          :shift_exchange, :with_shifts,
+          requested_shift: users_shift_three, pending_user_approval: false,
+          approved_by_user: false, pending_admin_approval: true
+        )
+      end
+      let!(:change_request_from_other_user) do
+        FactoryBot.create(
+          :shift_exchange, :with_shifts, pending_user_approval: true
+        )
+      end
+
+      context 'user has pending requests' do
+        it 'return user\'s pending change requests' do
+          scope_result = ShiftExchange.pending_for_user(user)
+          expect(scope_result).to include(pending_approval)
+          expect(scope_result)
+            .not_to include(refused_by_user, admin_approval_pending,
+                            change_request_from_other_user)
+        end
+      end
+    end
+  end
 end
