@@ -89,12 +89,27 @@ RSpec.describe ShiftExchange, type: :model do
   end
 
   describe '.be_approved_by_user' do
-    let!(:exchange) { FactoryBot.create(:shift_exchange, :with_shifts) }
+    context 'exchange is not autoapproved' do
+      let!(:user_with_different_role) do
+        FactoryBot.create(:user, role: 'Superhero')
+      end
+      let!(:shift) { FactoryBot.create(:shift, user: user_with_different_role) }
+      let!(:exchange) do
+        FactoryBot.create(:shift_exchange, :with_shifts, requested_shift: shift)
+      end
 
-    context 'when invoked' do
       it 'should update pending_user_approval for false and approved_by_user ' \
          'for true' do
-        exchange.be_approved_by_user
+        expect { exchange.be_approved_by_user }.to change(::Shift, :count).by(0)
+        expect(exchange.pending_user_approval).to be_falsey
+        expect(exchange.approved_by_user).to be_truthy
+      end
+    end
+
+    context 'exchange is autoapproved' do
+      let!(:exchange) { FactoryBot.create(:shift_exchange, :with_shifts) }
+      it 'should update the attributes and create new shifts' do
+        expect { exchange.be_approved_by_user }.to change(::Shift, :count).by(2)
         expect(exchange.pending_user_approval).to be_falsey
         expect(exchange.approved_by_user).to be_truthy
       end
