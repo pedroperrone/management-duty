@@ -37,5 +37,5 @@ module ManagementDuty
         { user: @shift.user, origin_shift: @shift }
       end
     end
-end
+  end
 end
