@@ -14,6 +14,13 @@ class ShiftExchange < ApplicationRecord
       .where('shifts.user_id = ?', user.id)
   }
 
+  scope :pending_for_admin, lambda { |admin|
+    where(pending_user_approval: false, approved_by_user: true)
+      .joins('JOIN shifts ON shifts.id = shift_exchanges.given_up_shift_id')
+      .joins('JOIN users ON shifts.user_id = users.id')
+      .where('users.invited_by_id = ?', admin.id)
+  }
+
   def be_approved_by_user
     be_judged_by_user(true)
     perform_exchange if autoapproved?

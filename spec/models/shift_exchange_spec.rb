@@ -86,6 +86,62 @@ RSpec.describe ShiftExchange, type: :model do
         end
       end
     end
+
+    describe 'pending_for_admin', :focus do
+      let!(:admin) { FactoryBot.create(:admin) }
+
+      context 'exchange for this admin' do
+        let!(:user_one) { FactoryBot.create(:user, invited_by: admin) }
+        let!(:user_two) { FactoryBot.create(:user, invited_by: admin) }
+        let!(:shift_one) { FactoryBot.create(:shift, user: user_one) }
+        let!(:shift_two) { FactoryBot.create(:shift, user: user_two) }
+
+        context 'there are exchanges with pending admin approval' do
+          let!(:exchange) do
+            FactoryBot.create(:shift_exchange, :pending_admin_approval,
+                              given_up_shift: shift_one, requested_shift: shift_two)
+          end
+
+          it 'should return the pending exchange' do
+            scope_result = ShiftExchange.pending_for_admin(admin)
+            expect(scope_result).to include(exchange)
+          end
+        end
+
+        context 'there are exchanges with pending user approval' do
+          let!(:exchange) do
+            FactoryBot.create(:shift_exchange, :pending_user_approval,
+              given_up_shift: shift_one, requested_shift: shift_two)
+          end
+
+          it 'should not return the exchange' do
+            scope_result = ShiftExchange.pending_for_admin(admin)
+            expect(scope_result).not_to include(exchange)
+          end
+        end
+
+        context 'there are exchanges refused by users' do
+          let!(:exchange) do
+            FactoryBot.create(:shift_exchange, :refused_by_user,
+              given_up_shift: shift_one, requested_shift: shift_two)
+          end
+
+          it 'should not return exchange' do
+            scope_result = ShiftExchange.pending_for_admin(admin)
+            expect(scope_result).not_to include(exchange)
+          end
+        end
+      end
+
+      context 'there are exchanges pending to another admin' do
+        let!(:exchange) { FactoryBot.create(:shift_exchange, :with_shifts, :pending_admin_approval)}
+
+        it 'should not return the exchange' do
+          scope_result = ShiftExchange.pending_for_admin(admin)
+          expect(scope_result).not_to include(exchange)
+        end
+      end
+    end
   end
 
   describe '.be_approved_by_user' do
