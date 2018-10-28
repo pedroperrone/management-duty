@@ -16,6 +16,7 @@ class ShiftExchange < ApplicationRecord
 
   def be_approved_by_user
     be_judged_by_user(true)
+    perform_exchange if autoapproved?
   end
 
   def be_refused_by_user
@@ -41,5 +42,39 @@ class ShiftExchange < ApplicationRecord
 
   def be_judged_by_user(user_response)
     update(pending_user_approval: false, approved_by_user: user_response)
+  end
+
+  def autoapproved?
+    requested_shift.user.same_expertise_level?(given_up_shift.user)
+  end
+
+  def perform_exchange
+    ActiveRecord::Base.transaction do
+      inactivate_shifts
+      create_copies
+    end
+  end
+
+  def inactivate_shifts
+    given_up_shift.update(active: false)
+    requested_shift.update(active: false)
+  end
+
+  def create_copies
+    ManagementDuty::Shift::Copier.new(
+      given_up_shift, given_up_shift_custom_attributes
+    ).create_copy
+
+    ManagementDuty::Shift::Copier.new(
+      requested_shift, requested_shift_custom_attributes
+    ).create_copy
+  end
+
+  def given_up_shift_custom_attributes
+    { user: requested_shift.user }
+  end
+
+  def requested_shift_custom_attributes
+    { user: given_up_shift.user }
   end
 end
