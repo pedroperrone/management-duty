@@ -30,6 +30,15 @@ class ShiftExchange < ApplicationRecord
     be_judged_by_user(false)
   end
 
+  def be_approved_by_admin
+    be_judged_by_admin(true)
+    perform_exchange
+  end
+
+  def be_refused_by_admin
+    be_judged_by_admin(false)
+  end
+
   private
 
   def shifts_length
@@ -49,6 +58,10 @@ class ShiftExchange < ApplicationRecord
 
   def be_judged_by_user(user_response)
     update(pending_user_approval: false, approved_by_user: user_response)
+  end
+
+  def be_judged_by_admin(admin_response)
+    update(pending_admin_approval: false, approved_by_admin: admin_response)
   end
 
   def autoapproved?

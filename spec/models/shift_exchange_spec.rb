@@ -194,4 +194,28 @@ RSpec.describe ShiftExchange, type: :model do
       end
     end
   end
+
+  describe '.be_refused_by_admin' do
+    let!(:exchange) do
+      FactoryBot.create(:shift_exchange, :with_shifts, :pending_admin_approval)
+    end
+
+    it 'should set pending_admin_approval and approved_by_admin as false' do
+      expect { exchange.be_refused_by_admin }.to change(::Shift, :count).by(0)
+      expect(exchange.pending_admin_approval).to be_falsey
+      expect(exchange.approved_by_admin).to be_falsey
+    end
+  end
+
+  describe '.be_approved_by_admin' do
+    let!(:exchange) do
+      FactoryBot.create(:shift_exchange, :with_shifts, :pending_admin_approval)
+    end
+
+    it 'should make the exchange and set the boolean attributes properly' do
+      expect { exchange.be_approved_by_admin }.to change(::Shift, :count).by(2)
+      expect(exchange.pending_admin_approval).to be_falsey
+      expect(exchange.approved_by_admin).to be_truthy
+    end
+  end
 end
