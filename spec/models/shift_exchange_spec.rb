@@ -2,6 +2,20 @@
 
 require 'rails_helper'
 
+RSpec.shared_examples 'an exchange to be judged by the admin' do
+  it 'should be returned for the scope' do
+    scope_result = ShiftExchange.pending_for_admin(admin)
+    expect(scope_result).to include(exchange)
+  end
+end
+
+RSpec.shared_examples 'an exchange not to be judged by the admin' do
+  it 'should not be returned for the scope' do
+    scope_result = ShiftExchange.pending_for_admin(admin)
+    expect(scope_result).not_to include(exchange)
+  end
+end
+
 RSpec.describe ShiftExchange, type: :model do
   describe 'validations' do
     it { should belong_to(:given_up_shift) }
@@ -86,6 +100,59 @@ RSpec.describe ShiftExchange, type: :model do
         end
       end
     end
+
+    describe 'pending_for_admin' do
+      let!(:admin) { FactoryBot.create(:admin) }
+
+      context 'exchange for this admin' do
+        let!(:user_one) { FactoryBot.create(:user, invited_by: admin) }
+        let!(:user_two) { FactoryBot.create(:user, invited_by: admin) }
+        let!(:shift_one) { FactoryBot.create(:shift, user: user_one) }
+        let!(:shift_two) { FactoryBot.create(:shift, user: user_two) }
+
+        context 'there are exchanges with pending admin approval' do
+          let!(:exchange) do
+            FactoryBot.create(
+              :shift_exchange, :pending_admin_approval,
+              given_up_shift: shift_one, requested_shift: shift_two
+            )
+          end
+
+          it_behaves_like 'an exchange to be judged by the admin'
+        end
+
+        context 'there are exchanges with pending user approval' do
+          let!(:exchange) do
+            FactoryBot.create(
+              :shift_exchange, :pending_user_approval,
+              given_up_shift: shift_one, requested_shift: shift_two
+            )
+          end
+
+          it_behaves_like 'an exchange not to be judged by the admin'
+        end
+
+        context 'there are exchanges refused by users' do
+          let!(:exchange) do
+            FactoryBot.create(
+              :shift_exchange, :refused_by_user,
+              given_up_shift: shift_one, requested_shift: shift_two
+            )
+          end
+
+          it_behaves_like 'an exchange not to be judged by the admin'
+        end
+      end
+
+      context 'there are exchanges pending to another admin' do
+        let!(:exchange) do
+          FactoryBot.create(:shift_exchange, :with_shifts,
+                            :pending_admin_approval)
+        end
+
+        it_behaves_like 'an exchange not to be judged by the admin'
+      end
+    end
   end
 
   describe '.be_approved_by_user' do
@@ -125,6 +192,30 @@ RSpec.describe ShiftExchange, type: :model do
         expect(exchange.pending_user_approval).to be_falsey
         expect(exchange.approved_by_user).to be_falsey
       end
+    end
+  end
+
+  describe '.be_refused_by_admin' do
+    let!(:exchange) do
+      FactoryBot.create(:shift_exchange, :with_shifts, :pending_admin_approval)
+    end
+
+    it 'should set pending_admin_approval and approved_by_admin as false' do
+      expect { exchange.be_refused_by_admin }.to change(::Shift, :count).by(0)
+      expect(exchange.pending_admin_approval).to be_falsey
+      expect(exchange.approved_by_admin).to be_falsey
+    end
+  end
+
+  describe '.be_approved_by_admin' do
+    let!(:exchange) do
+      FactoryBot.create(:shift_exchange, :with_shifts, :pending_admin_approval)
+    end
+
+    it 'should make the exchange and set the boolean attributes properly' do
+      expect { exchange.be_approved_by_admin }.to change(::Shift, :count).by(2)
+      expect(exchange.pending_admin_approval).to be_falsey
+      expect(exchange.approved_by_admin).to be_truthy
     end
   end
 end

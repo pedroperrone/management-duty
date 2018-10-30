@@ -14,6 +14,13 @@ class ShiftExchange < ApplicationRecord
       .where('shifts.user_id = ?', user.id)
   }
 
+  scope :pending_for_admin, lambda { |admin|
+    where(pending_user_approval: false, approved_by_user: true)
+      .joins('JOIN shifts ON shifts.id = shift_exchanges.given_up_shift_id')
+      .joins('JOIN users ON shifts.user_id = users.id')
+      .where('users.invited_by_id = ?', admin.id)
+  }
+
   def be_approved_by_user
     be_judged_by_user(true)
     perform_exchange if autoapproved?
@@ -21,6 +28,15 @@ class ShiftExchange < ApplicationRecord
 
   def be_refused_by_user
     be_judged_by_user(false)
+  end
+
+  def be_approved_by_admin
+    be_judged_by_admin(true)
+    perform_exchange
+  end
+
+  def be_refused_by_admin
+    be_judged_by_admin(false)
   end
 
   private
@@ -42,6 +58,10 @@ class ShiftExchange < ApplicationRecord
 
   def be_judged_by_user(user_response)
     update(pending_user_approval: false, approved_by_user: user_response)
+  end
+
+  def be_judged_by_admin(admin_response)
+    update(pending_admin_approval: false, approved_by_admin: admin_response)
   end
 
   def autoapproved?
