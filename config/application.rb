@@ -20,6 +20,7 @@ module ManagementDuty
     # Configure single controller layout
     Devise::RegistrationsController.layout "devise"
     end
-  end
 
+    config.i18n.default_locale = 'pt-BR'
+  end
 end
