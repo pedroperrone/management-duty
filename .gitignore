@@ -29,3 +29,6 @@
 .DS_store
 .env
 yarn.lock
+
+# Emacs temps
+**/*~
