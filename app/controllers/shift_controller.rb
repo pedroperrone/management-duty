@@ -81,5 +81,4 @@ class ShiftController < ApplicationController
       :user_id => @user.id
     }
   end
-
 end
