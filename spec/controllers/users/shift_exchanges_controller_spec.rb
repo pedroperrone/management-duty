@@ -115,4 +115,88 @@ RSpec.describe Users::ShiftExchangesController, type: :controller do
       end
     end
   end
+
+  describe 'PUT #approve' do
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:shift) { FactoryBot.create(:shift, user: user) }
+    let!(:exchange) do
+      FactoryBot.create(:shift_exchange, :with_shifts, requested_shift: shift)
+    end
+
+    context 'without user session' do
+      it 'should redirect_to user_session_path' do
+        put :approve, params: { id: shift.id }
+
+        expect(subject).to redirect_to(user_session_path)
+      end
+    end
+
+    context 'with user session' do
+      before { sign_in user }
+      context 'user does not own the requested shift' do
+        let!(:exchange) do
+          FactoryBot.create(:shift_exchange, :with_shifts)
+        end
+
+        it 'should redirect_to root_path' do
+          put :approve, params: { id: exchange.id }
+
+          expect(subject).to redirect_to(root_path)
+          expect(exchange.pending_user_approval).to be_truthy
+        end
+      end
+
+      context 'valid approval' do
+        it 'approves the exchange' do
+          put :approve, params: { id: exchange.id }
+
+          expect(subject).to redirect_to(dashboard_path)
+          expect(exchange.reload.pending_user_approval).to be_falsey
+          expect(exchange.approved_by_user).to be_truthy
+        end
+      end
+    end
+  end
+
+  describe 'PUT #refuse' do
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:shift) { FactoryBot.create(:shift, user: user) }
+    let!(:exchange) do
+      FactoryBot.create(:shift_exchange, :with_shifts, requested_shift: shift)
+    end
+
+    context 'without user session' do
+      it 'should redirect_to user_session_path' do
+        put :refuse, params: { id: shift.id }
+
+        expect(subject).to redirect_to(user_session_path)
+      end
+    end
+
+    context 'with user session' do
+      before { sign_in user }
+      context 'user does not own the requested shift' do
+        let!(:exchange) do
+          FactoryBot.create(:shift_exchange, :with_shifts)
+        end
+
+        it 'should redirect_to root_path' do
+          put :refuse, params: { id: exchange.id }
+
+          expect(subject).to redirect_to(root_path)
+          expect(exchange.pending_user_approval).to be_truthy
+        end
+      end
+
+      context 'valid approval' do
+        it 'approves the exchange' do
+          put :refuse, params: { id: exchange.id }
+
+          expect(subject).to redirect_to(dashboard_path)
+          expect(exchange.reload.pending_user_approval).to be_falsey
+          expect(exchange.approved_by_user).to be_falsey
+        end
+      end
+    end
+  end
 end
