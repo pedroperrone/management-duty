@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.shared_examples 'exchange a non existing shift' do
@@ -25,7 +27,7 @@ RSpec.describe Users::ShiftExchangesController, type: :controller do
       let!(:shift_exchange) do
         FactoryBot.create(
           :shift_exchange, requested_shift: requested_shift,
-          given_up_shift: given_up_shift
+                           given_up_shift: given_up_shift
         )
       end
 
@@ -76,7 +78,7 @@ RSpec.describe Users::ShiftExchangesController, type: :controller do
         context 'given_up_shift does not exist' do
           let(:params) do
             {
-              given_up_shift_id: 999999,
+              given_up_shift_id: 999_999,
               requested_shift_id: requested_shift.id
             }
           end
@@ -88,7 +90,7 @@ RSpec.describe Users::ShiftExchangesController, type: :controller do
           let(:params) do
             {
               given_up_shift_id: given_up_shift.id,
-              requested_shift_id: 999999
+              requested_shift_id: 999_999
             }
           end
 

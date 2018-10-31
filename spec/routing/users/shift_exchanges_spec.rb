@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Users::ShiftExchangesController, type: :routing do
   describe 'routing' do
     context 'POST' do
