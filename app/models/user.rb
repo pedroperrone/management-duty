@@ -1,6 +1,16 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  include PgSearch
+  pg_search_scope :search_by_name, against: %i[name role email],
+
+                                   using: {
+                                     tsearch: {
+                                       any_word: true,
+                                       prefix: true
+                                     }
+                                   }
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
