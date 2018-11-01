@@ -44,7 +44,6 @@ class ShiftController < ApplicationController
       puts @shift.errors.messages
       redirect_to shift_new_path
     end
-    
   end
 
   def destroy
