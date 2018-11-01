@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Admins::ShiftExchangesController, type: :controller do
@@ -49,7 +51,7 @@ RSpec.describe Admins::ShiftExchangesController, type: :controller do
       let!(:shift) { FactoryBot.create(:shift, user: user) }
       let!(:shift_exchange) do
         FactoryBot.create(:shift_exchange, :with_shifts,
-          :pending_admin_approval,given_up_shift: shift)
+                          :pending_admin_approval, given_up_shift: shift)
       end
       let(:params) do
         {
@@ -62,7 +64,7 @@ RSpec.describe Admins::ShiftExchangesController, type: :controller do
       before { sign_in admin }
       context 'shift does not exist' do
         it 'should redirect to route path' do
-          put :approve, params: { id: 99999 }
+          put :approve, params: { id: 99_999 }
 
           expect(subject).to redirect_to(root_path)
         end
@@ -110,7 +112,7 @@ RSpec.describe Admins::ShiftExchangesController, type: :controller do
       let!(:shift) { FactoryBot.create(:shift, user: user) }
       let!(:shift_exchange) do
         FactoryBot.create(:shift_exchange, :with_shifts,
-          :pending_admin_approval,given_up_shift: shift)
+                          :pending_admin_approval, given_up_shift: shift)
       end
       let(:params) do
         {
@@ -123,7 +125,7 @@ RSpec.describe Admins::ShiftExchangesController, type: :controller do
       before { sign_in admin }
       context 'shift does not exist' do
         it 'should redirect to route path' do
-          put :refuse, params: { id: 99999 }
+          put :refuse, params: { id: 99_999 }
 
           expect(subject).to redirect_to(root_path)
         end

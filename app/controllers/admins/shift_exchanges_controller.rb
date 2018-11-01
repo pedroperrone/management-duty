@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admins::ShiftExchangesController < ApplicationController
   before_action :authenticate_admin!
   before_action :set_shift_exchange, :validate_admin, except: :index
