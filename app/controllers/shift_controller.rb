@@ -34,7 +34,6 @@ class ShiftController < ApplicationController
     end
   end
 
-
   def update
     @shift = Shift.find_by_id(params[:shift_id])
     
