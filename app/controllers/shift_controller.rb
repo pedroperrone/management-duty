@@ -1,13 +1,21 @@
 class ShiftController < ApplicationController
-  def index
+  # POST /shift
+  def create
+    super
   end
 
-  def show
-  end
-
-  def new
-  end
-
+  # GET /shift/edit
   def edit
+    super
+  end
+
+  # PUT /shift
+  def update
+    super
+  end
+
+  # DELETE /shift
+  def destroy
+    super
   end
 end
