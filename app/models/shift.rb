@@ -32,6 +32,10 @@ class Shift < ApplicationRecord
     time >= starts_at && time < ends_at
   end
 
+  def admin
+    user.invited_by
+  end
+
   private
 
   def summed_length_limit
