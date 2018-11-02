@@ -1,0 +1,43 @@
+<%= content_for :page_title do %>
+  Management Duty - Dashboard
+<%end%>
+
+<%= content_for :breadcrumb do %>
+  <a class="breadcrumb-item" href="index">Turnos</a>
+  <span class="breadcrumb-item active">Pesquisar Turnos</span>
+<%end%>
+
+<%= content_for :body_title do %>
+  Pesquisar Turnos
+<%end%>
+
+<%= content_for :body_description do %>
+  Encontre o melhor turno para você
+<%end%>
+
+<%= content_for :section_title do %>
+  Encontrar os melhores turnos é fácil
+<%end%>
+
+<%= content_for :section_description do %>
+  Informe o Nome, Email ou a Ocupação que você procura e nós encotraremos para você...
+  <div class="row-sm mt-0 p-0">
+    <%= form_tag(users_searches_path, method: "get", remote: true, id: 'searchNameForm') do %>
+      <%= text_field_tag :name, params[:name], id: 'inputSearch', placeholder: "Nome, Email ou Ocupação", class: 'form-control', autocomplete: 'off' %>
+    <% end %>
+  </div>
+
+   <div id="search-results" class="row">
+   </div>
+<%end%>
+
+<%= content_for :javascript do %>
+<script>
+$("#inputSearch").bind("keyup", function() {
+  var form = $("#searchNameForm");
+  var url = "/users/searches";
+  var formData = form.serialize();
+  $.get(url, formData, function(html) {});
+});
+</script>
+<%end%>
