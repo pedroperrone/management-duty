@@ -3,9 +3,18 @@ require 'date'
 class ShiftController < ApplicationController
   before_action :authenticate_admin!
 
-  before_action :set_user_from_email, only: :create
+  before_action :set_user, only: :create
 
-  before_action :set_user_from_shift, only: :update
+  #
+  def set_user
+    @user = User.find_by_email(params[:user_email])
+    redirect_to shift_new_path if @user.nil?
+  end
+
+  #
+  def new
+    render 'new', layout: 'dashboard'
+  end
 
   # Views
   def new
@@ -26,6 +35,9 @@ class ShiftController < ApplicationController
   # CRUD
   def create
     @shift = Shift.new(shift_params)
+
+    user_id = @user['id'].to_i
+    @shift = Shift.new({starts_at: start_date, ends_at: end_date, user_id: user_id})
 
     if @shift.save
       redirect_to dashboard_path
