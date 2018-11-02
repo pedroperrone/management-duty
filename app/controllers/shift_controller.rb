@@ -14,6 +14,7 @@ class ShiftController < ApplicationController
     @shift.ends_at = 1.hours.from_now
     
     render 'new', layout: 'dashboard'
+
   end
 
   def edit
