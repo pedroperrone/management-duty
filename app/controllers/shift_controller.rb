@@ -2,7 +2,15 @@ require 'date'
 
 class ShiftController < ApplicationController
   before_action :authenticate_admin!
-  
+  before_action :set_user, only: :create
+
+  #
+  def set_user
+    @user = User.find_by_email(params[:user_email])
+    redirect_to shift_new_path if @user.nil?
+  end
+
+  #
   def new
     render 'new', layout: 'dashboard'
   end
@@ -20,24 +28,13 @@ class ShiftController < ApplicationController
                             params["day2"]["ends_at(4i)"].to_i,
                             params["day2"]["ends_at(5i)"].to_i)
 
-    user = User.find_by email: params[:user_email]
+    user_id = @user['id'].to_i
+    @shift = Shift.new({starts_at: start_date, ends_at: end_date, user_id: user_id})
 
-    if user
-      user_id = user['id'].to_i
-
-      @shift = Shift.new({starts_at: start_date, ends_at: end_date, user_id: user_id})
-      
-      if @shift.save
-        redirect_to '/dashboard'
-
-      else
-        # Erro ao criar turno
-        redirect_to '/shift/new'
-      end
-
+    if @shift.save
+      redirect_to dashboard_path
     else
-      # Erro ao obter id do usuario
-      redirect_to '/shift/new'
+      redirect_to shift_new_path
     end
   end
 
