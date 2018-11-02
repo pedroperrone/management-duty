@@ -1,6 +1,8 @@
 require 'date'
 
 class ShiftController < ApplicationController
+  before_action :authenticate_admin!
+  
   def new
     render 'new', layout: 'dashboard'
   end
