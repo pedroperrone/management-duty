@@ -40,7 +40,7 @@
         </div>
       </div><!-- d-flex -->
       <div class="br-pagebody">
-        <div class="br-section-wrapper" style="height: 500px">
+        <div class="br-section-wrapper" style="min-height: 500px">
           <h6 class="br-section-label"><%= yield :section_title %></h6>
           <p class="br-section-text"><%= yield :section_description %></p>
         </div>
@@ -50,5 +50,6 @@
     </div><!-- br-mainpanel -->
     <!-- ########## END: MAIN PANEL ########## -->
       <%= javascript_include_tag 'dashboard', 'data-turbolinks-track': 'reload' %>
+      <%= yield :javascript %>
   </body>
 </html>

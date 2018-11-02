@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   # Admin controller
   get "/company/collaborators" => 'admins/invitations#index'
 
+  # Shift controller
   get 'shift/new'
   get 'shift/update'
   post 'shift/create'

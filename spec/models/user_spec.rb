@@ -30,6 +30,33 @@ RSpec.describe User, type: :model do
       expect(user.shifts).to include(shift_two)
       expect(user.shifts).not_to include(shift_one)
     end
+
+    context '.search_colleagues' do
+      let!(:admin_one) { FactoryBot.create(:admin) }
+      let!(:admin_two) { FactoryBot.create(:admin) }
+      let!(:user) { FactoryBot.create(:user, invited_by: admin_one) }
+      let!(:colleage_one) do
+        FactoryBot.create(:user, invited_by: admin_one, name: 'AAA',
+                                 role: 'AAA', email: 'AA@A')
+      end
+      let!(:colleage_two) do
+        FactoryBot.create(:user, invited_by: admin_one, name: 'ZZZ',
+                                 role: 'ZZZ', email: 'ZZ@Z')
+      end
+      let!(:user_from_another_company) do
+        FactoryBot.create(
+          :user, invited_by: admin_two, name: colleage_one.name,
+                 role: colleage_one.role, email: "a#{colleage_one.email}"
+        )
+      end
+
+      it 'should return compatible users from the same company' do
+        scope_response = User.search_colleagues(user, 'Aa')
+        expect(scope_response).to include(colleage_one)
+        expect(scope_response)
+          .not_to include(colleage_two, user, user_from_another_company)
+      end
+    end
   end
 
   describe '.same_expertise_level?' do
