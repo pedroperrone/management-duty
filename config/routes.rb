@@ -22,4 +22,10 @@ Rails.application.routes.draw do
     put 'shift_exchanges/:id/approve' => 'shift_exchanges#approve'
     put 'shift_exchanges/:id/refuse' => 'shift_exchanges#refuse'
   end
+
+  namespace :admins do
+    resources :shift_exchanges, only: :index
+    put 'shift_exchanges/:id/approve' => 'shift_exchanges#approve'
+    put 'shift_exchanges/:id/refuse' => 'shift_exchanges#refuse'
+  end
 end
