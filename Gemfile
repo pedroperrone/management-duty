@@ -37,7 +37,7 @@ gem 'rubocop', '~> 0.59.0', require: false
 group :development, :test do
   gem 'pry-byebug'
   gem 'dotenv-rails'
-  gem 'rspec-rails', '~> 3.4', '>= 3.4.2'
+  gem 'rspec-rails', '~> 3.8'
   gem 'shoulda'
   gem 'shoulda-matchers', '~> 3.1'
   gem "factory_bot_rails"
