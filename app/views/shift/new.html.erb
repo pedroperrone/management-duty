@@ -1,3 +1,23 @@
+<%= content_for :page_title do %>
+  Management Duty - company
+<%end%>
+
+<%= content_for :breadcrumb do %>
+  <a class="breadcrumb-item" href="index">Dashboard</a>
+  <span class="breadcrumb-item active">Company</span>
+  <span class="breadcrumb-item active">Collaborators</span>
+<%end%>
+
+<%= content_for :body_title do %>
+  Lorem ipsum dolor sit
+<%end%>
+
+<%= content_for :body_description do %>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam maximus
+<%end%>
+
+<%= content_for :section_description do %>
+
 <%= content_for :form_title do %>
   Log in
 <% end %>
@@ -16,4 +36,5 @@
 <br>
 <%= submit_tag("Create") %>
 
+<% end %>
 <% end %>
