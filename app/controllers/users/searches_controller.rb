@@ -1,17 +1,29 @@
 # frozen_string_literal: true
 
 class Users::SearchesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :validate_params
+
   def index
-    if params[:name]
-      admin  = current_user.invited_by_id
-      @search_collaborators = User.search_by_name(params[:name])
-                                  .where(invited_by_id: admin)
-      respond_to do |format|
-        format.js { render partial: 'search-results' }
-      end
-    else
-      render layout: 'dashboard'
+    @search_collaborators = User.search_colleagues(current_user, name_param)
+
+    respond_to do |format|
+      format.js { render partial: 'search-results' }
     end
+  end
+
+  private
+
+  def validate_params
+    return if valid_params?
+
+    render layout: 'dashboard'
+  end
+
+  def valid_params?
+    name_param.present?
+  end
+
+  def name_param
+    params[:name]
   end
 end
