@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get 'shift/update'
-  get 'shift/create'
-  get 'shift/destroy'
-  get 'shift/edit'
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',
     registrations: 'admins/registrations'
