@@ -110,6 +110,25 @@ RSpec.describe Shift, type: :model do
           end
           it_should_behave_like 'an invalid shift'
         end
+
+        context 'tries to create a shift that contains an existing shift' do
+          let(:new_shift) do
+            FactoryBot.build(
+              :shift, user: user, ends_at: first_shift.ends_at + 1.hour,
+                      starts_at: first_shift.starts_at - 1.hour
+            )
+          end
+          it_should_behave_like 'an invalid shift'
+        end
+
+        context 'tries to create a shift equal to an existing one' do
+          let(:new_shift) do
+            FactoryBot.build(:shift, user: user,
+                                     starts_at: first_shift.starts_at,
+                                     ends_at: first_shift.ends_at)
+          end
+          it_should_behave_like 'an invalid shift'
+        end
       end
     end
   end
