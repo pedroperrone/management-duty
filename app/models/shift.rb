@@ -5,7 +5,7 @@ class Shift < ApplicationRecord
   belongs_to :origin_shift, class_name: Shift.name, optional: true
 
   validates :ends_at, :starts_at, :user, presence: true
-  with_options unless: :nil_attributes? do
+  with_options unless: :nil_attributes?, if: :active? do
     validate :summed_length_limit, :minimum_length, :overlap
   end
 
@@ -32,6 +32,10 @@ class Shift < ApplicationRecord
     time >= starts_at && time < ends_at
   end
 
+  def admin
+    user.invited_by
+  end
+
   private
 
   def summed_length_limit
@@ -47,7 +51,7 @@ class Shift < ApplicationRecord
   end
 
   def overlap
-    return unless overlaps_another_shift?
+    return unless overlaps_another_shift? || contains_other_shift?
 
     errors.add(:overlap, I18n.t('validations.shift.overlap'))
   end
@@ -57,7 +61,7 @@ class Shift < ApplicationRecord
   end
 
   def overlaps_another_shift?
-    start_overlap_count + end_overlap_count > 0
+    (start_overlap_count + end_overlap_count).positive?
   end
 
   def start_overlap_count
@@ -71,6 +75,11 @@ class Shift < ApplicationRecord
   def overlap_count(limit)
     user.shifts
         .where('starts_at < ? AND ends_at > ?', limit, limit).count
+  end
+
+  def contains_other_shift?
+    user.shifts.where('starts_at >= ? AND ends_at <= ?', starts_at, ends_at)
+        .count.positive?
   end
 
   def nil_attributes?

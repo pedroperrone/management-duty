@@ -7,6 +7,8 @@ FactoryBot.define do
       "admin#{s}@managementduty.com"
     end
     password { '123456' }
-    company_name { 'Perdigão' }
+    sequence :company_name do |s|
+      "Company#{s}"
+    end
   end
 end

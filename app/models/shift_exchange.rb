@@ -39,6 +39,10 @@ class ShiftExchange < ApplicationRecord
     be_judged_by_admin(false)
   end
 
+  def admin
+    given_up_shift.admin
+  end
+
   private
 
   def shifts_length
