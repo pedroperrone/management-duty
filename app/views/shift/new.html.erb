@@ -1,0 +1,19 @@
+<%= content_for :form_title do %>
+  Log in
+<% end %>
+
+<%= content_for :form_description do %>
+  Welcome back!
+<% end %>
+
+<%= form_tag(controller: "shift", action: "create") do %>
+
+<%= text_field_tag(:user_email) %>
+<br>
+<%= datetime_select("day1", "starts_at", default: 0.hours.from_now) %>
+<br>
+<%= datetime_select("day2", "ends_at", default: 1.hours.from_now) %>
+<br>
+<%= submit_tag("Create") %>
+
+<% end %>

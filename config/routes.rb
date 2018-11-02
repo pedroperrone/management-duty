@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get 'shift/update'
-  get 'shift/create'
-  get 'shift/destroy'
-  get 'shift/edit'
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',
     registrations: 'admins/registrations'
@@ -26,4 +22,12 @@ Rails.application.routes.draw do
     put 'shift_exchanges/:id/approve' => 'shift_exchanges#approve'
     put 'shift_exchanges/:id/refuse' => 'shift_exchanges#refuse'
   end
+
+  get 'shift/new'
+
+  get 'shift/update'
+  post 'shift/create'
+  get 'shift/destroy'
+  get 'shift/edit'
+
 end
