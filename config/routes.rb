@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :searches, only: %i[index]
   end
 
+
   namespace :admins do
     resources :shift_exchanges, only: :index
     put 'shift_exchanges/:id/approve' => 'shift_exchanges#approve'
