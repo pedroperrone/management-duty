@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ShiftController, type: :controller do
+RSpec.describe ShiftsController, type: :controller do
 
   describe "GET #index" do
     it "returns http success" do

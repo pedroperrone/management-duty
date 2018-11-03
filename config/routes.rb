@@ -34,16 +34,7 @@ Rails.application.routes.draw do
 
 
   # Shift controller
-  get 'shift/new'
-  get 'shift/edit/:shift_id' => 'shift#edit'
-
-  post 'shift/create'
-  post 'shift/update/:shift_id' => 'shift#update'
-  get 'shift/destroy
-'
-
-
-
+  resources :shifts
 
 
 end
