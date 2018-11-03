@@ -79,7 +79,7 @@ class Shift < ApplicationRecord
 
   def contains_other_shift?
     user.shifts.where('starts_at >= ? AND ends_at <= ?', starts_at, ends_at)
-        .count.positive?
+        .where.not(id: id).count.positive?
   end
 
   def nil_attributes?
