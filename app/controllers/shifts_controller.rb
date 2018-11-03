@@ -6,8 +6,8 @@ class ShiftsController < ApplicationController
   before_action :set_user, only: :create
 
   before_action :set_user_from_email, only: :create
-
-  before_action :set_user_from_shift, only: :update
+  before_action :set_user_from_shift_id, only: :update
+  before_action :set_shift, only: :edit
 
   # Views
   def new
@@ -19,8 +19,6 @@ class ShiftsController < ApplicationController
   end
 
   def edit
-    @shift = Shift.find_by_id(params[:shift_id])
-    
     render 'edit', layout: 'dashboard'
   end
 
@@ -32,18 +30,18 @@ class ShiftsController < ApplicationController
       redirect_to dashboard_path
     else
       puts @shift.errors.messages
-      redirect_to shift_new_path
+      redirect_to new_shift_path
     end
   end
 
   def update
-    @shift = Shift.find_by_id(params[:shift_id])
+    @shift = Shift.find_by_id(params[:id])
     
     if @shift.update(shift_params)
       redirect_to dashboard_path
     else
       puts @shift.errors.messages
-      redirect_to shift_new_path
+      redirect_to edit_shift_path
     end
   end
 
@@ -55,13 +53,19 @@ class ShiftsController < ApplicationController
   def set_user_from_email
     @user = User.find_by_email(params[:user_email])
     
-    redirect_to shift_new_path if @user.nil?
+    redirect_to new_shift_path if @user.nil?
   end
 
-  def set_user_from_shift
-    @user = User.find_by_id(Shift.find_by_id(params[:shift_id]).user_id)
+  def set_user_from_shift_id
+    @user = User.find_by_id(Shift.find_by_id(params[:id]).user_id)
     
-    redirect_to shift_new_path if @user.nil?
+    redirect_to root_path if @user.nil?
+  end
+
+  def set_shift
+    @shift = Shift.find_by_id(params[:id])
+
+    redirect_to root_path if @shift.nil?
   end
 
   #
