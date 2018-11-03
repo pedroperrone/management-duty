@@ -26,15 +26,18 @@
 	  Welcome back!
 	<% end %>
 
-	<%= form_tag(controller: "shift", action: "create") do %>
+	<%= form_for @shift, url: {action: "create"}, html: {class: "nifty_form"} do |f| %>
 
-		<%= text_field_tag(:user_email) %>
-		<br>
-		<%= datetime_select("day1", "starts_at", default: 0.hours.from_now) %>
-		<br>
-		<%= datetime_select("day2", "ends_at", default: 1.hours.from_now) %>
-		<br>
-		<%= submit_tag("Create") %>
+	  <%= text_field_tag :user_email, '' %>
+	  <br>
+
+	  <%= f.datetime_select :starts_at %>
+	  <br>
+
+	  <%= f.datetime_select :ends_at %>
+	  <br>
+
+	  <%= f.submit "Create" %>
 
 	<% end %>
 	
