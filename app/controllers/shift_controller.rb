@@ -5,16 +5,9 @@ class ShiftController < ApplicationController
 
   before_action :set_user, only: :create
 
-  #
-  def set_user
-    @user = User.find_by_email(params[:user_email])
-    redirect_to shift_new_path if @user.nil?
-  end
+  before_action :set_user_from_email, only: :create
 
-  #
-  def new
-    render 'new', layout: 'dashboard'
-  end
+  before_action :set_user_from_shift, only: :update
 
   # Views
   def new
@@ -23,7 +16,6 @@ class ShiftController < ApplicationController
     @shift.ends_at = 1.hours.from_now
     
     render 'new', layout: 'dashboard'
-
   end
 
   def edit
@@ -35,9 +27,6 @@ class ShiftController < ApplicationController
   # CRUD
   def create
     @shift = Shift.new(shift_params)
-
-    user_id = @user['id'].to_i
-    @shift = Shift.new({starts_at: start_date, ends_at: end_date, user_id: user_id})
 
     if @shift.save
       redirect_to dashboard_path
