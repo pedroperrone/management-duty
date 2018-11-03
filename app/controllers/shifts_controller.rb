@@ -1,6 +1,6 @@
 require 'date'
 
-class ShiftController < ApplicationController
+class ShiftsController < ApplicationController
   before_action :authenticate_admin!
 
   before_action :set_user_from_email, only: :create
