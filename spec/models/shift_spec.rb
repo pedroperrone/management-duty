@@ -130,6 +130,14 @@ RSpec.describe Shift, type: :model do
           it_should_behave_like 'an invalid shift'
         end
       end
+
+      context 'user tries to update shift' do
+        let!(:shift) { FactoryBot.create(:shift, :with_user) }
+
+        it 'does not count the shift itself to forbid overlap' do
+          expect(shift.update({})).to be_truthy
+        end
+      end
     end
   end
 
