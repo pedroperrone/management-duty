@@ -19,10 +19,13 @@ Rails.application.routes.draw do
 
   # Shift controller
   get 'shift/new'
-  get 'shift/update'
+  get 'shift/edit/:shift_id' => 'shift#edit'
+
   post 'shift/create'
-  get 'shift/destroy'
-  get 'shift/edit'
+  post 'shift/update/:shift_id' => 'shift#update'
+  get 'shift/destroy
+'
+
 
   namespace :admins do
     resources :shift_exchanges, only: :index
