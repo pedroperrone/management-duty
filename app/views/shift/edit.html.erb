@@ -1,2 +1,45 @@
-<h1>Shift#edit</h1>
-<p>Find me in app/views/shift/edit.html.erb</p>
+<%= content_for :page_title do %>
+  Management Duty - company
+<%end%>
+
+<%= content_for :breadcrumb do %>
+  <a class="breadcrumb-item" href="index">Dashboard</a>
+  <span class="breadcrumb-item active">Company</span>
+  <span class="breadcrumb-item active">Collaborators</span>
+<%end%>
+
+<%= content_for :body_title do %>
+  Lorem ipsum dolor sit
+<%end%>
+
+<%= content_for :body_description do %>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam maximus
+<%end%>
+
+<%= content_for :section_description do %>
+
+	<%= content_for :form_title do %>
+	  Log in
+	<% end %>
+
+	<%= content_for :form_description do %>
+	  Welcome back!
+	<% end %>
+
+	<%= form_for @shift, url: {action: "update"}, :method => :POST do |f| %>
+
+	  <br>
+	  <br>
+	  
+	  <%= f.datetime_select :starts_at %>
+	  <br>
+
+	  <%= f.datetime_select :ends_at %>
+	  <br>
+
+	  <%= f.submit "Edit" %>
+
+	<% end %>
+	
+<% end %>
+
