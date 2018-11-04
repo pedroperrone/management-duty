@@ -6,12 +6,12 @@ class ShiftsController < ApplicationController
   before_action :set_user, only: :create
 
   before_action :set_user_from_email, only: :create
-  before_action :set_shift_from_id, only: [:edit, :update]
+  before_action :set_shift_from_id, only: [:edit, :update, :destroy]
 
   # Views
   def new
     @shift = Shift.new
-    
+
     render 'new', layout: 'dashboard'
   end
 
@@ -27,7 +27,7 @@ class ShiftsController < ApplicationController
     @shift = Shift.new(shift_params)
 
     if @shift.save
-      redirect_to dashboard_path
+      render 'index', layout: 'dashboard'
     else
       puts @shift.errors.messages
       redirect_to new_shift_path
@@ -39,7 +39,7 @@ class ShiftsController < ApplicationController
     @user = User.find(@shift.user_id)
     
     if @shift.update(shift_params)
-      redirect_to dashboard_path
+      render 'index', layout: 'dashboard'
     else
       puts @shift.errors.messages
       redirect_to edit_shift_path
@@ -47,6 +47,15 @@ class ShiftsController < ApplicationController
   end
 
   def destroy
+    # set_shift_from_id
+
+    if @shift.delete
+      render 'index', layout: 'dashboard'
+    else
+      puts @shift.errors.messages
+      redirect_to shifts_path
+    end
+    
   end
 
   #
