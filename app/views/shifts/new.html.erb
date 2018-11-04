@@ -28,13 +28,13 @@
 
 	<%= form_for @shift, url: {action: "create"}, html: {class: "nifty_form"} do |f| %>
 
-	  <%= text_field_tag :user_email, '' %>
+	  <%= text_field_tag(:user_email, '') %>
 	  <br>
 
-	  <%= f.datetime_select :starts_at %>
+	  <%= f.datetime_select(:starts_at, default: 0.hours.from_now) %>
 	  <br>
 
-	  <%= f.datetime_select :ends_at %>
+	  <%= f.datetime_select(:ends_at, default: 1.hours.from_now) %>
 	  <br>
 
 	  <%= f.submit "Create" %>
