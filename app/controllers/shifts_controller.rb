@@ -3,9 +3,8 @@ require 'date'
 class ShiftsController < ApplicationController
   before_action :authenticate_admin!
 
-  before_action :set_user, only: :create
-
   before_action :set_user_from_email, only: :create
+
   before_action :set_shift_from_id, only: [:edit, :update, :destroy]
 
   # Views
@@ -16,20 +15,16 @@ class ShiftsController < ApplicationController
   end
 
   def edit
-    # set_shift_from_id
-    
     render 'edit', layout: 'dashboard'
   end
 
   def show
-    # set_shift_from_id
 
-    render 'show', layout: 'dashboard'
   end
 
   # CRUD
   def create
-    # set_user_from_email
+    # set_shift_from_id
     @shift = Shift.new(shift_params)
 
     if @shift.save
@@ -46,10 +41,12 @@ class ShiftsController < ApplicationController
     
     if @shift.update(shift_params)
       render 'index', layout: 'dashboard'
+
     else
       puts @shift.errors.messages
       redirect_to edit_shift_path
     end
+    
   end
 
   def destroy
@@ -59,9 +56,8 @@ class ShiftsController < ApplicationController
       render 'index', layout: 'dashboard'
     else
       puts @shift.errors.messages
-      redirect_to shifts_path
+      redirect_to dashboard_path
     end
-    
   end
 
   #
@@ -71,6 +67,7 @@ class ShiftsController < ApplicationController
     
     redirect_to new_shift_path if @user.nil?
   end
+
 
   def set_shift_from_id
     begin
@@ -92,6 +89,7 @@ class ShiftsController < ApplicationController
 
   def shift_params
     {
+
       :starts_at => parsed_date_params(:starts_at),
       :ends_at => parsed_date_params(:ends_at),
       :user_id => @user.id
