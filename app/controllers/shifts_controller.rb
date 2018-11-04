@@ -30,13 +30,11 @@ class ShiftsController < ApplicationController
 
   # CRUD
   def create
-    # set_shift_from_id
-    @shift = Shift.new(shift_params)
+    # set_user_from_email (also sets shift)
 
     if @shift.save
       render 'index', layout: 'dashboard'
     else
-      puts @shift.errors.messages
       redirect_to new_shift_path
     end
   end
@@ -49,7 +47,6 @@ class ShiftsController < ApplicationController
       render 'index', layout: 'dashboard'
 
     else
-      puts @shift.errors.messages
       redirect_to edit_shift_path
     end
     
@@ -57,32 +54,51 @@ class ShiftsController < ApplicationController
 
   def destroy
     # set_shift_from_id
-
+    
     if @shift.delete
       render 'index', layout: 'dashboard'
     else
-      puts @shift.errors.messages
-      redirect_to dashboard_path
+      redirect_to root_path
     end
   end
 
   #
   private
   def set_visible_shifts
-    @shifts = Shift.all
+    if admin_signed_in?
+      # only shifts from users the admin invited
+      @collabs = User.where(:invited_by => current_admin.id)
+      @shifts = Shift.where(:user_id => @collabs.select(:id))
+    elsif user_signed_in?
+      # only shifts from users from the same company
+      @collabs = User.where(:invited_by => current_user.invited_by)
+      @shifts = Shift.where(:user_id => @collabs.select(:id))
+    end
   end
   
   def set_user_from_email
+    # When an user e-mail is passed on params
     @user = User.find_by_email(params[:user_email])
-    
-    redirect_to new_shift_path if @user.nil?
+    if @user.nil?
+      redirect_to new_shift_path
+    end
+
+    @shift = Shift.new(shift_params)
+    if @shift.nil? || current_admin.id != User.find(@shift.user_id).invited_by.id
+      redirect_to new_shift_path
+    end
   end
 
 
   def set_shift_from_id
+    # When an shift id is passed on params
     begin
       @shift = Shift.find(params[:id])
     rescue
+      redirect_to root_path
+    end
+
+    if @current_admin.id != User.find(@shift.user_id).invited_by.id
       redirect_to root_path
     end
   end

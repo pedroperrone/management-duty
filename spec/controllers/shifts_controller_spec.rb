@@ -43,8 +43,9 @@ RSpec.describe ShiftsController, type: :controller do
       context 'admin session' do
         let!(:resource) { FactoryBot.create(:admin) }
 
-        context 'valid shift' do 
-          let!(:shift_param) { FactoryBot.create(:shift, :with_user) }
+        context 'valid shift' do
+          let!(:shift_user) { FactoryBot.create(:user, invited_by: resource) }
+          let!(:shift_param) { FactoryBot.create(:shift, user: shift_user) }
 
           it 'render edit shift page as admin' do
             get :edit, params: { :id => shift_param.id.to_s }
@@ -54,8 +55,10 @@ RSpec.describe ShiftsController, type: :controller do
         end
 
         context 'invalid shift' do
+          let!(:shift_param) { FactoryBot.create(:shift, :with_user) }
+          
           it 'attempt to edit invalid shift as admin' do
-            get :edit, params: { :id => '0' }
+            get :edit, params: { :id => shift_param.id.to_s }
 
             expect(response).to redirect_to(root_path)
           end
@@ -89,8 +92,9 @@ RSpec.describe ShiftsController, type: :controller do
       context 'admin session' do
         let!(:resource) { FactoryBot.create(:admin) }
 
-        context 'valid shift' do 
-          let!(:shift_param) { FactoryBot.create(:shift, :with_user) }
+        context 'valid shift' do
+          let!(:shift_user) { FactoryBot.create(:user, invited_by: resource) }
+          let!(:shift_param) { FactoryBot.create(:shift, user: shift_user) }
 
           it 'render shift page as admin' do
             get :show, params: { :id => shift_param.id.to_s }
@@ -132,8 +136,8 @@ RSpec.describe ShiftsController, type: :controller do
       context 'admin session' do
         let!(:resource) { FactoryBot.create(:admin) }
 
-        context 'valid user' do
-          let!(:shift_user) { FactoryBot.create(:user) }
+        context 'valid shift' do
+          let!(:shift_user) { FactoryBot.create(:user, invited_by: resource) }
 
           it 'create valid shift as admin' do
             post :create, params: {
@@ -220,13 +224,25 @@ RSpec.describe ShiftsController, type: :controller do
         let!(:resource) { FactoryBot.create(:admin) }
 
         context 'valid shift' do
-          let!(:user_shift) { FactoryBot.create(:shift, :with_user) }
+          let!(:shift_owner) { FactoryBot.create(:user, invited_by: resource) }
+          let!(:user_shift) { FactoryBot.create(:shift, :with_user, user_id: shift_owner.id) }
 
           it 'destroy existing shift as admin' do
             delete :destroy, params: { :id => user_shift.id }
 
             expect(response).to have_http_status(:success)
             expect(Shift.count).to eq 0
+          end
+        end
+
+        context 'invalid (other company) shift' do
+          let!(:user_shift) { FactoryBot.create(:shift, :with_user) }
+
+          it 'attempt to destroy other\'s shift' do
+            delete :destroy, params: { :id => user_shift.id }
+
+            expect(Shift.count).to eq 1
+            expect(subject).to redirect_to root_path
           end
         end
       end
