@@ -5,7 +5,7 @@ class ShiftsController < ApplicationController
 
   before_action :set_user_from_email, only: :create
 
-  before_action :set_shift_from_id, only: [:edit, :update, :destroy]
+  before_action :set_shift_from_id, only: [:show, :edit, :update, :destroy]
 
   # Views
   def new
@@ -19,7 +19,7 @@ class ShiftsController < ApplicationController
   end
 
   def show
-
+    render 'show', layout: 'dashboard'
   end
 
   # CRUD
