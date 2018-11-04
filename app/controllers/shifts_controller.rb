@@ -3,6 +3,8 @@ require 'date'
 class ShiftsController < ApplicationController
   before_action :authenticate_admin!
 
+  before_action :set_visible_shifts
+
   before_action :set_user_from_email, only: :create
 
   before_action :set_shift_from_id, only: [:show, :edit, :update, :destroy]
@@ -20,6 +22,10 @@ class ShiftsController < ApplicationController
 
   def show
     render 'show', layout: 'dashboard'
+  end
+
+  def index
+    render 'index', layout: 'dashboard'
   end
 
   # CRUD
@@ -62,6 +68,10 @@ class ShiftsController < ApplicationController
 
   #
   private
+  def set_visible_shifts
+    @shifts = Shift.all
+  end
+  
   def set_user_from_email
     @user = User.find_by_email(params[:user_email])
     
