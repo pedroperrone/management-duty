@@ -21,6 +21,12 @@ class ShiftsController < ApplicationController
     render 'edit', layout: 'dashboard'
   end
 
+  def show
+    # set_shift_from_id
+
+    render 'show', layout: 'dashboard'
+  end
+
   # CRUD
   def create
     # set_user_from_email
