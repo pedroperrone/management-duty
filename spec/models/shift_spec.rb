@@ -21,6 +21,16 @@ RSpec.describe Shift, type: :model do
     it { should validate_presence_of(:user) }
     it { should belong_to(:user) }
     it { should belong_to(:origin_shift) }
+    context 'time_consistency' do
+      let!(:new_shift) do
+        FactoryBot.build(:shift, :with_user, starts_at: Time.now,
+                                             ends_at: Time.now - 2.hour)
+      end
+
+      before { Timecop.freeze(Time.now) }
+      it_should_behave_like 'an invalid shift'
+    end
+
     context 'ininterrupt_time' do
       let!(:user) { FactoryBot.create(:user) }
       let!(:previous_shift) do

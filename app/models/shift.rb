@@ -5,6 +5,7 @@ class Shift < ApplicationRecord
   belongs_to :origin_shift, class_name: Shift.name, optional: true
 
   validates :ends_at, :starts_at, :user, presence: true
+  validates_numericality_of :ends_at_as_int, greater_than: :starts_at_as_int
   with_options unless: :nil_attributes?, if: :active? do
     validate :summed_length_limit, :minimum_length, :overlap
   end
@@ -74,12 +75,21 @@ class Shift < ApplicationRecord
 
   def overlap_count(limit)
     user.shifts
-        .where('starts_at < ? AND ends_at > ?', limit, limit).count
+        .where('starts_at < ? AND ends_at > ?', limit, limit)
+        .where.not(id: id).count
   end
 
   def contains_other_shift?
     user.shifts.where('starts_at >= ? AND ends_at <= ?', starts_at, ends_at)
         .where.not(id: id).count.positive?
+  end
+
+  def ends_at_as_int
+    ends_at.to_i
+  end
+
+  def starts_at_as_int
+    starts_at.to_i
   end
 
   def nil_attributes?

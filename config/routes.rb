@@ -11,11 +11,11 @@ Rails.application.routes.draw do
   # Welcome Controller
   root 'welcome#index'
   # Dashboard Controller
-  get "/dashboard/:page" => 'dashboard#show'
-  get "/dashboard" => 'dashboard#show'
+  get 'dashboard/:page' => 'dashboard#show'
+  get 'dashboard' => 'dashboard#show'
 
   # Admin controller
-  get "/company/collaborators" => 'admins/invitations#index'
+  get 'company/collaborators' => 'admins/invitations#index'
 
 
   namespace :users do
@@ -32,9 +32,8 @@ Rails.application.routes.draw do
     put 'shift_exchanges/:id/refuse' => 'shift_exchanges#refuse'
   end
 
-
   # Shift controller
   resources :shifts
 
-
+  put 'shift_partitions/:id' => 'shift_partitions#partitionate'
 end
