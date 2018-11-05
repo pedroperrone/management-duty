@@ -6,8 +6,9 @@ class ShiftsController < ApplicationController
   before_action :set_visible_shifts
 
   before_action :set_user_from_email, only: :create
-
-  before_action :set_shift_from_id, only: [:show, :edit, :update, :destroy]
+  before_action :set_user_from_id, only: :show
+  
+  before_action :set_shift_from_id, only: [:edit, :update, :destroy]
 
   # Views
   def new
@@ -25,7 +26,7 @@ class ShiftsController < ApplicationController
   end
 
   def index
-    render 'index', layout: 'dashboard'
+    render 'show', layout: 'dashboard'
   end
 
   # CRUD
@@ -33,7 +34,7 @@ class ShiftsController < ApplicationController
     # set_user_from_email (also sets shift)
 
     if @shift.save
-      render 'index', layout: 'dashboard'
+      render 'show', layout: 'dashboard'
     else
       redirect_to new_shift_path
     end
@@ -44,7 +45,7 @@ class ShiftsController < ApplicationController
     @user = User.find(@shift.user_id)
     
     if @shift.update(shift_params)
-      render 'index', layout: 'dashboard'
+      render 'show', layout: 'dashboard'
 
     else
       redirect_to edit_shift_path
@@ -56,7 +57,7 @@ class ShiftsController < ApplicationController
     # set_shift_from_id
     
     if @shift.delete
-      render 'index', layout: 'dashboard'
+      render 'show', layout: 'dashboard'
     else
       redirect_to root_path
     end
@@ -89,9 +90,18 @@ class ShiftsController < ApplicationController
     end
   end
 
+  def set_user_from_id
+    # When an user id is passed on params
+    begin
+      @user = User.find(params[:id])
+    rescue
+      redirect_to root_path
+    end
+  end
+
 
   def set_shift_from_id
-    # When an shift id is passed on params
+    # When a shift id is passed on params
     begin
       @shift = Shift.find(params[:id])
     rescue

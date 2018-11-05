@@ -94,10 +94,9 @@ RSpec.describe ShiftsController, type: :controller do
 
         context 'valid shift' do
           let!(:shift_user) { FactoryBot.create(:user, invited_by: resource) }
-          let!(:shift_param) { FactoryBot.create(:shift, user: shift_user) }
 
           it 'render shift page as admin' do
-            get :show, params: { :id => shift_param.id.to_s }
+            get :show, params: { :id => shift_user.id.to_s }
 
             expect(response).to have_http_status(:success)
           end
