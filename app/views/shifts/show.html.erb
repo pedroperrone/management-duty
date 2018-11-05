@@ -31,6 +31,12 @@
 	end %>
 	
 	<% @shifts.each do |shift| %>
+
+	  <% if admin_signed_in? %>
+	  <%= User.find(shift.user_id).email %>
+	  <% end %>
+	  <br>
+	
 	  <%= shift.id %>
 	  <br>
 
@@ -40,13 +46,16 @@
 	  <%= shift.ends_at %>
 	  <br>
 
-	  <%= form_tag(edit_shift_path(shift.id), method: :get) do %>
-	    <%= submit_tag("Edit") %>
-	  <% end %>
+	  <% if admin_signed_in? %>
+	    <%= form_tag(edit_shift_path(shift.id), method: :get) do %>
+	      <%= submit_tag("Edit") %>
+	    <% end %>
 
-	  <%= form_for(shift, params: {:id => shift.id}, :method => :delete) do %>
-	    <%= submit_tag("Delete") %>
+	    <%= form_for(shift, params: {:id => shift.id}, :method => :delete) do %>
+	      <%= submit_tag("Delete") %>
+	    <% end %>
 	  <% end %>
+	  
 	  <br>
 
 	  <br>
