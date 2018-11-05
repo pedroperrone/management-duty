@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
     dashboard_path || stored_location_for(resource) || root_path
   end
 
+  def after_invite_path_for(resource)
+   company_collaborators_path || dashboard_path || root_path
+ end
+
   def authenticate_inviter!
     authenticate_admin!(force: true)
   end
