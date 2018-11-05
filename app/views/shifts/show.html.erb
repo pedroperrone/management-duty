@@ -26,24 +26,33 @@
 	  Welcome back!
 	<% end %>
 
-	<%= @shift.id %>
-	<br>
-
-	<%= @shift.starts_at %>
-	<br>
-
-	<%= @shift.ends_at %>
-	<br>
-
-	<%= form_for @shift, url:  {action: "edit"}, method: :get do |f| %>
-	<%= f.submit "Edit" %>
-	<% end %>
-
-	<%= form_for @shift, url:  {action: "destroy"}, method: :delete do |f| %>
-	<%= f.submit "Delete" %>
-	<% end %>
+	<% if not params[:show_old]
+	   @shifts = @shifts.where(Shift.arel_table[:starts_at].gt(Time.now))
+	end %>
 	
+	<% @shifts.each do |shift| %>
+	  <%= shift.id %>
+	  <br>
 
+	  <%= shift.starts_at %>
+	  <br>
+
+	  <%= shift.ends_at %>
+	  <br>
+
+	  <%= form_tag(edit_shift_path(shift.id), method: :get) do %>
+	    <%= submit_tag("Edit") %>
+	  <% end %>
+
+	  <%= form_for(shift, params: {:id => shift.id}, :method => :delete) do %>
+	    <%= submit_tag("Delete") %>
+	  <% end %>
+	  <br>
+
+	  <br>
+	<%end%> 
 	
 <% end %>
+
+
 
