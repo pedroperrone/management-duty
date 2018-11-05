@@ -6,23 +6,26 @@ class ShiftsController < ApplicationController
 
   before_action :set_visible_shifts
 
-  before_action :set_user_from_email, only: :create
-  before_action :set_user_from_id, only: :show
-  
   before_action :set_shift_from_id, only: [:edit, :update, :destroy]
+
+  before_action :set_user_from_id, only: [:show]
+  before_action :set_user_from_shift, only: [:edit, :update, :destroy]
+  before_action :set_user_from_email, only: :create
+
+  before_action :validate_visibility, only: [:edit, :update, :destroy, :create, :show]
 
   # Views
   def new
-    @shift = Shift.new
-
     render 'new', layout: 'dashboard'
   end
 
   def edit
+    # set_shift_from_id
     render 'edit', layout: 'dashboard'
   end
 
   def show
+    # set_user_from_id
     render 'show', layout: 'dashboard'
   end
 
@@ -32,7 +35,8 @@ class ShiftsController < ApplicationController
 
   # CRUD
   def create
-    # set_user_from_email (also sets shift)
+    # set_user_from_email
+    @shift = Shift.new(shift_params)
 
     if @shift.save
       render 'show', layout: 'dashboard'
@@ -43,11 +47,10 @@ class ShiftsController < ApplicationController
 
   def update
     # set_shift_from_id
-    @user = User.find(@shift.user_id)
+    # set_user_from_shift
     
     if @shift.update(shift_params)
       render 'show', layout: 'dashboard'
-
     else
       redirect_to edit_shift_path
     end
@@ -69,24 +72,36 @@ class ShiftsController < ApplicationController
   def set_visible_shifts
     if admin_signed_in?
       # only shifts from users the admin invited
-      @collabs = User.where(:invited_by => current_admin.id)
-      @shifts = Shift.where(:user_id => @collabs.select(:id))
+      @collabs = User.where(:invited_by => current_admin)
     elsif user_signed_in?
       # only shifts from users from the same company
       @collabs = User.where(:invited_by => current_user.invited_by)
-      @shifts = Shift.where(:user_id => @collabs.select(:id))
+    end
+    @shifts = Shift.where(:user_id => @collabs.select(:id))
+  end
+
+  def set_shift_from_id
+    # When a shift id is passed on params
+    begin
+      @shift = Shift.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_path
+    end
+  end
+
+  def set_user_from_shift
+    begin
+      @user = User.where(:invited_by => current_admin).find(@shift.user_id)
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_path
     end
   end
   
   def set_user_from_email
     # When an user e-mail is passed on params
-    @user = User.find_by_email(params[:user_email])
-    if @user.nil?
-      redirect_to new_shift_path
-    end
-
-    @shift = Shift.new(shift_params)
-    if @shift.nil? || current_admin.id != User.find(@shift.user_id).invited_by.id
+    begin
+      @user = User.find_by_email(params[:user_email])
+    rescue ActiveRecord::RecordNotFound
       redirect_to new_shift_path
     end
   end
@@ -95,21 +110,13 @@ class ShiftsController < ApplicationController
     # When an user id is passed on params
     begin
       @user = User.find(params[:id])
-    rescue
+    rescue ActiveRecord::RecordNotFound
       redirect_to root_path
     end
   end
-
-
-  def set_shift_from_id
-    # When a shift id is passed on params
-    begin
-      @shift = Shift.find(params[:id])
-    rescue
-      redirect_to root_path
-    end
-
-    if @current_admin.id != User.find(@shift.user_id).invited_by.id
+  
+  def validate_visibility
+    if @user.nil? || @collabs.where(:id => @user.id).count == 0
       redirect_to root_path
     end
   end
