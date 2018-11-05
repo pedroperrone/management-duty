@@ -14,6 +14,14 @@ class ApplicationController < ActionController::Base
     authenticate_admin!(force: true)
   end
 
+  def authenticate_any!
+    if admin_signed_in?
+        true
+    else
+        authenticate_user!
+    end
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:accept_invitation, keys: %i[name role])
   end

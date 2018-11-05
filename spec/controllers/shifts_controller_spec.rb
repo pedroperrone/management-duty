@@ -110,19 +110,25 @@ RSpec.describe ShiftsController, type: :controller do
       context 'user session' do
         let!(:resource) { FactoryBot.create(:user) }
 
-        it 'attempt to edit shift as user' do
-          get :show, params: {:id => '0'}
+        it 'attempt to views own shifts as user' do
+          get :show, params: {:id => resource.id.to_s}
           
-          expect(subject).to redirect_to(admin_session_path)
+          expect(response).to have_http_status(:success)
+        end
+
+        it 'attempt to views other\'s shifts as user' do
+          get :show, params: {:id => (resource.id+1).to_s}
+          
+          expect(response).to have_http_status(:redirect)
         end
       end
     end
     
     context 'without session' do
-      it 'attempt to edit shift as anon' do
+      it 'attempt to view shifts as anon' do
         get :show, params: {:id => '0'}
 
-        expect(subject).to redirect_to(admin_session_path)
+        expect(subject).to redirect_to(user_session_path)
       end
     end
   end
