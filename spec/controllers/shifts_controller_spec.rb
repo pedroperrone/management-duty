@@ -210,7 +210,7 @@ RSpec.describe ShiftsController, type: :controller do
             it 'attempt to create impossible shift as admin' do
               post :create, params: {
                 shift: {}
-                  .merge(split_date_params(date_before, :starts_at))
+                  .merge(split_date_params(date_after, :starts_at))
                   .merge(split_date_params(date_before, :ends_at)),
                 user_email: shift_user.email
               }
