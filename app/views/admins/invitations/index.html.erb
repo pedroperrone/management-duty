@@ -49,8 +49,10 @@
               <div class="d-flex align-items-center">
                 <%= image_tag('user.png', :class => 'wd-32 rounded-circle', :all => '') %>
                 <div class="mg-l-15">
-                  <div class="tx-inverse"><%= collaborator.name %></div>
-                  <span class="tx-12"><%= collaborator.email %></span>
+                  <div class="tx-inverse">
+                    <%= link_to(collaborator.name, user_show_path(collaborator.id), class: 'nav-link') %>
+                  </div>
+                  <span class="tx-12 ml-3"><%= collaborator.email %></span>
                 </div>
               </div>
             </td>
@@ -60,10 +62,7 @@
               <a href="page-contacts.html#" data-toggle="dropdown" class="btn pd-y-3 tx-gray-500 hover-info"><i class="icon ion-more"></i></a>
               <div class="dropdown-menu dropdown-menu-right pd-10">
                 <nav class="nav nav-style-1 flex-column">
-                  <a href="#" class="nav-link">Info</a>
-                  <a href="#" class="nav-link">Email</a>
-                  <a href="#" class="nav-link">Edit</a>
-                  <a href="#" class="nav-link">Delete</a>
+                  <%= link_to('Visualizar', user_show_path(collaborator.id), class: 'nav-link') %>
                 </nav>
               </div><!-- dropdown-menu -->
             </td>
