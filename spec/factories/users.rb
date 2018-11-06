@@ -12,5 +12,4 @@ FactoryBot.define do
   trait :invited_by do
     invited_by { FactoryBot.create(:admin) }
   end
-
 end
