@@ -1,0 +1,97 @@
+<%= content_for :section_description do %>
+
+<div class="br-mainpanel br-profile-page">
+  <!-- Profile information -->
+
+  <div class="card shadow-base bd-0 rounded-0 widget-4">
+    <div class="card-header ht-75">
+      <div class="hidden-xs-down">
+        <a href="" class="mg-r-10"><span class="tx-medium">0</span> Followers</a>
+        <a href=""><span class="tx-medium">0</span> Following</a>
+      </div>
+      <div class="tx-24 hidden-xs-down">
+        <a href="" class="mg-r-10"><i class="icon ion-ios-email-outline"></i></a>
+        <a href=""><i class="icon ion-more"></i></a>
+      </div>
+    </div><!-- card-header -->
+    <div class="card-body">
+      <div class="card-profile-img">
+        <%= image_tag('user.png', :all => '') %>
+      </div><!-- card-profile-img -->
+      <h4 class="tx-normal tx-roboto tx-white"><%= @user.name %></h4>
+      <p class="mg-b-25"><%= @user.role %><br/><%= @user.email %></p>
+      <p class="wd-md-500 mg-md-l-auto mg-md-r-auto mg-b-25">Singer, Lawyer, Achiever, Wearer of unrelated hats, Data Visualizer, Mayonaise Tester. I don't know what alt-tab does. Storyteller.</p>
+
+      <p class="mg-b-0 tx-24">
+        <a href="" class="tx-white-8 mg-r-5"><i class="fa fa-facebook-official"></i></a>
+        <a href="" class="tx-white-8 mg-r-5"><i class="fa fa-twitter"></i></a>
+        <a href="" class="tx-white-8 mg-r-5"><i class="fa fa-pinterest"></i></a>
+        <a href="" class="tx-white-8"><i class="fa fa-instagram"></i></a>
+      </p>
+    </div>
+  </div>
+
+  <!-- END Profile information  -->
+
+  <div class="ht-70 bg-gray-100 pd-x-20 d-flex align-items-center justify-content-center shadow-base">
+    <ul class="nav nav-outline active-info align-items-center flex-row" role="tablist">
+      <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#shifts" role="tab">Turnos</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#solicitations" role="tab">Solicitações de troca</a></li>
+    </ul>
+  </div>
+
+  <div class="tab-content br-profile-body">
+        <div class="tab-pane fade active show" id="shifts">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="media-list bg-white rounded shadow-base">
+                <div class="media pd-20 pd-xs-30">
+                  <div class="media-body mg-l-20">
+                    <p class="mg-b-20">Informações dos turnos</p>
+                    <div class="media-footer">
+                      <div>
+                        <a href=""><i class="fa fa-heart"></i></a>
+                        <a href="" class="mg-l-10"><i class="fa fa-comment"></i></a>
+                        <a href="" class="mg-l-10"><i class="fa fa-retweet"></i></a>
+                        <a href="" class="mg-l-10"><i class="fa fa-ellipsis-h"></i></a>
+                      </div>
+                    </div><!-- d-flex -->
+                  </div><!-- media-body -->
+                </div><!-- media -->
+              </div><!-- card -->
+            </div><!-- col-lg-12 -->
+          </div><!-- row -->
+        </div><!-- tab-pane -->
+
+        <div class="tab-pane fade" id="solicitations">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="media-list bg-white rounded shadow-base">
+                <div class="media pd-20 pd-xs-30">
+                  <%= image_tag('user.png', :class => 'wd-40 rounded-circle', :all => '') %>
+                  <div class="media-body mg-l-20">
+                    <div class="d-flex justify-content-between mg-b-10">
+                      <div>
+                        <h6 class="mg-b-2 tx-inverse tx-14">Louise Kate</h6>
+                        <span class="tx-12 tx-gray-500">@louisekate</span>
+                      </div>
+                      <span class="tx-12">2 minutes ago</span>
+                    </div><!-- d-flex -->
+                    <p class="mg-b-20">Mensagem de solicitação de troca</p>
+                    <div class="media-footer">
+                      <div>
+                        <a href=""><i class="fa fa-heart"></i></a>
+                        <a href="" class="mg-l-10"><i class="fa fa-comment"></i></a>
+                        <a href="" class="mg-l-10"><i class="fa fa-retweet"></i></a>
+                        <a href="" class="mg-l-10"><i class="fa fa-ellipsis-h"></i></a>
+                      </div>
+                    </div><!-- d-flex -->
+                  </div><!-- media-body -->
+                </div><!-- media -->
+              </div><!-- card -->
+            </div><!-- col-lg-12 -->
+          </div><!-- row -->
+        </div><!-- tab-pane -->
+      </div>
+  </div>
+<%end%>
