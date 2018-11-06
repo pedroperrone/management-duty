@@ -4,7 +4,9 @@ class UsersController < ApplicationController
   before_action :authenticate_admin!, :validate_params
 
   def show
+    @shift = Shift.new
     @user = User.find(id_param)
+    @shifts = @user.shifts
     render layout: 'profile'
   end
 
