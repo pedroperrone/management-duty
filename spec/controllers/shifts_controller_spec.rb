@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ShiftsController, :focus, type: :controller do
+RSpec.describe ShiftsController, type: :controller do
   describe "POST, #create" do
     context 'with session' do
       before { sign_in resource }
@@ -40,7 +40,7 @@ RSpec.describe ShiftsController, :focus, type: :controller do
 
               expect(Shift.count).to eq(0)
               expect(response).to have_http_status(:redirect)
-              expect(subject).to redirect_to(user_show_path(resource))
+              expect(subject).to redirect_to(user_show_path(shift_user))
             end
 
             it 'attempt to create impossible shift as admin' do
@@ -52,7 +52,7 @@ RSpec.describe ShiftsController, :focus, type: :controller do
 
               expect(Shift.count).to eq(0)
               expect(response).to have_http_status(:redirect)
-              expect(subject).to redirect_to(user_show_path(resource))
+              expect(subject).to redirect_to(user_show_path(shift_user))
             end
           end
         end
@@ -104,7 +104,7 @@ RSpec.describe ShiftsController, :focus, type: :controller do
     end
   end
 
-  describe "PATCH, #update" do
+  describe "PUT, #update" do
     let!(:any_shift) { FactoryBot.create(:shift, :with_user) }
     let!(:date_before) { DateTime.new(2018, 1, 1, 1, 1) }
     let!(:date_after) { DateTime.new(2018, 1, 1, 2, 1) }
@@ -137,9 +137,11 @@ RSpec.describe ShiftsController, :focus, type: :controller do
           it 'update owned shift by extending it as admin' do
             put :update, params: {
               id: shift_param.id,
-              shift: {}
-                .merge(split_date_params(shift_param.starts_at, :starts_at))
-                .merge(split_date_params(shift_param.ends_at + 1.hour, :ends_at))
+              shift: {
+                starts_at: to_datetime_picker_format(shift_param.starts_at),
+                ends_at: to_datetime_picker_format(shift_param.ends_at + 1.hour)
+              },
+              user_email: shift_user.email
             }
 
             expect(resource).to redirect_to(user_show_path(shift_user))
@@ -148,35 +150,45 @@ RSpec.describe ShiftsController, :focus, type: :controller do
           it 'update owned shift by shifting it 1 hour as admin' do
             put :update, params: {
               id: shift_param.id,
-              shift: {}
-                .merge(split_date_params(shift_param.starts_at + 1.hour, :starts_at))
-                .merge(split_date_params(shift_param.ends_at + 1.hour, :ends_at))
+              shift: {
+                starts_at: to_datetime_picker_format(
+                  shift_param.starts_at + 1.hour
+                ),
+                ends_at: to_datetime_picker_format(shift_param.ends_at + 1.hour)
+              },
+              user_email: shift_user.email
             }
 
-            expect(response).to have_http_status(:success)
+            expect(subject).to redirect_to(user_show_path(shift_user))
           end
 
           it 'update owned shift to valid one as admin' do
             put :update, params: {
               id: shift_param.id,
-              shift: {}
-                .merge(split_date_params(date_before, :starts_at))
-                .merge(split_date_params(date_after, :ends_at))
+              shift: {
+                starts_at: to_datetime_picker_format(shift_param.starts_at),
+                ends_at: to_datetime_picker_format(shift_param.ends_at)
+              },
+              user_email: shift_user.email
             }
 
-            expect(response).to have_http_status(:success)
+            expect(subject).to redirect_to(user_show_path(shift_user))
           end
 
           it 'update owned shift to invalid (too short) one as admin' do
             put :update, params: {
               id: shift_param.id,
-              shift: {}
-                .merge(split_date_params(date_before, :starts_at))
-                .merge(split_date_params(date_before, :ends_at))
+              shift: {
+                starts_at: to_datetime_picker_format(shift_param.starts_at),
+                ends_at: to_datetime_picker_format(
+                  shift_param.starts_at + 30.minute
+                )
+              },
+              user_email: shift_user.email
             }
 
             expect(response).to have_http_status(:redirect)
-            expect(subject).to redirect_to(edit_shift_path)
+            expect(subject).to redirect_to(user_show_path(shift_user))
           end
         end
       end
@@ -239,7 +251,7 @@ RSpec.describe ShiftsController, :focus, type: :controller do
         let!(:resource) { FactoryBot.create(:user) }
 
         it 'attempt to destroy shift as user' do
-          delete :destroy, params: { id: 0.to_s }
+          delete :destroy, params: { id: 0 }
 
           expect(subject).to redirect_to(admin_session_path)
           expect(response).to have_http_status(:redirect)
@@ -249,7 +261,7 @@ RSpec.describe ShiftsController, :focus, type: :controller do
 
     context 'without session' do
       it 'attempt to create shift as anon' do
-        delete :destroy, params: { id: 0.to_s }
+        delete :destroy, params: { id: 0 }
 
         expect(subject).to redirect_to(admin_session_path)
         expect(response).to have_http_status(:redirect)

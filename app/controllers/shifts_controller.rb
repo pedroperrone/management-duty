@@ -9,8 +9,8 @@ class ShiftsController < ApplicationController
   before_action :set_visibility, except: %i[new index]
 
   before_action :set_user_from_email, only: %i[edit destroy]
+  before_action :set_shift, only: :destroy
 
-  before_action :set_user_from_id, only: [:show]
   before_action :set_user_from_shift, only: %i[edit destroy]
   before_action :set_user_from_email, only: %i[create update]
 
@@ -50,8 +50,9 @@ class ShiftsController < ApplicationController
   def update
     # set_shift_from_id
     # set_user_from_shift
-    @shift = Shift.find(params[:shift_id])
-    if @shift.update(update_params)
+
+    @shift = Shift.find(params[:id])
+    if @shift.update(update_shift_params)
       redirect_to user_show_path(@user)
     else
       redirect_to user_show_path(@user)
@@ -130,5 +131,9 @@ class ShiftsController < ApplicationController
 
   def unwrapped_shift_param
     params[:shift]
+  end
+
+  def set_shift
+    @shift = Shift.find(params[:id])
   end
 end
