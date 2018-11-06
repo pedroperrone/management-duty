@@ -11,11 +11,12 @@ Rails.application.routes.draw do
   # Welcome Controller
   root 'welcome#index'
   # Dashboard Controller
-  get "/dashboard/:page" => 'dashboard#show'
-  get "/dashboard" => 'dashboard#show'
+  get 'dashboard/:page' => 'dashboard#show'
+  get 'dashboard' => 'dashboard#show'
 
   # Admin controller
-  get "/company/collaborators" => 'admins/invitations#index'
+  get 'company/collaborators' => 'admins/invitations#index'
+
 
   namespace :users do
     resources :shift_exchanges, only: %i[create index]
@@ -24,11 +25,18 @@ Rails.application.routes.draw do
     resources :searches, only: %i[index]
   end
 
+
   namespace :admins do
     resources :shift_exchanges, only: :index
     put 'shift_exchanges/:id/approve' => 'shift_exchanges#approve'
     put 'shift_exchanges/:id/refuse' => 'shift_exchanges#refuse'
   end
 
+  #  Users Controller
   get 'users/:id' => 'users#show', :as => :user_show
+
+  resources :shifts
+
+  put 'shift_partitions/:id' => 'shift_partitions#partitionate'
+
 end
