@@ -38,7 +38,7 @@ class ShiftsController < ApplicationController
   # CRUD
   def create
     # set_user_from_email
-    @shift = Shift.new(shift_params)
+    @shift = Shift.new(create_shift_params)
 
     if @shift.save
       redirect_to user_show_path(@user)
@@ -50,7 +50,6 @@ class ShiftsController < ApplicationController
   def update
     # set_shift_from_id
     # set_user_from_shift
-    puts '--------------------------------'
     @shift = Shift.find(params[:shift_id])
     if @shift.update(update_params)
       redirect_to user_show_path(@user)
@@ -80,7 +79,8 @@ class ShiftsController < ApplicationController
   end
 
   def validate_visibility
-    redirect_to root_path if @user.nil? || @collabs.where(id: @user.id).count.zero?
+    return unless @user.nil? || @collabs.where(id: @user.id).count.zero?
+    redirect_to root_path
   end
 
   def set_shift_from_id
@@ -114,27 +114,21 @@ class ShiftsController < ApplicationController
   end
 
   def parsed_date_params(label)
-    # Method for parsing datetime_select date
-    puts '-------------------------------------'
-    puts label
-    DateTime.strptime(label,'%d/%m/%Y %I:%M %p')
+    DateTime.strptime(unwrapped_shift_param[label],'%d/%m/%Y %I:%M %p')
   end
 
-  def shift_params
-    shift = params[:shift]
-    puts shift
-    {
-      starts_at: parsed_date_params(shift[:starts_at]),
-      ends_at: parsed_date_params(shift[:ends_at]),
-      user_id: @user.id
-    }
+  def create_shift_params
+    update_shift_params.merge(user: @user)
   end
 
-  def update_params
-    {
-      starts_at: parsed_date_params(params[:starts_at]),
-      ends_at: parsed_date_params(params[:ends_at])
-    }
+  def update_shift_params
+    %i[starts_at ends_at].inject({}) do |hash, key|
+      hash[key] = parsed_date_params(key)
+      hash
+    end
   end
 
+  def unwrapped_shift_param
+    params[:shift]
+  end
 end
