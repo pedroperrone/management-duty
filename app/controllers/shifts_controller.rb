@@ -53,6 +53,8 @@ class ShiftsController < ApplicationController
     @shift = Shift.find(params[:shift_id])
     if @shift.update(update_params)
       redirect_to user_show_path(@user)
+    else
+      redirect_to user_show_path(@user)
     end
 
   end
@@ -98,11 +100,9 @@ class ShiftsController < ApplicationController
   end
 
   def set_user_from_email
-    # When an user e-mail is passed on params
-
     @user = User.find_by_email(params[:user_email])
-    rescue ActiveRecord::RecordNotFound
-    redirect_to new_shift_path
+    return unless @user.nil?
+    redirect_to users_searches_path
   end
 
   def set_user_from_id
