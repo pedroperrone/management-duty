@@ -40,27 +40,60 @@
     </ul>
   </div>
 
+  <div class="bg-white pd-y-12 mg-t-15 mg-xs-t-30 shadow-base rounded">
+    <%= form_for @shift, url: {:controller => "shifts", action: "create"}, html: {class: "nifty_form"} do |f| %>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <%= text_field_tag(:user_email, @user.email, style: 'display:none') %><br/>
+          <%= f.text_field(:starts_at, placeholder: 'Inicio do Turno', class: 'form-control datetimepicker-input', id: 'ends_at', data: { toggle: 'datetimepicker', target: '#ends_at'}, autocomplete: 'off') %><br/>
+          <%= f.text_field(:ends_at, placeholder: 'Término do Turno', class: 'form-control datetimepicker-input', id: 'starts_at', data: { toggle: 'datetimepicker', target: '#starts_at'}, autocomplete: 'off') %><br/>
+          <%= f.submit "Create", class: 'btn btn-info btn-sm' %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+
   <div class="tab-content br-profile-body">
         <div class="tab-pane fade active show" id="shifts">
           <div class="row">
             <div class="col-lg-12">
-              <div class="media-list bg-white rounded shadow-base">
-                <div class="media pd-20 pd-xs-30">
-                  <div class="media-body mg-l-20">
-                    <p class="mg-b-20">Informações dos turnos</p>
-                    <div class="media-footer">
-                      <div>
-                        <a href=""><i class="fa fa-heart"></i></a>
-                        <a href="" class="mg-l-10"><i class="fa fa-comment"></i></a>
-                        <a href="" class="mg-l-10"><i class="fa fa-retweet"></i></a>
-                        <a href="" class="mg-l-10"><i class="fa fa-ellipsis-h"></i></a>
+              <% @shifts.each do |shift| %>
+                <div class="media-list bg-white rounded shadow-base mt-1">
+
+                  <div class="media pd-20 pd-xs-30">
+                    <%= image_tag('user.png', :all => '', class: 'wd-40 rounded-circle') %>
+                    <div class="media-body mg-l-20">
+                      <%= form_tag(shift_update_path, method: "put") do |f| %>
+                      <%= text_field_tag(:shift_id, shift.id, style: 'display:none') %><br/>
+                      <%= text_field_tag(:user_email, @user.email, style: 'display:none') %><br/>
+                      <div class="form-group col-sm-6">
+                          <div class="input-group date" id='<%="starts_at#{shift.id}"%>' data-target-input="nearest">
+                              <input type="text" name="starts_at" value="<%= shift.starts_at.strftime('%d/%m/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#starts_at#{shift.id}"%>'/>
+                              <div class="input-group-append" data-target='<%="#starts_at#{shift.id}"%>' data-toggle="datetimepicker">
+                                  <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
+                              </div>
+                          </div>
                       </div>
-                    </div><!-- d-flex -->
-                  </div><!-- media-body -->
-                </div><!-- media -->
-              </div><!-- card -->
+                      <div class="form-group col-sm-6">
+                          <div class="input-group date" id='<%="ends_at#{shift.id}"%>' data-target-input="nearest">
+                              <input type="text" name="ends_at" value="<%= shift.ends_at.strftime('%d/%m/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#ends_at#{shift.id}"%>'/>
+                              <div class="input-group-append" data-target='<%="#ends_at#{shift.id}"%>' data-toggle="datetimepicker">
+                                  <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
+                              </div>
+                          </div>
+                      </div>
+
+                        <%= submit_tag 'Update', class: 'ml-3 btn btn-info btn-sm' %>
+                      <%end%>
+                    </div><!-- media-body -->
+                  </div><!-- media -->
+                </div><!-- card -->
+              <% end %>
             </div><!-- col-lg-12 -->
           </div><!-- row -->
+
         </div><!-- tab-pane -->
 
         <div class="tab-pane fade" id="solicitations">
@@ -94,4 +127,5 @@
         </div><!-- tab-pane -->
       </div>
   </div>
+
 <%end%>
