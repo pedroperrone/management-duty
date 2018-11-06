@@ -32,8 +32,11 @@ Rails.application.routes.draw do
     put 'shift_exchanges/:id/refuse' => 'shift_exchanges#refuse'
   end
 
-  # Shift controller
+  #  Users Controller
+  get 'users/:id' => 'users#show', :as => :user_show
+
   resources :shifts
 
   put 'shift_partitions/:id' => 'shift_partitions#partitionate'
+
 end

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <title><%= yield :page_title %></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag    'dashboard', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+  </head>
+  <body>
+    <!-- ########## START: LEFT PANEL ########## -->
+    <div class="br-logo"><a href="#">
+      <span>[</span> <%= image_tag('welcome/logo.png', :width => 30, :height => 30) %> MANAGEMENT <i>DUTY </i><span> ]</span></a>
+    </div>
+    <div class="br-sideleft overflow-y-auto">
+        <%= render 'layouts/dashboard/navigation' %>
+        <%= render 'layouts/dashboard/info_list' %>
+    </div><!-- br-sideleft -->
+    <!-- ########## END: LEFT PANEL ########## -->
+
+    <!-- ########## START: HEAD PANEL ########## -->
+      <%= render 'layouts/dashboard/head_panel' %>
+    <!-- ########## END: HEAD PANEL ########## -->
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <%= yield :section_description %>
+    <!-- ########## END: MAIN PANEL ########## -->
+      <%= javascript_include_tag 'dashboard', 'data-turbolinks-track': 'reload' %>
+      <%= yield :javascript %>
+  </body>
+</html>
