@@ -29,4 +29,6 @@ Rails.application.routes.draw do
     put 'shift_exchanges/:id/approve' => 'shift_exchanges#approve'
     put 'shift_exchanges/:id/refuse' => 'shift_exchanges#refuse'
   end
+
+  get 'users/:id' => 'users#show', :as => :user_show
 end
