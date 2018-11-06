@@ -4,7 +4,7 @@ class ShiftsController < ApplicationController
   before_action :authenticate_admin!, except: [:show, :index]
   before_action :authenticate_any!,  only: [:show, :index]
 
-  before_action :set_visible_shifts
+  before_action :set_visibility, except: [:new, :index]
 
   before_action :set_shift_from_id, only: [:edit, :update, :destroy]
 
@@ -12,7 +12,7 @@ class ShiftsController < ApplicationController
   before_action :set_user_from_shift, only: [:edit, :update, :destroy]
   before_action :set_user_from_email, only: :create
 
-  before_action :validate_visibility, only: [:edit, :update, :destroy, :create, :show]
+  before_action :validate_visibility, except: [:new, :index]
 
   # Views
   def new
@@ -69,15 +69,19 @@ class ShiftsController < ApplicationController
 
   #
   private
-  def set_visible_shifts
-    if admin_signed_in?
-      # only shifts from users the admin invited
-      @collabs = User.where(:invited_by => current_admin)
-    elsif user_signed_in?
-      # only shifts from users from the same company
-      @collabs = User.where(:invited_by => current_user.invited_by)
-    end
+  def set_visibility
+    @collabs = if admin_signed_in?
+                       User.where(invited_by: current_admin)
+                     else
+                       User.where(invited_by: current_user.invited_by)
+                     end
     @shifts = Shift.where(:user_id => @collabs.select(:id))
+  end
+
+  def validate_visibility
+    if @user.nil? || @collabs.where(:id => @user.id).count == 0
+      redirect_to root_path
+    end
   end
 
   def set_shift_from_id
@@ -111,12 +115,6 @@ class ShiftsController < ApplicationController
     begin
       @user = User.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to root_path
-    end
-  end
-  
-  def validate_visibility
-    if @user.nil? || @collabs.where(:id => @user.id).count == 0
       redirect_to root_path
     end
   end
