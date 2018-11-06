@@ -158,7 +158,7 @@ RSpec.describe ShiftsController, type: :controller do
 
     context 'without session' do
       it 'attempt to view shifts as anon' do
-        get :show, params: { id: '0' }
+        get :show, params: { id: 0.to_s }
 
         expect(response).to have_http_status(:redirect)
         expect(subject).to redirect_to(user_session_path)
@@ -181,8 +181,12 @@ RSpec.describe ShiftsController, type: :controller do
             it 'create valid shift as admin' do
               post :create, params: {
                 shift: {}
-                  .merge(split_date_params(DateTime.new(2018, 1, 1, 1, 1), :starts_at))
-                  .merge(split_date_params(DateTime.new(2018, 1, 1, 2, 1), :ends_at)),
+                  .merge(split_date_params(
+                           DateTime.new(2018, 1, 1, 1, 1), :starts_at
+                         ))
+                  .merge(split_date_params(
+                           DateTime.new(2018, 1, 1, 2, 1), :ends_at
+                         )),
                 user_email: shift_user.email
               }
 
@@ -195,8 +199,12 @@ RSpec.describe ShiftsController, type: :controller do
             it 'attempt to create shift too short as admin' do
               post :create, params: {
                 shift: {}
-                  .merge(split_date_params(DateTime.new(2018, 1, 1, 1, 1), :starts_at))
-                  .merge(split_date_params(DateTime.new(2018, 1, 1, 1, 1), :ends_at)),
+                  .merge(split_date_params(
+                           DateTime.new(2018, 1, 1, 1, 1), :starts_at
+                         ))
+                  .merge(split_date_params(
+                           DateTime.new(2018, 1, 1, 1, 1), :ends_at
+                         )),
                 user_email: shift_user.email
               }
 
@@ -208,8 +216,12 @@ RSpec.describe ShiftsController, type: :controller do
             it 'attempt to create impossible shift as admin' do
               post :create, params: {
                 shift: {}
-                  .merge(split_date_params(DateTime.new(2018, 1, 1, 2, 1), :starts_at))
-                  .merge(split_date_params(DateTime.new(2018, 1, 1, 1, 1), :ends_at)),
+                  .merge(split_date_params(
+                           DateTime.new(2018, 1, 1, 2, 1), :starts_at
+                         ))
+                  .merge(split_date_params(
+                           DateTime.new(2018, 1, 1, 1, 1), :ends_at
+                         )),
                 user_email: shift_user.email
               }
 
@@ -228,8 +240,12 @@ RSpec.describe ShiftsController, type: :controller do
           it 'attempt to create other\'s shift as admin' do
             post :create, params: {
               shift: {}
-                .merge(split_date_params(DateTime.new(2018, 1, 1, 1, 1), :starts_at))
-                .merge(split_date_params(DateTime.new(2018, 1, 1, 2, 1), :ends_at)),
+                .merge(split_date_params(
+                         DateTime.new(2018, 1, 1, 1, 1), :starts_at
+                       ))
+                .merge(split_date_params(
+                         DateTime.new(2018, 1, 1, 2, 1), :ends_at
+                       )),
               user_email: another_user.email
             }
 
@@ -264,6 +280,8 @@ RSpec.describe ShiftsController, type: :controller do
 
   describe "PATCH, #update" do
     let!(:any_shift) { FactoryBot.create(:shift, :with_user) }
+    let!(:date_before) { DateTime.new(2018, 1, 1, 1, 1) }
+    let!(:date_after) { DateTime.new(2018, 1, 1, 2, 1) }
 
     context 'with session' do
       before { sign_in resource }
@@ -312,8 +330,8 @@ RSpec.describe ShiftsController, type: :controller do
             put :update, params: {
               id: shift_param.id,
               shift: {}
-                .merge(split_date_params(DateTime.new(2018, 1, 1, 1, 1), :starts_at))
-                .merge(split_date_params(DateTime.new(2018, 1, 1, 2, 1), :ends_at))
+                .merge(split_date_params(date_before, :starts_at))
+                .merge(split_date_params(date_after, :ends_at))
             }
 
             expect(response).to have_http_status(:success)
@@ -323,8 +341,8 @@ RSpec.describe ShiftsController, type: :controller do
             put :update, params: {
               id: shift_param.id,
               shift: {}
-                .merge(split_date_params(DateTime.new(2018, 1, 1, 1, 1), :starts_at))
-                .merge(split_date_params(DateTime.new(2018, 1, 1, 1, 1), :ends_at))
+                .merge(split_date_params(date_before, :starts_at))
+                .merge(split_date_params(date_before, :ends_at))
             }
 
             expect(response).to have_http_status(:redirect)
@@ -364,7 +382,7 @@ RSpec.describe ShiftsController, type: :controller do
 
         context 'valid shift' do
           let!(:shift_owner) { FactoryBot.create(:user, invited_by: resource) }
-          let!(:user_shift) { FactoryBot.create(:shift, :with_user, user_id: shift_owner.id) }
+          let!(:user_shift) { FactoryBot.create(:shift, user_id: shift_owner.id) }
 
           it 'destroy existing shift as admin' do
             delete :destroy, params: { id: user_shift.id }

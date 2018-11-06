@@ -75,14 +75,12 @@ class ShiftsController < ApplicationController
                  User.where(invited_by: current_admin)
                else
                  User.where(invited_by: current_user.invited_by)
-                     end
+               end
     @shifts = Shift.where(user_id: @collabs.select(:id))
   end
 
   def validate_visibility
-    if @user.nil? || @collabs.where(id: @user.id).count == 0
-      redirect_to root_path
-    end
+    redirect_to root_path if @user.nil? || @collabs.where(id: @user.id).count.zero?
   end
 
   def set_shift_from_id
@@ -117,11 +115,11 @@ class ShiftsController < ApplicationController
 
   def parsed_date_params(label)
     # Method for parsing datetime_select date
-    date = DateTime.new(params[:shift][label.to_s + "(1i)"].to_i,
-                        params[:shift][label.to_s + "(2i)"].to_i,
-                        params[:shift][label.to_s + "(3i)"].to_i,
-                        params[:shift][label.to_s + "(4i)"].to_i,
-                        params[:shift][label.to_s + "(5i)"].to_i)
+    DateTime.new(params[:shift][label.to_s + "(1i)"].to_i,
+                 params[:shift][label.to_s + "(2i)"].to_i,
+                 params[:shift][label.to_s + "(3i)"].to_i,
+                 params[:shift][label.to_s + "(4i)"].to_i,
+                 params[:shift][label.to_s + "(5i)"].to_i)
   end
 
   def shift_params
