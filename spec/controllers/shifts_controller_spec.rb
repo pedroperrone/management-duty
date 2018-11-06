@@ -23,8 +23,8 @@ RSpec.describe ShiftsController, type: :controller do
                 user_email: shift_user.email
               }
 
-              expect(Shift.count).to eq(1)
               expect(subject).to redirect_to(user_show_path(shift_user))
+              expect(Shift.count).to eq(1)
             end
           end
 
@@ -77,7 +77,7 @@ RSpec.describe ShiftsController, type: :controller do
 
             expect(Shift.count).to eq 0
             expect(response).to have_http_status(:redirect)
-            expect(subject).to redirect_to(root_path)
+            expect(subject).to redirect_to(users_searches_path)
           end
         end
       end
@@ -227,9 +227,10 @@ RSpec.describe ShiftsController, type: :controller do
           let!(:user_shift) { FactoryBot.create(:shift, user_id: shift_owner.id) }
 
           it 'destroy existing shift as admin' do
-            delete :destroy, params: { id: user_shift.id }
+            delete :destroy, params: { id: user_shift.id,
+                                       user_email: shift_owner.email }
 
-            expect(response).to have_http_status(:success)
+            expect(subject).to redirect_to(user_show_path(shift_owner))
             expect(Shift.count).to eq 0
           end
         end
@@ -241,7 +242,7 @@ RSpec.describe ShiftsController, type: :controller do
             delete :destroy, params: { id: user_shift.id }
 
             expect(Shift.count).to eq 1
-            expect(subject).to redirect_to root_path
+            expect(subject).to redirect_to(users_searches_path)
             expect(response).to have_http_status(:redirect)
           end
         end
