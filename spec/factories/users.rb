@@ -9,4 +9,7 @@ FactoryBot.define do
     password { '123456' }
     role { 'Company_Administrator' }
   end
+  trait :invited_by do
+    invited_by { FactoryBot.create(:admin) }
+  end
 end

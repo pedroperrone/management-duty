@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   # Admin controller
   get 'company/collaborators' => 'admins/invitations#index'
 
+
   namespace :users do
     resources :shift_exchanges, only: %i[create index]
     put 'shift_exchanges/:id/approve' => 'shift_exchanges#approve'
@@ -24,11 +25,15 @@ Rails.application.routes.draw do
     resources :searches, only: %i[index]
   end
 
+
   namespace :admins do
     resources :shift_exchanges, only: :index
     put 'shift_exchanges/:id/approve' => 'shift_exchanges#approve'
     put 'shift_exchanges/:id/refuse' => 'shift_exchanges#refuse'
   end
+
+  # Shift controller
+  resources :shifts
 
   put 'shift_partitions/:id' => 'shift_partitions#partitionate'
 end

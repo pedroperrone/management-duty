@@ -1,0 +1,67 @@
+<%= content_for :page_title do %>
+  Management Duty - company
+<%end%>
+
+<%= content_for :breadcrumb do %>
+  <a class="breadcrumb-item" href="index">Dashboard</a>
+  <span class="breadcrumb-item active">Company</span>
+  <span class="breadcrumb-item active">Collaborators</span>
+<%end%>
+
+<%= content_for :body_title do %>
+  Lorem ipsum dolor sit
+<%end%>
+
+<%= content_for :body_description do %>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam maximus
+<%end%>
+
+<%= content_for :section_description do %>
+
+	<%= content_for :form_title do %>
+	  Log in
+	<% end %>
+
+	<%= content_for :form_description do %>
+	  Welcome back!
+	<% end %>
+
+	<% if not params[:show_old]
+	   @shifts = @shifts.where(Shift.arel_table[:starts_at].gt(Time.now))
+	end %>
+	
+	<% @shifts.each do |shift| %>
+
+	  <% if admin_signed_in? %>
+	  <%= User.find(shift.user_id).email %>
+	  <% end %>
+	  <br>
+	
+	  <%= shift.id %>
+	  <br>
+
+	  <%= shift.starts_at %>
+	  <br>
+
+	  <%= shift.ends_at %>
+	  <br>
+
+	  <% if admin_signed_in? %>
+	    <%= form_tag(edit_shift_path(shift.id), method: :get) do %>
+	      <%= submit_tag("Edit") %>
+	    <% end %>
+
+	    <%= form_for(shift, params: {:id => shift.id}, :method => :delete) do %>
+	      <%= submit_tag("Delete") %>
+	    <% end %>
+	  <% end %>
+	  
+	  <br>
+
+	  <br>
+	<%end%> 
+	
+<% end %>
+
+
+

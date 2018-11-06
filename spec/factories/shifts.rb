@@ -6,7 +6,7 @@ FactoryBot.define do
     ends_at { Time.now + 8.hour }
   end
   trait :with_user do
-    user { FactoryBot.create(:user) }
+    user { FactoryBot.create(:user, :invited_by) }
   end
   trait :inactive do
     active { false }
