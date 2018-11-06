@@ -8,13 +8,13 @@ class ShiftsController < ApplicationController
 
   before_action :set_visibility, except: %i[new index]
 
-  before_action :set_shift_from_id, only: %i[edit update destroy]
+  before_action :set_user_from_email, only: %i[edit destroy]
 
   before_action :set_user_from_id, only: [:show]
-  before_action :set_user_from_shift, only: %i[edit update destroy]
-  before_action :set_user_from_email, only: :create
+  before_action :set_user_from_shift, only: %i[edit destroy]
+  before_action :set_user_from_email, only: %i[create update]
 
-  before_action :validate_visibility, except: %i[new index]
+  before_action :validate_visibility, except: %i[new update index]
 
   # Views
   def new
@@ -41,21 +41,21 @@ class ShiftsController < ApplicationController
     @shift = Shift.new(shift_params)
 
     if @shift.save
-      render 'show', layout: 'dashboard'
+      redirect_to user_show_path(@user)
     else
-      redirect_to new_shift_path
+      redirect_to user_show_path(@user)
     end
   end
 
   def update
     # set_shift_from_id
     # set_user_from_shift
-
-    if @shift.update(shift_params)
-      render 'show', layout: 'dashboard'
-    else
-      redirect_to edit_shift_path
+    puts '--------------------------------'
+    @shift = Shift.find(params[:shift_id])
+    if @shift.update(update_params)
+      redirect_to user_show_path(@user)
     end
+
   end
 
   def destroy
@@ -87,7 +87,7 @@ class ShiftsController < ApplicationController
     # When a shift id is passed on params
 
     @shift = Shift.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordNotFound
     redirect_to root_path
   end
 
@@ -101,7 +101,7 @@ class ShiftsController < ApplicationController
     # When an user e-mail is passed on params
 
     @user = User.find_by_email(params[:user_email])
-  rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordNotFound
     redirect_to new_shift_path
   end
 
@@ -115,19 +115,26 @@ class ShiftsController < ApplicationController
 
   def parsed_date_params(label)
     # Method for parsing datetime_select date
-    DateTime.new(params[:shift][label.to_s + "(1i)"].to_i,
-                 params[:shift][label.to_s + "(2i)"].to_i,
-                 params[:shift][label.to_s + "(3i)"].to_i,
-                 params[:shift][label.to_s + "(4i)"].to_i,
-                 params[:shift][label.to_s + "(5i)"].to_i)
+    puts '-------------------------------------'
+    puts label
+    DateTime.strptime(label,'%d/%m/%Y %I:%M %p')
   end
 
   def shift_params
+    shift = params[:shift]
+    puts shift
     {
-
-      starts_at: parsed_date_params(:starts_at),
-      ends_at: parsed_date_params(:ends_at),
+      starts_at: parsed_date_params(shift[:starts_at]),
+      ends_at: parsed_date_params(shift[:ends_at]),
       user_id: @user.id
     }
   end
+
+  def update_params
+    {
+      starts_at: parsed_date_params(params[:starts_at]),
+      ends_at: parsed_date_params(params[:ends_at])
+    }
+  end
+
 end
