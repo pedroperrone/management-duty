@@ -173,6 +173,8 @@ RSpec.describe ShiftsController, type: :controller do
 
       context 'admin session' do
         let!(:resource) { FactoryBot.create(:admin) }
+        let!(:date_before) { DateTime.new(2018, 1, 1, 1, 1) }
+        let!(:date_after) { DateTime.new(2018, 1, 1, 2, 1) }
 
         context 'shift owner' do
           let!(:shift_user) { FactoryBot.create(:user, invited_by: resource) }
@@ -181,12 +183,8 @@ RSpec.describe ShiftsController, type: :controller do
             it 'create valid shift as admin' do
               post :create, params: {
                 shift: {}
-                  .merge(split_date_params(
-                           DateTime.new(2018, 1, 1, 1, 1), :starts_at
-                         ))
-                  .merge(split_date_params(
-                           DateTime.new(2018, 1, 1, 2, 1), :ends_at
-                         )),
+                  .merge(split_date_params(date_before, :starts_at))
+                  .merge(split_date_params(date_after, :ends_at)),
                 user_email: shift_user.email
               }
 
@@ -199,12 +197,8 @@ RSpec.describe ShiftsController, type: :controller do
             it 'attempt to create shift too short as admin' do
               post :create, params: {
                 shift: {}
-                  .merge(split_date_params(
-                           DateTime.new(2018, 1, 1, 1, 1), :starts_at
-                         ))
-                  .merge(split_date_params(
-                           DateTime.new(2018, 1, 1, 1, 1), :ends_at
-                         )),
+                  .merge(split_date_params(date_before, :starts_at))
+                  .merge(split_date_params(date_before, :ends_at)),
                 user_email: shift_user.email
               }
 
@@ -216,12 +210,8 @@ RSpec.describe ShiftsController, type: :controller do
             it 'attempt to create impossible shift as admin' do
               post :create, params: {
                 shift: {}
-                  .merge(split_date_params(
-                           DateTime.new(2018, 1, 1, 2, 1), :starts_at
-                         ))
-                  .merge(split_date_params(
-                           DateTime.new(2018, 1, 1, 1, 1), :ends_at
-                         )),
+                  .merge(split_date_params(date_before, :starts_at))
+                  .merge(split_date_params(date_before, :ends_at)),
                 user_email: shift_user.email
               }
 
