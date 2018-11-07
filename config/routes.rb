@@ -16,8 +16,7 @@ Rails.application.routes.draw do
 
   # Admin controller
   get 'company/collaborators' => 'admins/invitations#index'
-
-
+  
   namespace :users do
     resources :shift_exchanges, only: %i[create index]
     put 'shift_exchanges/:id/approve' => 'shift_exchanges#approve'
@@ -34,8 +33,7 @@ Rails.application.routes.draw do
 
   #  Users Controller
   get 'users/:id' => 'users#show', :as => :user_show
-
-
+  
   put 'shifts' => 'shifts#update', :as => :shift_update
   post 'shifts' => 'shifts#create', :as => :shift_create
   delete 'shifts' => 'shifts#destroy', :as => :shift_delete
