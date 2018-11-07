@@ -43,7 +43,7 @@ RSpec.describe ShiftPartitionsController, type: :controller do
             {
               params: {
                 id: shift.id,
-                partition_time: partition_time
+                partition_time: to_datetime_picker_format(partition_time)
               }
             }
           end
