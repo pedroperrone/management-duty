@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 
   put 'shifts' => 'shifts#update', :as => :shift_update
   post 'shifts' => 'shifts#create', :as => :shift_create
-  post 'shifts' => 'shifts#destroy', :as => :shift_delete
+  delete 'shifts' => 'shifts#destroy', :as => :shift_delete
 
   put 'shift_partitions/:id' => 'shift_partitions#partitionate'
 

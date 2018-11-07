@@ -46,7 +46,7 @@ class ShiftsController < ApplicationController
       return if @shift.user.invited_by == current_admin
     elsif user_signed_in?
       return if @shift.user == current_user
-    end 
+    end
     redirect_to root_path
   end
 
@@ -61,7 +61,7 @@ class ShiftsController < ApplicationController
   end
 
   def parsed_date_params(label)
-    DateTime.strptime(unwrapped_shift_param[label],'%d/%m/%Y %I:%M %p')
+    DateTime.strptime(unwrapped_shift_param(label),'%d/%m/%Y %I:%M %p')
   end
 
   def create_shift_params
@@ -75,11 +75,13 @@ class ShiftsController < ApplicationController
     end
   end
 
-  def unwrapped_shift_param
-    params[:shift]
+  def unwrapped_shift_param(key)
+    shift = params[:shift]
+    shift[key]
   end
 
   def set_shift
+    puts '-----------'
     @shift = Shift.find(params[:id])
   end
 
