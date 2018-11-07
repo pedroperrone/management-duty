@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     @shift = Shift.new
     @user = User.find(id_param)
     @shifts = @user.shifts
+    @my_shifts = current_user.shifts
     render layout: 'profile'
   end
 
@@ -23,5 +24,5 @@ class UsersController < ApplicationController
   def id_param
     params[:id]
   end
-  
+
 end

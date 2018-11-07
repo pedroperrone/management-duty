@@ -5,7 +5,7 @@
       <div class="col-lg-12">
         <% @shifts.each do |shift| %>
           <div class="media-list bg-white rounded shadow-base mt-1">
-            <div class="media pd-20 pd-xs-30">
+            <div class="media pd-20 pd-xs-30 shift" id='<%="shiftexchange#{shift.id}"%>'>
               <div class="media-body mg-l-20">
                 <div class="d-flex justify-content-between mg-b-10">
                 <div>
@@ -49,11 +49,69 @@
                 <% if current_user.id == shift.user_id%>
                   <button class="btn btn-info btn-sm ml-3 partition" id='<%="#{shift.id}"%>'>Particionar turno</button>
                 <% end %>
+                <% if current_user.id != shift.user_id%>
+                  <button class="btn btn-info btn-sm ml-3 exchange" id='exchange<%="#{shift.id}"%>' shift='<%="#{shift.id}"%>'>Solicitar troca</button>
+                <% end %>
                 <!-- END Shift update form -->
               </div><!-- media-body -->
             </div><!-- media -->
+
           </div><!-- card -->
         <% end %>
+
+        <div class="media-list bg-white rounded shadow-base mt-2" style="display: none" id="exchange">
+          <div class="media pd-20 pd-xs-30">
+            <div class="media-body mg-l-20 align-items-center justify-content-center d-flex">
+              <%= form_tag(users_shift_exchange_path, method: "post") do |f| %>
+                <input type="text" name="given_up_shift_id"  id="given_up_shift_id" style="display: none"/>
+                <input type="text" name="requested_shift_id" id="requested_shift_id" style="display: none"/>
+                <button class="btn btn-info btn-sm" type="submit">Trocar turnos</button>
+                <button class="btn btn-danger btn-sm ml-3" >Cancelar</button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div id="my_shifts" style="display: none">
+          <h4 class="mt-4">Seleciono o seu turno</h4>
+
+          <% @my_shifts.each do |my_shift| %>
+            <div class="media-list bg-white rounded shadow-base mt-1 my_shift" id='<%="myshift#{my_shift.id}"%>'>
+              <div class="media pd-20 pd-xs-30">
+                <div class="media-body mg-l-20">
+                  <div class="d-flex justify-content-between mg-b-10">
+                  <div>
+                    <h6 class="mg-b-2 tx-inverse tx-14">Created at: <%= my_shift.created_at%></h6>
+                    <span class="tx-12 tx-gray-500">By: <%= current_user.invited_by.email %></span>
+                  </div>
+                </div>
+                <!-- My Shifts form -->
+                  <div class="form-group col-sm-6">
+                      <div class="input-group date" id='<%="starts_at#{my_shift.id}"%>' data-target-input="nearest">
+                          <input type="text" name="shift[starts_at]" value="<%= my_shift.starts_at.strftime('%d/%m/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#starts_at#{my_shift.id}"%>' disabled/>
+                          <div class="input-group-append" data-target='<%="#starts_at#{my_shift.id}"%>' data-toggle="datetimepicker">
+                              <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                      <div class="input-group date" id='<%="ends_at#{my_shift.id}"%>' data-target-input="nearest">
+                          <input type="text" name="shift[ends_at]" value="<%= my_shift.ends_at.strftime('%d/%m/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#ends_at#{my_shift.id}"%>' disabled/>
+                          <div class="input-group-append" data-target='<%="#ends_at#{my_shift.id}"%>' data-toggle="datetimepicker">
+                              <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
+                          </div>
+                      </div>
+                  </div>
+
+                <button class="btn btn-info btn-sm ml-3 select" id='<%="#{my_shift.id}"%>'>Selecionar</button>
+                <!-- END My Shifts -->
+                </div><!-- media-body -->
+              </div><!-- media -->
+
+            </div><!-- card -->
+          <% end %>
+      </div>
+
       </div><!-- col-lg-12 -->
     </div><!-- row -->
   </div><!-- tab-pane -->
