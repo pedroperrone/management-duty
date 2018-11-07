@@ -33,4 +33,8 @@ class ApplicationController < ActionController::Base
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
   end
+
+  def parse_datetime_from_picker(datetime)
+    DateTime.strptime(datetime, '%d/%m/%Y %I:%M %p')
+  end
 end

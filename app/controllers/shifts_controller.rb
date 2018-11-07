@@ -61,7 +61,7 @@ class ShiftsController < ApplicationController
   end
 
   def parsed_date_params(label)
-    DateTime.strptime(unwrapped_shift_param(label),'%d/%m/%Y %I:%M %p')
+    parse_datetime_from_picker(unwrapped_shift_param(label))
   end
 
   def create_shift_params

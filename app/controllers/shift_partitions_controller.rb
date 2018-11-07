@@ -31,6 +31,6 @@ class ShiftPartitionsController < ApplicationController
   end
 
   def partition_time
-    params[:partition_time]
+    to_datetime_picker_format(params[:partition_time])
   end
 end

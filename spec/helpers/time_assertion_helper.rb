@@ -7,6 +7,7 @@ module TimeAssertionHelper
   end
 
   def to_datetime_picker_format(datetime)
+    datetime = datetime.to_datetime if datetime.class == String
     datetime.strftime('%d/%m/%Y %I:%M %p')
   end
 end
