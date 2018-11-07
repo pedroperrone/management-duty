@@ -7,7 +7,13 @@ class ApplicationController < ActionController::Base
   protected
 
   def after_sign_in_path_for(resource)
-    dashboard_path || stored_location_for(resource) || root_path
+    if current_admin
+      company_collaborators_path || root_path
+    elsif current_user
+      user_show_path(current_user) || stored_location_for(resource) || root_path
+    else
+      root_path
+    end
   end
 
   def after_invite_path_for(resource)

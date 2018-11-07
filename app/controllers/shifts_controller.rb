@@ -3,7 +3,7 @@
 require 'date'
 
 class ShiftsController < ApplicationController
-  before_action :authenticate_admin!, except: :index
+  before_action :logged_in?, except: :index
   before_action :set_user, except: :index
   before_action :authenticate_admin_relationship, except: :index
   before_action :set_shift, except: %i[index create]
@@ -41,12 +41,16 @@ class ShiftsController < ApplicationController
 
   private
 
+  def logged_in?
+    authenticate_admin! || authenticate_user!
+  end
+
   def authenticate_resource_company
     if admin_signed_in?
       return if @shift.user.invited_by == current_admin
     elsif user_signed_in?
       return if @shift.user == current_user
-    end 
+    end
     redirect_to root_path
   end
 
@@ -61,7 +65,7 @@ class ShiftsController < ApplicationController
   end
 
   def parsed_date_params(label)
-    DateTime.strptime(unwrapped_shift_param[label],'%d/%m/%Y %I:%M %p')
+    DateTime.strptime(unwrapped_shift_param(label),'%d/%m/%Y %I:%M %p')
   end
 
   def create_shift_params
@@ -75,11 +79,13 @@ class ShiftsController < ApplicationController
     end
   end
 
-  def unwrapped_shift_param
-    params[:shift]
+  def unwrapped_shift_param(key)
+    shift = params[:shift]
+    shift[key]
   end
 
   def set_shift
+    puts '-----------'
     @shift = Shift.find(params[:id])
   end
 

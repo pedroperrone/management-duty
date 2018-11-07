@@ -1,33 +1,22 @@
 <label class="sidebar-label pd-x-10 mg-t-20 op-3">Navigation</label>
 <ul class="br-sideleft-menu">
-  <li class="br-menu-item">
-    <a href="/dashboard" class="br-menu-link active">
-      <i class="menu-item-icon icon ion-ios-home-outline tx-24"></i>
-      <span class="menu-item-label">Dashboard</span>
-    </a><!-- br-menu-link -->
-  </li><!-- br-menu-item -->
-  <% if user_signed_in? %>
-  <li class="br-menu-item">
-    <a href="#" class="br-menu-link with-sub">
-      <i class="menu-item-icon icon ion-ios-timer-outline tx-24"></i>
-      <span class="menu-item-label">Turnos</span>
-    </a><!-- br-menu-link -->
-    <ul class="br-menu-sub nav flex-column">
-      <li class="sub-item"><%= link_to('Pesquisar Turnos', users_searches_path, class: 'sub-link')%></li>
-      <li class="sub-item"><a href="#" class="sub-link">Fracionar Turnos</a></li>
-      <li class="sub-item"><a href="#" class="sub-link">Checar Turnos</a></li>
-    </ul>
-  </li><!-- br-menu-item -->
+    <% if user_signed_in? %>
+    <li class="br-menu-item">
+      <a href='<%= "/users/#{current_user.id}" %>' class="br-menu-link active">
+        <i class="menu-item-icon icon ion-ios-home-outline tx-24"></i>
+        <span class="menu-item-label">Meu perfil</span>
+      </a><!-- br-menu-link -->
+    </li><!-- br-menu-item -->
+    <li class="br-menu-item">
+      <a href="/users/searches" class="br-menu-link">
+        <i class="menu-item-icon icon ion-search tx-24"></i>
+        <span class="menu-item-label">Pesquisar Turnos</span>
+      </a><!-- br-menu-link -->
+    </li><!-- br-menu-item -->
   <li class="br-menu-item">
     <a href="#" class="br-menu-link">
       <i class="menu-item-icon icon ion-ios-chatboxes-outline tx-24"></i>
       <span class="menu-item-label">Mensagens</span>
-    </a><!-- br-menu-link -->
-  </li><!-- br-menu-item -->
-  <li class="br-menu-item">
-    <a href="#" class="br-menu-link">
-      <i class="menu-item-icon icon ion-ios-paper-outline tx-24"></i>
-      <span class="menu-item-label">Relatórios</span>
     </a><!-- br-menu-link -->
   </li><!-- br-menu-item -->
   <% end %>

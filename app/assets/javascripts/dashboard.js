@@ -18,6 +18,12 @@ $(document).ready(function(){
    $(this).addClass('active');
  });
 
+ $('.partition').click(function(){
+   var id = $(this).attr('id');
+   let name = '#partition'+id
+   $(name).toggle();
+ });
+
  // This will collapsed sidebar menu on left into a mini icon menu
  $('#btnLeftMenu').on('click', function(){
    var menuText = $('.menu-item-label');
