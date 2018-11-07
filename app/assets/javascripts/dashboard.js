@@ -8,6 +8,7 @@
 //= require dashboard/jquery-ui/jquery-ui
 //= require dashboard/jquery-switchbutton/jquery-switchButton
 //= require dashboard/peity/jquery-peity
+//= require tempusdominus-bootstrap-4.js
 
 $(document).ready(function(){
 

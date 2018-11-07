@@ -35,7 +35,10 @@ Rails.application.routes.draw do
   #  Users Controller
   get 'users/:id' => 'users#show', :as => :user_show
 
-  resources :shifts
+
+  put 'shifts' => 'shifts#update', :as => :shift_update
+  post 'shifts' => 'shifts#create', :as => :shift_create
+  delete 'shifts' => 'shifts#destroy', :as => :shift_delete
 
   put 'shift_partitions/:id' => 'shift_partitions#partitionate'
 
