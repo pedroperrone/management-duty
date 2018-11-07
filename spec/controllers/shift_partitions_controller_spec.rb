@@ -72,7 +72,7 @@ RSpec.describe ShiftPartitionsController, type: :controller do
               expect { put :partitionate, params }
                 .to change(::Shift, :count).by(2)
 
-              expect(subject).to redirect_to(dashboard_path)
+              expect(subject).to redirect_to(user_show_path(user))
             end
           end
         end
