@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate_admin!, :validate_params
+  before_action :validate_params
 
   def show
     @shift = Shift.new
@@ -23,5 +23,5 @@ class UsersController < ApplicationController
   def id_param
     params[:id]
   end
-
+  
 end

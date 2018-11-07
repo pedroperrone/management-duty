@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'management_duty/errors/time_out_of_shift_range_error'
+require 'management_duty/shift/partitionator.rb'
+
 class ShiftPartitionsController < ApplicationController
   before_action :authenticate_user!, :authenticate_shift_ownership
 
@@ -11,7 +14,7 @@ class ShiftPartitionsController < ApplicationController
   def partitionate
     ManagementDuty::Shift::Partitionator.new(shift)
                                         .partitionate_at(partition_time)
-    redirect_to dashboard_path
+    redirect_to user_show_path(current_user)
   end
 
   private

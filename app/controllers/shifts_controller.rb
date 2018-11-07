@@ -3,7 +3,8 @@
 require 'date'
 
 class ShiftsController < ApplicationController
-  before_action :authenticate_admin!, except: :index
+  
+  before_action :logged_in?, except: :index
   before_action :set_user, except: :index
   before_action :authenticate_admin_relationship, except: :index
   before_action :set_shift, except: %i[index create]
@@ -40,6 +41,10 @@ class ShiftsController < ApplicationController
   end
 
   private
+  
+  def logged_in?
+    authenticate_admin! || authenticate_user!
+  end
 
   def authenticate_resource_company
     if admin_signed_in?
@@ -67,7 +72,7 @@ class ShiftsController < ApplicationController
   def create_shift_params
     update_shift_params.merge(user: @user)
   end
-
+  
   def update_shift_params
     %i[starts_at ends_at].inject({}) do |hash, key|
       hash[key] = parsed_date_params(key)
