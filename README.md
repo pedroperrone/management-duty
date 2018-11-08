@@ -1,4 +1,4 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/d21c02c221f6c0dd1796/maintainability)](https://codeclimate.com/github/pedroperrone/management-duty/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/d21c02c221f6c0dd1796/test_coverage)](https://codeclimate.com/github/pedroperrone/management-duty/test_coverage) [![Build Status](https://semaphoreci.com/api/v1/pedroperrone/management-duty/branches/master/badge.svg)](https://semaphoreci.com/pedroperrone/management-duty)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d21c02c221f6c0dd1796/maintainability)](https://codeclimate.com/github/pedroperrone/management-duty/maintainability) [![Build Status](https://semaphoreci.com/api/v1/pedroperrone/management-duty/branches/master/badge.svg)](https://semaphoreci.com/pedroperrone/management-duty)
 
 ## Descrição
 
