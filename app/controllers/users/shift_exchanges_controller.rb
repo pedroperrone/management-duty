@@ -16,8 +16,6 @@ class Users::ShiftExchangesController < ApplicationController
 
   def create
     new_shift_exchenge = ShiftExchange.new(shift_exchange_params)
-    puts '-----------------------------'
-    pp new_shift_exchenge
     if new_shift_exchenge.save
       redirect_to users_searches_path
     else
@@ -77,8 +75,6 @@ class Users::ShiftExchangesController < ApplicationController
   end
 
   def current_user_owns_requested_shift?
-    puts '----------------'
-    puts @shift_exchange.requested_shift.user_id, current_user.id
     @shift_exchange.requested_shift.user_id == current_user.id
   end
 end
