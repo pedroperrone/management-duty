@@ -22,6 +22,9 @@ class ShiftsController < ApplicationController
     else
       redirect_to user_show_path(@user)
     end
+
+
+
   end
 
   def update
