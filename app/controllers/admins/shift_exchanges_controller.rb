@@ -8,13 +8,14 @@ class Admins::ShiftExchangesController < ApplicationController
 
   def index
     @shift_exchanges = ShiftExchange.pending_for_admin(current_admin)
+    render layout: 'dashboard'
   end
 
   def approve
     if @shift_exchange.be_approved_by_admin
       redirect_to admins_shift_exchanges_path
     else
-      redirect_to dashboard_path
+      redirect_to admins_shift_exchanges_path
     end
   end
 
@@ -22,7 +23,7 @@ class Admins::ShiftExchangesController < ApplicationController
     if @shift_exchange.be_refused_by_admin
       redirect_to admins_shift_exchanges_path
     else
-      redirect_to dashboard_path
+      redirect_to admins_shift_exchanges_path
     end
   end
 
