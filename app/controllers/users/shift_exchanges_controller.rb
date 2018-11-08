@@ -16,10 +16,13 @@ class Users::ShiftExchangesController < ApplicationController
 
   def create
     new_shift_exchenge = ShiftExchange.new(shift_exchange_params)
+    puts '-----------------------------'
+    pp new_shift_exchenge
     if new_shift_exchenge.save
-      redirect_to users_shift_exchanges_path
+      redirect_to dashboard_path
     else
-      redirect_to root_path
+
+      redirect_to dashboard_path
     end
   end
 

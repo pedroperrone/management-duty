@@ -19,8 +19,8 @@ Rails.application.routes.draw do
 
   namespace :users do
     resources :shift_exchanges, only: %i[index]
-    put 'shift_exchanges/:id/approve' => 'shift_exchanges#approve'
-    put 'shift_exchanges/:id/refuse' => 'shift_exchanges#refuse'
+    put 'shift_exchanges' => 'shift_exchanges#approve', :as => :exchenge_approve
+    put 'shift_exchanges' => 'shift_exchanges#refuse', :as => :exchenge_refuse
     post 'shift_exchanges' => 'shift_exchanges#create', :as => :shift_exchange
     resources :searches, only: %i[index]
   end

@@ -6,8 +6,13 @@ class UsersController < ApplicationController
   def show
     @shift = Shift.new
     @user = User.find(id_param)
+    user = @user
     @shifts = @user.shifts
-    @my_shifts = current_user.shifts
+    if current_user
+      @my_shifts = current_user.shifts
+      @my_shift_exchanges = ShiftExchange.pending_for_user(current_user)
+    end
+    @shift_exchanges = ShiftExchange.pending_for_user(user)
     render layout: 'profile'
   end
 
