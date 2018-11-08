@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'management_duty/shift/copier.rb'
 
 class ShiftExchange < ApplicationRecord
   belongs_to :requested_shift, class_name: Shift.name
@@ -19,6 +20,7 @@ class ShiftExchange < ApplicationRecord
       .joins('JOIN shifts ON shifts.id = shift_exchanges.given_up_shift_id')
       .joins('JOIN users ON shifts.user_id = users.id')
       .where('users.invited_by_id = ?', admin.id)
+      .where(pending_admin_approval: true)
   }
 
   def be_approved_by_user

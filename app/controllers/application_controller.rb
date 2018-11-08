@@ -41,6 +41,6 @@ class ApplicationController < ActionController::Base
   end
 
   def parse_datetime_from_picker(datetime)
-    DateTime.strptime(datetime, '%d/%m/%Y %I:%M %p')
+    DateTime.strptime(datetime, '%m/%d/%Y %I:%M %p')
   end
 end

@@ -14,6 +14,7 @@ class ShiftPartitionsController < ApplicationController
   def partitionate
     ManagementDuty::Shift::Partitionator.new(shift)
                                         .partitionate_at(partition_time)
+
     redirect_to user_show_path(current_user)
   end
 
@@ -34,6 +35,6 @@ class ShiftPartitionsController < ApplicationController
   end
 
   def partition_time
-    to_datetime_picker_format(params[:partition_time])
+    parse_datetime_from_picker(params[:partition_time])
   end
 end

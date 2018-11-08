@@ -19,18 +19,17 @@ class Users::ShiftExchangesController < ApplicationController
     puts '-----------------------------'
     pp new_shift_exchenge
     if new_shift_exchenge.save
-      redirect_to dashboard_path
+      redirect_to users_searches_path
     else
-
       redirect_to dashboard_path
     end
   end
 
   def approve
     if @shift_exchange.be_approved_by_user
-      redirect_to dashboard_path
+      redirect_to user_show_path(current_user.id)
     else
-      redirect_to root_path
+      redirect_to user_show_path(current_user.id)
     end
   end
 
