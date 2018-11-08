@@ -48,7 +48,7 @@
                   <%= form_tag(shift_update_path, method: "put") do |f| %>
                     <div class="form-group col-sm-6">
                         <div class="input-group date" id='<%="starts_at#{shift.id}"%>' data-target-input="nearest">
-                            <input type="text" name="shift[starts_at]" value="<%= shift.starts_at.strftime('%d/%m/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#starts_at#{shift.id}"%>'/>
+                            <input type="text" name="shift[starts_at]" value="<%= shift.starts_at.strftime('%m/%d/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#starts_at#{shift.id}"%>'/>
                             <div class="input-group-append" data-target='<%="#starts_at#{shift.id}"%>' data-toggle="datetimepicker">
                                 <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -56,7 +56,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <div class="input-group date" id='<%="ends_at#{shift.id}"%>' data-target-input="nearest">
-                            <input type="text" name="shift[ends_at]" value="<%= shift.ends_at.strftime('%d/%m/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#ends_at#{shift.id}"%>'/>
+                            <input type="text" name="shift[ends_at]" value="<%= shift.ends_at.strftime('%m/%d/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#ends_at#{shift.id}"%>'/>
                             <div class="input-group-append" data-target='<%="#ends_at#{shift.id}"%>' data-toggle="datetimepicker">
                                 <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                             </div>

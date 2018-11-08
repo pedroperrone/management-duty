@@ -18,7 +18,7 @@
                 <%= text_field_tag(:id, shift.id, style: 'visibility:hidden') %><br/>
                   <div class="form-group col-sm-6">
                       <div class="input-group date" id='<%="starts_at#{shift.id}"%>' data-target-input="nearest">
-                          <input type="text" name="shift[starts_at]" value="<%= shift.starts_at.strftime('%d/%m/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#starts_at#{shift.id}"%>' disabled/>
+                          <input type="text" name="shift[starts_at]" value="<%= shift.starts_at.strftime('%m/%d/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#starts_at#{shift.id}"%>' disabled/>
                           <div class="input-group-append" data-target='<%="#starts_at#{shift.id}"%>' data-toggle="datetimepicker">
                               <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                           </div>
@@ -28,7 +28,7 @@
                   <div style="display:none;" id='<%="partition#{shift.id}"%>'>
                     <div class="d-md-flex col-sm-7">
                       <div class="input-group date" id='<%="partition_time#{shift.id}"%>' data-target-input="nearest">
-                          <input type="text" name="partition_time" value="<%= shift.starts_at.strftime('%d/%m/%Y %I:%M %p') %>" class="form-control datetimepicker-input mb-3" data-target='<%="#partition_time#{shift.id}"%>'/>
+                          <input type="text" name="partition_time" value="<%= shift.starts_at.strftime('%m/%d/%Y %I:%M %p') %>" class="form-control datetimepicker-input mb-3" data-target='<%="#partition_time#{shift.id}"%>'/>
                           <div class="input-group-append" data-target='<%="#partition_time#{shift.id}"%>' data-toggle="datetimepicker">
                               <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                           </div>
@@ -39,7 +39,7 @@
                   <% end %>
                   <div class="form-group col-sm-6">
                       <div class="input-group date" id='<%="ends_at#{shift.id}"%>' data-target-input="nearest">
-                          <input type="text" name="shift[ends_at]" value="<%= shift.ends_at.strftime('%d/%m/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#ends_at#{shift.id}"%>' disabled/>
+                          <input type="text" name="shift[ends_at]" value="<%= shift.ends_at.strftime('%m/%d/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#ends_at#{shift.id}"%>' disabled/>
                           <div class="input-group-append" data-target='<%="#ends_at#{shift.id}"%>' data-toggle="datetimepicker">
                               <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                           </div>
@@ -73,7 +73,7 @@
         </div>
 
         <div id="my_shifts" style="display: none">
-          <h4 class="mt-4">Seleciono o seu turno</h4>
+          <h4 class="mt-4">Selecione o seu turno</h4>
 
           <% @my_shifts.each do |my_shift| %>
             <div class="media-list bg-white rounded shadow-base mt-1 my_shift" id='<%="myshift#{my_shift.id}"%>'>
@@ -88,7 +88,7 @@
                 <!-- My Shifts form -->
                   <div class="form-group col-sm-6">
                       <div class="input-group date" id='<%="starts_at#{my_shift.id}"%>' data-target-input="nearest">
-                          <input type="text" name="shift[starts_at]" value="<%= my_shift.starts_at.strftime('%d/%m/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#starts_at#{my_shift.id}"%>' disabled/>
+                          <input type="text" name="shift[starts_at]" value="<%= my_shift.starts_at.strftime('%m/%d/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#starts_at#{my_shift.id}"%>' disabled/>
                           <div class="input-group-append" data-target='<%="#starts_at#{my_shift.id}"%>' data-toggle="datetimepicker">
                               <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                           </div>
@@ -96,7 +96,7 @@
                   </div>
                   <div class="form-group col-sm-6">
                       <div class="input-group date" id='<%="ends_at#{my_shift.id}"%>' data-target-input="nearest">
-                          <input type="text" name="shift[ends_at]" value="<%= my_shift.ends_at.strftime('%d/%m/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#ends_at#{my_shift.id}"%>' disabled/>
+                          <input type="text" name="shift[ends_at]" value="<%= my_shift.ends_at.strftime('%m/%d/%Y %I:%M %p') %>" class="form-control datetimepicker-input" data-target='<%="#ends_at#{my_shift.id}"%>' disabled/>
                           <div class="input-group-append" data-target='<%="#ends_at#{my_shift.id}"%>' data-toggle="datetimepicker">
                               <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                           </div>
@@ -123,7 +123,7 @@
 
           <% @my_shift_exchanges.each do |my_pending_shifts| %>
 
-            <div class="media-list bg-white rounded shadow-base">
+            <div class="media-list bg-white rounded shadow-base mt-2">
               <div class="media pd-20 pd-xs-30">
 
                 <div class="media-body mg-l-20">
@@ -139,7 +139,7 @@
                       <p> Seu turno: </p>
                     <div class="form-group col-sm-6">
                         <div class="input-group date" data-target-input="nearest">
-                            <input type="text" value='<%=" #{@my_requested_shift.starts_at.strftime("%d/%m/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
+                            <input type="text" value='<%=" #{@my_requested_shift.starts_at.strftime("%m/%d/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
                             <div class="input-group-append" >
                                 <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -147,7 +147,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <div class="input-group date" data-target-input="nearest">
-                            <input type="text" value='<%=" #{@my_requested_shift.ends_at.strftime("%d/%m/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
+                            <input type="text" value='<%=" #{@my_requested_shift.ends_at.strftime("%m/%d/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
                             <div class="input-group-append" >
                                 <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -156,7 +156,7 @@
                     <p> Turno oferecido: </p>
                     <div class="form-group col-sm-6">
                         <div class="input-group date" data-target-input="nearest">
-                            <input type="text" value='<%=" #{@my_given_up_shift.starts_at.strftime("%d/%m/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
+                            <input type="text" value='<%=" #{@my_given_up_shift.starts_at.strftime("%m/%d/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
                             <div class="input-group-append" >
                                 <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -164,7 +164,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <div class="input-group date" data-target-input="nearest">
-                            <input type="text" value='<%=" #{@my_given_up_shift.ends_at.strftime("%d/%m/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
+                            <input type="text" value='<%=" #{@my_given_up_shift.ends_at.strftime("%m/%d/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
                             <div class="input-group-append" >
                                 <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -178,7 +178,7 @@
                       <% end %>
                       <%= form_tag(users_exchenge_refuse_path, method: "put") do |f| %>
                         <input type="text" name="id"  value='<%="#{my_pending_shifts.id}"%>' id="given_up_shift_id" style="display: none" />
-                        <button class="btn btn-danger btn-sm" type="submit">Reprovar</button>
+                        <button class="btn btn-danger btn-sm ml-2" type="submit">Reprovar</button>
                       <% end %>
                     </div>
 
@@ -192,7 +192,7 @@
           <% else %>
 
           <% @shift_exchanges.each do |pending_shifts| %>
-            <div class="media-list bg-white rounded shadow-base">
+            <div class="media-list bg-white rounded shadow-base mt-2">
               <div class="media pd-20 pd-xs-30">
 
                 <div class="media-body mg-l-20">
@@ -207,7 +207,7 @@
                     <% @given_up_shift = Shift.find(pending_shifts.given_up_shift_id)%>
                     <div class="form-group col-sm-6">
                         <div class="input-group date" data-target-input="nearest">
-                            <input type="text" value='<%=" #{@requested_shift.starts_at.strftime("%d/%m/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
+                            <input type="text" value='<%=" #{@requested_shift.starts_at.strftime("%m/%d/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
                             <div class="input-group-append" >
                                 <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -215,7 +215,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <div class="input-group date" data-target-input="nearest">
-                            <input type="text" value='<%=" #{@requested_shift.ends_at.strftime("%d/%m/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
+                            <input type="text" value='<%=" #{@requested_shift.ends_at.strftime("%m/%d/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
                             <div class="input-group-append" >
                                 <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -224,7 +224,7 @@
                     <p> Trocar pelo turno </p>
                     <div class="form-group col-sm-6">
                         <div class="input-group date" data-target-input="nearest">
-                            <input type="text" value='<%=" #{@given_up_shift.starts_at.strftime("%d/%m/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
+                            <input type="text" value='<%=" #{@given_up_shift.starts_at.strftime("%m/%d/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
                             <div class="input-group-append" >
                                 <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -232,7 +232,7 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <div class="input-group date" data-target-input="nearest">
-                            <input type="text" value='<%=" #{@given_up_shift.ends_at.strftime("%d/%m/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
+                            <input type="text" value='<%=" #{@given_up_shift.ends_at.strftime("%m/%d/%Y %I:%M %p")}"%>' class="form-control datetimepicker-input" disabled/>
                             <div class="input-group-append" >
                                 <div class="input-group-text ml-2 mt-2"><i class="fa fa-calendar"></i></div>
                             </div>
