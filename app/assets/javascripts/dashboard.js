@@ -24,6 +24,29 @@ $(document).ready(function(){
    $(name).toggle();
  });
 
+ $(".exchange").click(function(){
+   $(".shift").hide();
+   var id = $(this).attr('id');
+   var shift = $(this).attr('shift');
+   console.log(shift);
+   let name = '#shift'+id
+   $(name).show(500);
+   $("#my_shifts").show(500);
+   $("#requested_shift_id").val(shift); given_up_shift_id
+ });
+
+ $('.select').click(function(){
+   var id = $(this).attr('id');
+   let name = '#myshift'+id
+   $('.my_shift').hide();
+   $("#exchange").show();
+   $(name).show(500);
+   $("#given_up_shift_id").val(id);
+ });
+
+
+
+
  // This will collapsed sidebar menu on left into a mini icon menu
  $('#btnLeftMenu').on('click', function(){
    var menuText = $('.menu-item-label');

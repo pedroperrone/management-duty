@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'management_duty/errors/time_out_of_shift_range_error'
 
 class Users::ShiftExchangesController < ApplicationController
   before_action :authenticate_user!
@@ -15,10 +16,13 @@ class Users::ShiftExchangesController < ApplicationController
 
   def create
     new_shift_exchenge = ShiftExchange.new(shift_exchange_params)
+    puts '-----------------------------'
+    pp new_shift_exchenge
     if new_shift_exchenge.save
-      redirect_to users_shift_exchanges_path
+      redirect_to dashboard_path
     else
-      redirect_to root_path
+
+      redirect_to dashboard_path
     end
   end
 
@@ -56,7 +60,7 @@ class Users::ShiftExchangesController < ApplicationController
   end
 
   def current_user_owns_given_up_shift?
-    @given_up_shift.user == current_user
+    @given_up_shift.user_id == current_user.id
   end
 
   def shift_exchange_params
@@ -74,6 +78,8 @@ class Users::ShiftExchangesController < ApplicationController
   end
 
   def current_user_owns_requested_shift?
-    @shift_exchange.requested_shift.user == current_user
+    puts '----------------'
+    puts @shift_exchange.requested_shift.user_id, current_user.id
+    @shift_exchange.requested_shift.user_id == current_user.id
   end
 end
