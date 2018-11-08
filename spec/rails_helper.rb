@@ -10,7 +10,7 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'database_cleaner'
 
-Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each { |f| puts f; puts require(f) }
+Dir[File.dirname(__FILE__) + '/helpers/*.rb'].each { |f| puts require(f) }
 include TimeAssertionHelper
 
 Shoulda::Matchers.configure do |config|

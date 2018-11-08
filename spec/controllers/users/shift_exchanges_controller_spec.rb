@@ -112,7 +112,7 @@ RSpec.describe Users::ShiftExchangesController, type: :controller do
           new_exchange = ShiftExchange.last
           expect(new_exchange.given_up_shift).to eq(given_up_shift)
           expect(new_exchange.requested_shift).to eq(requested_shift)
-          expect(subject).to redirect_to(users_shift_exchanges_path)
+          expect(subject).to redirect_to(users_searches_path)
         end
       end
     end
@@ -152,7 +152,7 @@ RSpec.describe Users::ShiftExchangesController, type: :controller do
         it 'approves the exchange' do
           put :approve, params: { id: exchange.id }
 
-          expect(subject).to redirect_to(dashboard_path)
+          expect(subject).to redirect_to(user_show_path(user))
           expect(exchange.reload.pending_user_approval).to be_falsey
           expect(exchange.approved_by_user).to be_truthy
         end
