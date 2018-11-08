@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'date'
-require 'pry'
 class ShiftsController < ApplicationController
 
   before_action :logged_in?, except: :index

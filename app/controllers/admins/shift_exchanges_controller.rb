@@ -38,7 +38,6 @@ class Admins::ShiftExchangesController < ApplicationController
   end
 
   def validate_admin
-    # binding.pry
     return if current_admin_invited_shift_owner?
 
     redirect_to dashboard_path
